@@ -86,8 +86,14 @@ tr:hover td{background:#fafcfb}
 .pin.sel svg path{fill:#c0392b}
 
 .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-.ph{aspect-ratio:4/3;border-radius:10px;border:1px dashed #b9c9c0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--ink2);font-size:12px;background:#f7faf8;cursor:pointer;text-align:center;padding:6px}
+.ph{position:relative;aspect-ratio:4/3;border-radius:10px;border:1px dashed #b9c9c0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--ink2);font-size:12px;background:#f7faf8;cursor:pointer;text-align:center;padding:6px;overflow:hidden}
 .ph.filled{border-style:solid;background:linear-gradient(150deg,#8fbf9e,#5c8f6f);color:#fff;border-color:transparent}
+.ph input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.ph img.thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
+.ph .lbl{position:relative;z-index:1}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(0);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:9999;opacity:0;transition:opacity .25s,transform .25s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
 
 .rubric{border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:9px;background:#fff}
 .rubric .top{display:flex;align-items:center;gap:10px}
@@ -204,7 +210,7 @@ tr:hover td{background:#fafcfb}
     <p class="muted">เรียงลำดับตาม “คะแนนที่เพิ่มได้ต่อหนึ่งหน่วยต้นทุน” มิใช่ตามลำดับตัวชี้วัด เพื่อให้ผู้ประกอบการเห็นว่าควรลงทุนอะไรก่อน ซึ่งเป็นคุณค่าเดียวกับที่การนำเสนอแบบพอร์ตโฟลิโอสร้างให้ผู้บริหารระดับพื้นที่</p>
     <table id="planTable"></table>
     <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn" onclick="alert('ส่งเข้าคิวสอบทาน — ดูผลที่แท็บผู้ตรวจประเมิน')">ยื่นขอรับรอง</button>
+      <button class="btn" onclick="toast('ส่งเข้าคิวสอบทาน — ดูผลที่แท็บผู้ตรวจประเมิน')">ยื่นขอรับรอง</button>
       <button class="btn ghost" onclick="alert('ระบบจะประมวลผลภาพดาวเทียมซ้ำอัตโนมัติทุกปี และแจ้งเตือนเมื่อค่าตัวชี้วัดใดต่ำกว่าเกณฑ์ขั้นต่ำ')">ตั้งการติดตามอัตโนมัติรายปี</button>
     </div>
   </div>
@@ -390,16 +396,25 @@ map.querySelectorAll('.pin').forEach(p=>p.onclick=()=>{
 });
 const SPOTS=['ทางเข้าหลัก','พื้นที่ส่วนกลาง','แนวเชื่อมสู่ชายหาด','จุดพักผ่อน / ศาลา'];
 let filled=0;
-document.getElementById('photos').innerHTML=SPOTS.map((s,i)=>`<div class="ph" data-i="${i}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg><span>${s}<br>แตะเพื่อถ่ายพาโนรามา</span></div>`).join('');
-document.querySelectorAll('.ph').forEach(el=>el.onclick=()=>{
-  if(el.classList.contains('filled'))return;
+document.getElementById('photos').innerHTML=SPOTS.map((s,i)=>`<div class="ph" data-i="${i}"><input type="file" accept="image/*" capture="environment"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="lbl">${s}<br>แตะเพื่อถ่ายพาโนรามา</span></div>`).join('');
+document.querySelectorAll('.ph').forEach(el=>el.querySelector('input').onchange=e=>{
+  const file=e.target.files[0];
+  if(!file||el.classList.contains('filled'))return;
   el.classList.add('filled');
-  el.innerHTML=`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M4 12l5 5 11-11"/></svg><span style="color:#fff">${SPOTS[el.dataset.i]}<br>พิกัดและเวลาผ่านการตรวจ</span>`;
+  const url=URL.createObjectURL(file);
+  el.innerHTML=`<img class="thumb" src="${url}"><svg class="lbl" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M4 12l5 5 11-11"/></svg><span class="lbl" style="color:#fff">${SPOTS[el.dataset.i]}<br>พิกัดและเวลาผ่านการตรวจ</span>`;
+  el.style.cursor='default';
   filled++;
   const b=document.getElementById('btnAI');
   if(filled>=4){b.disabled=false;b.textContent='ส่งให้ AI ประเมิน (4 ภาพพร้อมแล้ว)';setStep(3)}
   else b.textContent=`ส่งให้ AI ประเมิน (ต้องครบ 4 ภาพ — ขณะนี้ ${filled})`;
 });
+function toast(msg){
+  const t=document.createElement('div');
+  t.className='toast';t.textContent=msg;document.body.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300)},3200);
+}
 function setStep(n){document.querySelectorAll('.fstep').forEach(f=>f.classList.toggle('on',+f.dataset.s<=n))}
 const CONF={hi:['สูง','c-hi'],md:['ปานกลาง','c-md'],lo:['ต่ำ · ต้องให้มนุษย์สอบทาน','c-lo']};
 document.getElementById('btnAI').onclick=()=>{
