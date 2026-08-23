@@ -147,3 +147,11 @@ Sentinel-2 MSI L2A · Sentinel-1 GRD · SRTM · ESA WorldCover v200 · Google Op
 ## เทคโนโลยี
 
 Vanilla JavaScript · Chart.js 4 · Leaflet 1.9 · ไม่มี build step ไม่มี dependency ที่ต้องติดตั้ง
+
+## โครงสร้างไฟล์เพิ่มเติม
+
+- `index.html` — ต้นแบบส่วนต่อประสาน BEQI Platform v2 (Dual-User + AI Assessment) พร้อม dashboard, แผนที่ และ rubrics
+- `landing.html` — หน้า landing ธีม Andaman (Tailwind + Epilogue/Inter/Space Grotesk) สำหรับผู้ใช้ 3 กลุ่ม
+  (Tourists / Entrepreneurs / Evaluators)
+- `skills/` — Claude Skills ที่ใช้ประกอบการทำดุษฎีนิพนธ์ (academics, academic-paper-strategist,
+  academic-paper-composer, canvas-design) ดูรายละเอียดใน `skills/README.md` — ไม่เกี่ยวข้องกับหน้าเว็บ
