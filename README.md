@@ -150,8 +150,10 @@ Vanilla JavaScript · Chart.js 4 · Leaflet 1.9 · ไม่มี build step �
 
 ## โครงสร้างไฟล์เพิ่มเติม
 
-- `index.html` — ต้นแบบส่วนต่อประสาน BEQI Platform v2 (Dual-User + AI Assessment) พร้อม dashboard, แผนที่ และ rubrics
-- `landing.html` — หน้า landing ธีม Andaman (Tailwind + Epilogue/Inter/Space Grotesk) สำหรับผู้ใช้ 3 กลุ่ม
-  (Tourists / Entrepreneurs / Evaluators)
+- `index.html` — หน้าแรกของเว็บ: landing ธีม Andaman (Tailwind + Epilogue/Inter/Space Grotesk)
+  สำหรับผู้ใช้ 3 กลุ่ม (Tourists / Entrepreneurs / Evaluators) ปุ่ม Portal Access และ Explore the Index
+  ลิงก์ไปยังต้นแบบ dashboard
+- `prototype-v2.html` — ต้นแบบส่วนต่อประสาน BEQI Platform v2 (Dual-User + AI Assessment)
+  พร้อม dashboard, แผนที่ และ rubrics (เดิมคือ `index.html`)
 - `skills/` — Claude Skills ที่ใช้ประกอบการทำดุษฎีนิพนธ์ (academics, academic-paper-strategist,
   academic-paper-composer, canvas-design) ดูรายละเอียดใน `skills/README.md` — ไม่เกี่ยวข้องกับหน้าเว็บ

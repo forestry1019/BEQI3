@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BEQI Platform — ต้นแบบส่วนต่อประสาน v2 (Dual-User + AI Assessment)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#132a1f; --ink2:#4a6157; --line:#dfe7e2; --bg:#f4f7f5; --card:#ffffff;
+  --green:#2f8f5b; --green-d:#1d6b41; --blue:#2b7fb8; --amber:#c88a1e;
+  --silver:#8f9aa3; --gold:#c9a227; --platinum:#5d7d8f;
+  --r:14px; --sh:0 1px 3px rgba(19,42,31,.08), 0 8px 24px rgba(19,42,31,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Sarabun',-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 64px}
+
+/* header */
+header{background:linear-gradient(135deg,#1d6b41,#2f8f5b 55%,#2b7fb8);color:#fff;padding:26px 0 0}
+.hd{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand h1{margin:0;font-size:22px;font-weight:700;letter-spacing:.2px}
+.brand p{margin:2px 0 0;font-size:13.5px;opacity:.9}
+.logo{width:44px;height:44px;flex:none}
+.tabs{display:flex;gap:6px;margin-top:22px;flex-wrap:wrap}
+.tab{background:rgba(255,255,255,.14);color:#fff;border:0;padding:11px 18px;border-radius:12px 12px 0 0;font-family:inherit;font-size:14.5px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
+.tab:hover{background:rgba(255,255,255,.24)}
+.tab.on{background:var(--bg);color:var(--ink);font-weight:600}
+.tab small{display:block;font-size:11.5px;opacity:.75;font-weight:400}
+
+/* generic */
+.panel{display:none;padding-top:26px}
+.panel.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:20px}
+.grid{display:grid;gap:16px}
+h2{font-size:19px;margin:26px 0 12px;display:flex;align-items:center;gap:9px}
+h3{font-size:15.5px;margin:0 0 10px}
+.muted{color:var(--ink2);font-size:13.5px}
+.step{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;font-size:14px;font-weight:700;flex:none}
+.btn{background:var(--green);color:#fff;border:0;border-radius:10px;padding:11px 18px;font-family:inherit;font-size:14.5px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:var(--green-d)}
+.btn.ghost{background:#fff;color:var(--green-d);border:1.5px solid var(--green)}
+.btn.blue{background:var(--blue)}
+.pill{display:inline-block;padding:3px 11px;border-radius:99px;font-size:12.5px;background:#eef4f0;color:var(--ink2)}
+
+/* badge */
+.badge{display:inline-flex;align-items:center;gap:9px;padding:7px 15px;border-radius:99px;color:#fff;font-weight:600;font-size:14px}
+.b-plat{background:linear-gradient(135deg,#5d7d8f,#94b3c2)}
+.b-gold{background:linear-gradient(135deg,#b8901c,#e3c355)}
+.b-silver{background:linear-gradient(135deg,#7d8992,#b8c2c9)}
+.b-cert{background:linear-gradient(135deg,#3e7a57,#6aab84)}
+.b-none{background:#b7c0bb}
+
+/* site cards */
+.sites{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.site{cursor:pointer;transition:.15s;border-left:5px solid var(--green)}
+.site:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(19,42,31,.13)}
+.site .score{font-size:34px;font-weight:700;line-height:1}
+.site .score span{font-size:14px;font-weight:400;color:var(--ink2)}
+.iconrow{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.ico{display:flex;flex-direction:column;align-items:center;gap:3px;width:60px}
+.ico .dot{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.ico span{font-size:10.5px;color:var(--ink2);text-align:center;line-height:1.25}
+.ico b{font-size:12px}
+
+/* table */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#eef4f0;font-weight:600;font-size:13px}
+tr:hover td{background:#fafcfb}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* capture flow */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 20px}
+.fstep{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;position:relative;opacity:.5}
+.fstep.on{opacity:1;border-color:var(--green);box-shadow:0 0 0 3px rgba(47,143,91,.12)}
+.fstep .n{font-size:12px;color:var(--green-d);font-weight:700}
+.fstep .t{font-size:13.5px;font-weight:600;margin-top:2px}
+.fstep .s{font-size:11.5px;color:var(--ink2)}
+
+.map{position:relative;height:250px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#cfe6f2 0%,#cfe6f2 34%,#e8f1e5 34%,#dcebd6 100%);border:1px solid var(--line)}
+.pin{position:absolute;transform:translate(-50%,-100%);cursor:pointer;text-align:center}
+.pin svg{filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.pin b{display:block;font-size:11px;background:#fff;padding:1px 6px;border-radius:6px;margin-top:2px;white-space:nowrap;border:1px solid var(--line)}
+.pin.sel svg path{fill:#c0392b}
+
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.ph{position:relative;aspect-ratio:4/3;border-radius:10px;border:1px dashed #b9c9c0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--ink2);font-size:12px;background:#f7faf8;cursor:pointer;text-align:center;padding:6px;overflow:hidden}
+.ph.filled{border-style:solid;background:linear-gradient(150deg,#8fbf9e,#5c8f6f);color:#fff;border-color:transparent}
+.ph input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.ph img.thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
+.ph .lbl{position:relative;z-index:1}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(0);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:9999;opacity:0;transition:opacity .25s,transform .25s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
+
+.rubric{border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:9px;background:#fff}
+.rubric .top{display:flex;align-items:center;gap:10px}
+.rubric .nm{font-weight:600;font-size:14px;flex:1}
+.sc{display:flex;gap:4px}
+.sc i{width:22px;height:22px;border-radius:6px;background:#e9efeb;display:block}
+.sc i.f{background:var(--green)}
+.why{font-size:12.5px;color:var(--ink2);margin-top:7px;padding-left:2px;border-left:3px solid #e4ece7;padding-left:10px}
+.conf{font-size:11.5px;padding:2px 8px;border-radius:99px;font-weight:600}
+.c-hi{background:#e3f3e9;color:#1d6b41}
+.c-md{background:#fdf3dd;color:#8a6410}
+.c-lo{background:#fbe6e4;color:#a33124}
+
+.note{background:#fdf8e9;border:1px solid #f0e2b6;border-left:4px solid var(--amber);border-radius:10px;padding:13px 15px;font-size:13.5px}
+.ok{background:#eaf6ef;border:1px solid #c6e5d3;border-left:4px solid var(--green);border-radius:10px;padding:13px 15px;font-size:13.5px}
+.queue{display:flex;align-items:center;gap:14px;padding:13px;border:1px solid var(--line);border-radius:12px;margin-bottom:9px;background:#fff}
+.queue .th{width:62px;height:62px;border-radius:10px;background:linear-gradient(150deg,#8fbf9e,#5c8f6f);flex:none}
+@media(max-width:760px){.flow{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="rgba(255,255,255,.16)"/><path d="M24 9c-7 5-11 11-11 17a11 11 0 0 0 22 0c0-6-4-12-11-17z" fill="#fff" opacity=".92"/><path d="M24 15v20M24 22l5-4M24 28l-5-4" stroke="#2f8f5b" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      <div>
+        <h1>BEQI Platform</h1>
+        <p>ดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก · ระเบียงเศรษฐกิจเขาหลัก จ.พังงา — ต้นแบบส่วนต่อประสาน v2</p>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab on" data-p="explore"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>ผู้มาเยือน / ผู้สนใจ<small>ดูคะแนนและระดับการรับรอง</small></span></button>
+      <button class="tab" data-p="project"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg><span>เจ้าของโครงการ<small>ปักหมุด ถ่ายรูป ให้ AI ประเมิน</small></span></button>
+      <button class="tab" data-p="audit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14v18l-7-4-7 4z"/><path d="M9 10l2 2 4-4"/></svg><span>ผู้ตรวจประเมิน / Back office<small>สอบทานและตัดสินการรับรอง</small></span></button>
+      <button class="tab" data-p="spec"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span>เกณฑ์และข้อกำหนด<small>Rubrics · Silver/Gold/Platinum</small></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ================= PANEL 1 : EXPLORER ================= -->
+<div class="panel on" id="p-explore">
+
+  <div class="card" style="border-left:5px solid var(--blue)">
+    <h3>ผู้ใช้กลุ่มที่ 1 — ผู้มาเยือน / ผู้สนใจ (Explorer)</h3>
+    <p class="muted" style="margin:0">คำถามหลักที่ผู้ใช้กลุ่มนี้ถือมา คือ <b>“พื้นที่นี้มีคุณภาพเชิงไบโอฟิลิกอย่างไร ได้คะแนนเท่าไร อยู่ระดับไหน”</b> หน้าจอจึงเริ่มจากคำตอบ ไม่ใช่จากตาราง — แสดงคะแนนรวม ตราสัญลักษณ์ และไอคอนรายตัวชี้วัดก่อน แล้วจึงให้ขยายดูรายละเอียดเมื่อผู้ใช้ร้องขอ ตามลำดับ overview → zoom → details ของ Shneiderman (1996)</p>
+  </div>
+
+  <h2><span class="step">1</span> พอร์ตโฟลิโอพื้นที่ในระเบียงเศรษฐกิจ</h2>
+  <div class="grid sites" id="siteList"></div>
+
+  <h2><span class="step">2</span> รายละเอียดพื้นที่ที่เลือก</h2>
+  <div class="card" id="detail"></div>
+
+  <h2><span class="step">3</span> ร่วมให้ข้อมูลเชิงประสบการณ์</h2>
+  <div class="card">
+    <h3>แบบสำรวจการรับรู้ของผู้มาเยือน (Visitor Perception Survey)</h3>
+    <p class="muted">ตัวชี้วัดที่ 1–3 วัดจากดาวเทียมโดยไม่ต้องรบกวนผู้ใช้ แต่มิติการรับรู้ต้องมาจากมนุษย์ แบบสำรวจนี้ทำหน้าที่สองอย่าง คือ (ก) เก็บข้อมูลตรวจสอบความตรงเชิงเกณฑ์ของคะแนน AI ตามสมมติฐานที่ 1 และ (ข) สร้างการมีส่วนร่วมแบบ citizen science ตามแบบ iNaturalist</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:8px">
+      <div style="border:1px solid var(--line);border-radius:11px;padding:13px"><b style="font-size:13.5px">ส่วนที่ 1 · การฟื้นฟูสุขภาวะ</b><p class="muted" style="margin:5px 0 0">6 ข้อ จากมาตรวัด Perceived Restorativeness (ART) — ใช้ทดสอบสหสัมพันธ์กับคะแนน GEE</p></div>
+      <div style="border:1px solid var(--line);border-radius:11px;padding:13px"><b style="font-size:13.5px">ส่วนที่ 2 · ความเชื่อมโยงกับธรรมชาติ</b><p class="muted" style="margin:5px 0 0">6 ข้อ จาก Nature Relatedness Scale ฉบับย่อ</p></div>
+      <div style="border:1px solid var(--line);border-radius:11px;padding:13px"><b style="font-size:13.5px">ส่วนที่ 3 · ประสบการณ์หลายประสาทสัมผัส</b><p class="muted" style="margin:5px 0 0">เลือกไอคอน รูป–เสียง–กลิ่น–สัมผัส ที่รับรู้ได้ พร้อมอัปโหลดภาพประกอบ (ไม่บังคับ)</p></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn blue" onclick="alert('เชื่อมต่อ Google Form / ฟอร์มในระบบ พร้อมส่งพิกัดและรหัสพื้นที่แนบไปกับคำตอบอัตโนมัติ')">เปิดแบบสำรวจ (Google Form)</button>
+      <button class="btn ghost" onclick="alert('สรุปผลรวมแบบไม่ระบุตัวตน แสดงเป็นค่าเฉลี่ยรายพื้นที่เมื่อมีผู้ตอบครบ 30 ราย')">ดูผลสำรวจของพื้นที่นี้</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PANEL 2 : PROJECT OWNER ================= -->
+<div class="panel" id="p-project">
+  <div class="card" style="border-left:5px solid var(--green)">
+    <h3>ผู้ใช้กลุ่มที่ 2 — เจ้าของโครงการ (Project Owner)</h3>
+    <p class="muted" style="margin:0">เป้าหมายของผู้ใช้กลุ่มนี้ต่างจากกลุ่มแรกโดยสิ้นเชิง คือ <b>“ทำอย่างไรให้คะแนนของพื้นที่ตนเองสูงขึ้นและได้รับการรับรอง”</b> หน้าจอจึงต้องเป็นลำดับงาน (task flow) ไม่ใช่แดชบอร์ด และต้องจบด้วยข้อเสนอแนะที่ทำได้จริง ไม่ใช่จบที่ตัวเลข</p>
+  </div>
+
+  <div class="flow" id="flow">
+    <div class="fstep on" data-s="1"><div class="n">ขั้นที่ 1</div><div class="t">ปักหมุดพื้นที่</div><div class="s">กำหนดขอบเขตและจุดถ่ายภาพ</div></div>
+    <div class="fstep" data-s="2"><div class="n">ขั้นที่ 2</div><div class="t">ถ่ายภาพพาโนรามา</div><div class="s">อย่างน้อย 4 จุด รอบพื้นที่</div></div>
+    <div class="fstep" data-s="3"><div class="n">ขั้นที่ 3</div><div class="t">AI ประเมินคะแนน</div><div class="s">14 องค์ประกอบ พร้อมเหตุผล</div></div>
+    <div class="fstep" data-s="4"><div class="n">ขั้นที่ 4</div><div class="t">แผนยกระดับคะแนน</div><div class="s">ข้อเสนอแนะเรียงตามผลตอบแทน</div></div>
+  </div>
+
+  <!-- step 1 -->
+  <div class="card" id="s1">
+    <h3>ขั้นที่ 1 · กดปักหมุดตำแหน่ง</h3>
+    <p class="muted">ระบบดึงตัวชี้วัดที่ 1–3 จาก Google Earth Engine ให้อัตโนมัติทันทีที่ปักหมุด ผู้ใช้จึงไม่ต้องกรอกข้อมูลเชิงพื้นที่ใด ๆ เอง — คลิกหมุดบนแผนที่จำลองด้านล่าง</p>
+    <div class="map" id="map"></div>
+    <div id="pinInfo" style="margin-top:12px"></div>
+  </div>
+
+  <!-- step 2 -->
+  <div class="card" id="s2" style="margin-top:16px">
+    <h3>ขั้นที่ 2 · ถ่ายภาพพาโนรามารอบจุดที่กำหนด</h3>
+    <p class="muted">กำหนดขั้นต่ำ 4 จุด (ทางเข้า · พื้นที่ส่วนกลาง · แนวเชื่อมสู่ชายหาด · จุดพักผ่อน) ภาพต้องมีพิกัดฝังในไฟล์และเวลาถ่ายไม่เกิน 90 วัน มิฉะนั้นระบบจะปฏิเสธก่อนส่งให้ AI ประเมิน ซึ่งเป็นจุดตรวจสอบคุณภาพเดียวกับที่ใช้กับข้อมูลดาวเทียมในขั้นที่ 2 ของลำดับงานอัตโนมัติ</p>
+    <div class="photos" id="photos"></div>
+    <div style="margin-top:13px"><button class="btn" id="btnAI" disabled>ส่งให้ AI ประเมิน (ต้องครบ 4 ภาพ)</button></div>
+  </div>
+
+  <!-- step 3 -->
+  <div class="card" id="s3" style="margin-top:16px;display:none">
+    <h3>ขั้นที่ 3 · ผลการประเมินโดย AI ตามเกณฑ์ 14 รูปแบบ</h3>
+    <div class="note" style="margin-bottom:14px"><b>สถานะของคะแนนชุดนี้ คือ “คะแนนตั้งต้นโดย AI” (AI pre-score) มิใช่ผลการรับรอง</b> — ตามหลักการแยกบทบาทในหัวข้อ 5.4.3 ผู้ขอรับรองเป็นผู้จัดหาหลักฐาน ระบบเป็นผู้ให้คะแนนตั้งต้น และผู้ตรวจประเมินที่มิใช่ผู้ประเมินเป็นผู้ตัดสิน คะแนนนี้จะยังไม่ถูกนำไปคำนวณดัชนีจนกว่าจะผ่านการสอบทานในแท็บถัดไป</div>
+    <div id="rubrics"></div>
+    <div class="ok" style="margin-top:14px" id="aiSummary"></div>
+  </div>
+
+  <!-- step 4 -->
+  <div class="card" id="s4" style="margin-top:16px;display:none">
+    <h3>ขั้นที่ 4 · แผนยกระดับคะแนน (Score Improvement Plan)</h3>
+    <p class="muted">เรียงลำดับตาม “คะแนนที่เพิ่มได้ต่อหนึ่งหน่วยต้นทุน” มิใช่ตามลำดับตัวชี้วัด เพื่อให้ผู้ประกอบการเห็นว่าควรลงทุนอะไรก่อน ซึ่งเป็นคุณค่าเดียวกับที่การนำเสนอแบบพอร์ตโฟลิโอสร้างให้ผู้บริหารระดับพื้นที่</p>
+    <table id="planTable"></table>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" onclick="toast('ส่งเข้าคิวสอบทาน — ดูผลที่แท็บผู้ตรวจประเมิน')">ยื่นขอรับรอง</button>
+      <button class="btn ghost" onclick="alert('ระบบจะประมวลผลภาพดาวเทียมซ้ำอัตโนมัติทุกปี และแจ้งเตือนเมื่อค่าตัวชี้วัดใดต่ำกว่าเกณฑ์ขั้นต่ำ')">ตั้งการติดตามอัตโนมัติรายปี</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PANEL 3 : AUDITOR ================= -->
+<div class="panel" id="p-audit">
+  <div class="card" style="border-left:5px solid var(--amber)">
+    <h3>ผู้ใช้กลุ่มที่ 3 — ผู้ตรวจประเมินและหน่วยงานกำกับ (Auditor / Back office)</h3>
+    <p class="muted" style="margin:0">กลุ่มนี้ไม่ได้ป้อนข้อมูลและไม่ได้ต้องการคะแนนของตนเอง แต่ทำหน้าที่ <b>ตัดสิน</b> และ <b>เฝ้าระวัง</b> จึงต้องเห็นสิ่งที่อีกสองกลุ่มไม่เห็น ได้แก่ ระดับความเชื่อมั่นของ AI รายข้อ ประวัติการแก้ไขคะแนน และส่วนต่างระหว่างคะแนน AI กับคะแนนผู้ตรวจ ซึ่งเป็นข้อมูลที่ใช้สอบเทียบแบบจำลองในระยะยาว</p>
+  </div>
+
+  <h2>คิวรอสอบทาน</h2>
+  <div id="queue"></div>
+
+  <h2>สถิติการสอบเทียบระหว่าง AI กับผู้ตรวจประเมิน</h2>
+  <div class="card">
+    <p class="muted" style="margin-top:0">ค่าเหล่านี้เป็นตัวเลขสาธิตสำหรับแสดงโครงสร้างหน้าจอ มิใช่ผลการทดสอบจริง ในเล่มต้องรายงานเป็นค่าที่วัดได้จริงพร้อมขนาดตัวอย่าง</p>
+    <table>
+      <tr><th>รายการ</th><th class="num">ค่า</th><th>เกณฑ์ที่ใช้ตัดสิน</th></tr>
+      <tr><td>ความสอดคล้องระหว่างผู้ประเมิน (Cohen’s κ ถ่วงน้ำหนัก) ระหว่าง AI กับผู้ตรวจ</td><td class="num">0.71</td><td>≥ 0.61 ถือว่าสอดคล้องระดับดี จึงยอมรับให้ AI ให้คะแนนตั้งต้นได้</td></tr>
+      <tr><td>สัดส่วนข้อที่ผู้ตรวจปรับคะแนนจาก AI</td><td class="num">18%</td><td>หากเกิน 30% ต้องทบทวนเกณฑ์หรือ prompt ก่อนใช้งานต่อ</td></tr>
+      <tr><td>อัตราการสุ่มตรวจ ณ สถานที่จริง</td><td class="num">100%</td><td>ปีที่ 1 ตรวจทุกราย เพื่อสร้างชุดข้อมูลสอบเทียบ แล้วจึงลดเหลือการสุ่ม</td></tr>
+      <tr><td>ข้อที่ AI ให้ความเชื่อมั่นต่ำและถูกส่งต่อให้มนุษย์เสมอ</td><td class="num">4 ข้อ</td><td>รูปแบบที่ 2 (Non-Visual), 7 (Natural Systems), 13 (Mystery), 14 (Risk/Peril)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ================= PANEL 4 : SPEC ================= -->
+<div class="panel" id="p-spec">
+
+  <h2>เกณฑ์การรับรองสองชั้น</h2>
+  <div class="card">
+    <p class="muted" style="margin-top:0">คงหลักการเดิมจากหัวข้อ 5.4.2 คือต้องผ่านพร้อมกันสองชั้น ชั้นแรกคือคะแนนรวม ชั้นที่สองคือค่ามาตรฐานของ <b>ทุก</b> ตัวชี้วัดต้องไม่ต่ำกว่าเกณฑ์ขั้นต่ำ เพื่อป้องกันการชดเชยระหว่างมิติ ระดับที่เสนอเพิ่มคือการแยกเป็นสี่ขั้นให้สื่อสารกับตลาดได้</p>
+    <table>
+      <tr><th>ระดับ</th><th class="num">คะแนนรวม BEQI</th><th class="num">ขั้นต่ำทุกตัวชี้วัด</th><th>เงื่อนไขเพิ่มเติม</th></tr>
+      <tr><td><span class="badge b-plat">Platinum</span></td><td class="num">≥ 90</td><td class="num">≥ 0.60</td><td>ตรวจ ณ สถานที่ทุกปี + เปิดเผยข้อมูลย้อนหลังอย่างน้อย 3 ปี</td></tr>
+      <tr><td><span class="badge b-gold">Gold</span></td><td class="num">≥ 80</td><td class="num">≥ 0.50</td><td>ตรวจ ณ สถานที่ทุก 2 ปี + ตัวชี้วัดที่ 4 ต้องผ่านการสอบทานโดยผู้ตรวจ</td></tr>
+      <tr><td><span class="badge b-silver">Silver</span></td><td class="num">≥ 70</td><td class="num">≥ 0.40</td><td>ตรวจ ณ สถานที่ครั้งแรก แล้วติดตามด้วยดาวเทียมรายปี</td></tr>
+      <tr><td><span class="badge b-cert">Certified</span></td><td class="num">≥ 60</td><td class="num">≥ 0.30</td><td>ระดับเริ่มต้น เพื่อให้ผู้ประกอบการรายเล็กเข้าสู่ระบบได้</td></tr>
+    </table>
+    <div class="note" style="margin-top:14px"><b>ผลการทดลองใช้เกณฑ์กับข้อมูลจริงสามโซนในบทที่ 4</b> — โซนใต้ (80.12) มีคะแนนรวมถึงเกณฑ์ Gold แต่ตัวชี้วัดที่ 2 เท่ากับ 0.316 จึงตกลงมาอยู่ระดับ Certified · โซนเหนือ (75.61, ตัวชี้วัดที่ 2 = 0.437) ได้ Silver · โซนกลาง (68.66, ตัวชี้วัดที่ 2 = 0.359) ได้ Certified ผลนี้ยืนยันว่ากลไกขั้นต่ำทำงานตามเจตนา และชี้ตรงกับข้อค้นพบเชิงพอร์ตโฟลิโอว่าการเชื่อมต่อผืนพืชพรรณคือจุดลงทุนที่ให้ผลตอบแทนสูงสุดของทั้งระเบียงเศรษฐกิจ</div>
+  </div>
+
+  <h2>เกณฑ์การให้คะแนนโดย AI (Scoring Rubrics) — ตัวชี้วัดที่ 4</h2>
+  <div class="card">
+    <p class="muted" style="margin-top:0">คงมาตรวัด 0–1–2 และคะแนนเต็ม 28 ตามแบบตรวจสอบเดิมทุกประการ สิ่งที่เพิ่มคือ <b>ข้อความนิยามระดับที่เขียนให้ตรวจสอบได้จากภาพ</b> เพื่อให้แบบจำลองภาษาเชิงภาพตัดสินได้ตรงกันทุกครั้ง และ <b>ช่องเหตุผลอ้างอิงหลักฐานในภาพ</b> ที่บังคับให้ระบุสิ่งที่เห็น มิใช่ให้คะแนนลอย ๆ</p>
+    <table>
+      <tr><th style="width:20%">องค์ประกอบ</th><th>0 — ไม่พบ</th><th>1 — พบบางส่วน</th><th>2 — เป็นองค์ประกอบหลัก</th><th style="width:11%">ความเชื่อมั่นที่คาด</th></tr>
+      <tr><td>1. การเชื่อมโยงทางสายตากับธรรมชาติ</td><td>ไม่ปรากฏพืชพรรณหรือน้ำในเฟรม</td><td>พืชพรรณเป็นแนวประดับ ครอบคลุมน้อยกว่า 1 ใน 4 ของเฟรม</td><td>พืชพรรณหรือผืนน้ำครอบคลุมมากกว่าครึ่งเฟรม และมองเห็นจากจุดใช้งานหลัก</td><td><span class="conf c-hi">สูง</span></td></tr>
+      <tr><td>2. การเชื่อมโยงโดยปราศจากการมองเห็น</td><td>ไม่พบโครงสร้างกำเนิดเสียง กลิ่น หรือผิวสัมผัส</td><td>พบหนึ่งองค์ประกอบ เช่น น้ำพุขนาดเล็ก</td><td>พบตั้งแต่สองช่องทางประสาทสัมผัสขึ้นไปในบริเวณเดียวกัน</td><td><span class="conf c-lo">ต่ำ</span></td></tr>
+      <tr><td>7. การเชื่อมต่อกับระบบธรรมชาติ</td><td>ไม่พบโครงสร้างจัดการน้ำเชิงนิเวศ</td><td>พบรางระบายน้ำชีวภาพหรือแปลงซึมน้ำขนาดเล็ก</td><td>พบระบบกักเก็บน้ำฝนที่ออกแบบให้มองเห็นและอธิบายได้</td><td><span class="conf c-md">ปานกลาง</span></td></tr>
+      <tr><td>9. การเชื่อมโยงวัสดุกับธรรมชาติ</td><td>โครงสร้างหลักเป็นวัสดุสังเคราะห์ทั้งหมด</td><td>ใช้วัสดุพื้นถิ่นเป็นวัสดุตกแต่งผิว</td><td>ใช้วัสดุพื้นถิ่นแปรรูปขั้นต่ำในโครงสร้างหลัก เช่น ไม้ท่อน หินธรรมชาติ หลังคาจาก</td><td><span class="conf c-hi">สูง</span></td></tr>
+      <tr><td>12. พื้นที่หลบภัย</td><td>ไม่มีพื้นที่ที่มีการปกป้องด้านบนและด้านหลัง</td><td>มีหลังคาคลุมแต่เปิดโล่งรอบด้าน</td><td>มีศาลาหรือซุ้มที่ปกป้องทั้งด้านบนและด้านหลัง พร้อมที่นั่ง</td><td><span class="conf c-hi">สูง</span></td></tr>
+      <tr><td>14. ความเสี่ยงจำลอง</td><td>ไม่พบ</td><td>พบโครงสร้างยกระดับที่มีราวกันตก</td><td>พบโครงสร้างที่สร้างความรู้สึกเสี่ยงชัดเจนพร้อมกลไกป้องกันที่มองเห็นได้</td><td><span class="conf c-lo">ต่ำ</span></td></tr>
+    </table>
+    <p class="muted" style="margin-bottom:0">ตารางนี้แสดงตัวอย่าง 6 จาก 14 องค์ประกอบ ฉบับเต็มอยู่ในเอกสารประกอบ องค์ประกอบที่ระบุความเชื่อมั่นระดับต่ำ คือกลุ่มที่ภาพนิ่งให้หลักฐานไม่พอโดยธรรมชาติ เช่น เสียงและกลิ่น ระบบจึงต้องบังคับส่งต่อให้ผู้ตรวจประเมินเสมอ ไม่ปล่อยให้ AI ตัดสินเอง</p>
+  </div>
+
+  <h2>สถาปัตยกรรมที่ต้องเพิ่มจากเดิม</h2>
+  <div class="card">
+    <table>
+      <tr><th>ชั้น</th><th>สถานะเดิมในเล่ม</th><th>สิ่งที่ต้องเพิ่มตามข้อเสนอนี้</th></tr>
+      <tr><td>ชั้นที่ 1 ประมวลผลเชิงพื้นที่</td><td>ข้อกำหนดเชิงออกแบบ ยังไม่ได้สร้าง</td><td>ไม่เปลี่ยน — ยังใช้ Earth Engine ผ่าน API สำหรับตัวชี้วัดที่ 1–3</td></tr>
+      <tr><td><b>ชั้นใหม่ · การเก็บหลักฐานภาคสนาม</b></td><td>—</td><td>รับภาพพร้อมพิกัดและเวลา ตรวจความสด ตรวจการซ้ำซ้อน และเก็บภาพต้นฉบับเป็นหลักฐานที่แก้ไขไม่ได้</td></tr>
+      <tr><td><b>ชั้นใหม่ · การประเมินด้วยแบบจำลองภาษาเชิงภาพ</b></td><td>—</td><td>ให้คะแนนตั้งต้น 14 องค์ประกอบ พร้อมเหตุผลและระดับความเชื่อมั่น บันทึกรุ่นของแบบจำลองและรุ่นของ rubric กำกับผลทุกครั้ง</td></tr>
+      <tr><td>ชั้นที่ 2 บริการและตรรกะธุรกิจ</td><td>ข้อกำหนดเชิงออกแบบ</td><td>เพิ่มคิวสอบทานโดยมนุษย์ สิทธิ์ตามบทบาทสามระดับ และการบันทึกส่วนต่างระหว่างคะแนน AI กับคะแนนผู้ตรวจ</td></tr>
+      <tr><td>ชั้นที่ 3 การแสดงผล</td><td>ต้นแบบครอบคลุมแล้ว</td><td>แยกหน้าจอตามบทบาท เพิ่มระบบไอคอนรายตัวชี้วัด และเพิ่มลำดับงานสี่ขั้นของเจ้าของโครงการ</td></tr>
+    </table>
+  </div>
+
+  <h2>ประเด็นที่ต้องระบุไว้ในเล่มอย่างตรงไปตรงมา</h2>
+  <div class="card">
+    <ul style="margin:0;padding-left:20px;font-size:14px">
+      <li><b>อคติของแบบจำลอง</b> — การใช้ AI ลดอคติจากการประเมินตนเองได้จริง แต่ย้ายอคติไปอยู่ที่ชุดข้อมูลฝึกและถ้อยคำของ rubric แทน จึงต้องรายงานค่าความสอดคล้องกับผู้ตรวจที่เป็นมนุษย์ พร้อมขนาดตัวอย่าง</li>
+      <li><b>ข้อจำกัดของภาพนิ่ง</b> — องค์ประกอบด้านเสียง กลิ่น และการเปลี่ยนแปลงตามฤดูกาล ประเมินจากภาพเดียวไม่ได้ ต้องระบุว่าเป็นข้อจำกัดเชิงระเบียบวิธี ไม่ใช่ปกปิดด้วยการให้คะแนนเต็ม</li>
+      <li><b>แรงจูงใจในการเลือกถ่ายเฉพาะมุมที่ดี</b> — ป้องกันด้วยการกำหนดจุดถ่ายภาพล่วงหน้าจากพิกัด ไม่ให้ผู้ยื่นเลือกเอง และให้ผู้ตรวจเป็นผู้ถ่ายในกรณีขอระดับ Gold ขึ้นไป</li>
+      <li><b>จริยธรรมการวิจัย</b> — ภาพจากผู้ใช้ต้องมีคำยินยอม ต้องเบลอใบหน้าบุคคลอัตโนมัติ และต้องผ่านคณะกรรมการจริยธรรมการวิจัยในมนุษย์ก่อนเก็บข้อมูลจริง</li>
+      <li><b>ผลต่อการประเมิน TAM</b> — ต้นแบบเดิมมีผู้ให้ข้อมูล 4 ท่านซึ่งเป็นผู้ตัดสินใจ เมื่อเพิ่มผู้ใช้กลุ่มเจ้าของโครงการที่ต้องลงมือถ่ายภาพเอง ควรเพิ่มผู้ให้ข้อมูลกลุ่มนี้และรายงานค่าความง่ายในการใช้งานแยกตามบทบาท เพราะภาระงานของสองกลุ่มต่างกันมาก</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<script>
+/* ---------- data ---------- */
+const SITES=[
+ {id:'n',name:'โซนเหนือ · เขาหลัก–บางสัก',type:'Eco-Adventure',score:75.61,n:[0.892,0.437,0.875,0.821],lvl:'silver',x:24,y:30},
+ {id:'c',name:'โซนกลาง · หาดบางเนียง–นางทอง',type:'Commercial',score:68.66,n:[0.853,0.359,0.856,0.679],lvl:'cert',x:52,y:52},
+ {id:'s',name:'โซนใต้ · อุทยานฯ เขาหลัก–ลำรู่',type:'Benchmark',score:80.12,n:[0.962,0.316,0.963,0.964],lvl:'cert',x:76,y:74}
+];
+const IND=[
+ {k:'สีเขียว',full:'ตัวชี้วัดที่ 1 ความหนาแน่นพื้นที่สีเขียวเชิงโครงสร้าง',c:'#2f8f5b',ic:'<path d="M12 3c-4 3.5-6 7-6 10a6 6 0 0 0 12 0c0-3-2-6.5-6-10z" fill="#fff"/><path d="M12 8v11" stroke="#2f8f5b" stroke-width="1.6"/>'},
+ {k:'เชื่อมโยง',full:'ตัวชี้วัดที่ 2 ความต่อเนื่องของโครงข่ายนิเวศ',c:'#7a9b3f',ic:'<circle cx="6" cy="7" r="2.6" fill="#fff"/><circle cx="18" cy="9" r="2.6" fill="#fff"/><circle cx="11" cy="18" r="2.6" fill="#fff"/><path d="M6 7l12 2M18 9l-7 9M6 7l5 11" stroke="#fff" stroke-width="1.5"/>'},
+ {k:'เข้าถึงน้ำ',full:'ตัวชี้วัดที่ 3 ศักยภาพการเข้าถึงพื้นที่น้ำธรรมชาติ',c:'#2b7fb8',ic:'<path d="M12 3c3.5 4.5 5.5 7.5 5.5 10a5.5 5.5 0 0 1-11 0c0-2.5 2-5.5 5.5-10z" fill="#fff"/>'},
+ {k:'ไบโอฟิลิก',full:'ตัวชี้วัดที่ 4 ความหนาแน่นองค์ประกอบเชิงไบโอฟิลิก (14 รูปแบบ)',c:'#c88a1e',ic:'<path d="M4 19V9l8-5 8 5v10" fill="#fff"/><path d="M9 19v-5h6v5" stroke="#c88a1e" stroke-width="1.5" fill="none"/>'}
+];
+const LVL={plat:['Platinum','b-plat'],gold:['Gold','b-gold'],silver:['Silver','b-silver'],cert:['Certified','b-cert'],none:['ยังไม่ผ่านเกณฑ์','b-none']};
+
+const PATTERNS=[
+ ['1. การเชื่อมโยงทางสายตากับธรรมชาติ',2,'hi','พบแนวไม้ยืนต้นและไม้พุ่มครอบคลุมประมาณสองในสามของเฟรมภาพ และมองเห็นได้จากทางเดินหลักและระเบียงห้องพัก'],
+ ['2. การเชื่อมโยงโดยปราศจากการมองเห็น',1,'lo','พบโครงสร้างคล้ายรางน้ำล้นบริเวณสระ ซึ่งอาจกำเนิดเสียงน้ำได้ แต่ภาพนิ่งไม่สามารถยืนยันเสียง กลิ่น หรือผิวสัมผัสได้ ต้องให้ผู้ตรวจยืนยัน ณ สถานที่'],
+ ['3. สิ่งเร้าทางประสาทสัมผัสแบบไม่เป็นจังหวะ',1,'md','เห็นเงาใบไม้เคลื่อนไหวบนผนัง บ่งชี้การมีอยู่ของสิ่งเร้าที่ไม่ซ้ำจังหวะ แต่ประเมินความถี่จากภาพเดียวไม่ได้'],
+ ['4. ความแปรผันของอุณหภูมิและการไหลของอากาศ',1,'md','พบช่องเปิดโล่งและระแนงไม้ที่เอื้อให้ลมผ่าน แต่ไม่พบหลักฐานการออกแบบร่มเงาที่จงใจสร้างความแตกต่างของอุณหภูมิ'],
+ ['5. การมีอยู่ของน้ำ',2,'hi','พบผืนน้ำถาวรสองแห่งในเฟรม คือสระและแนวชายหาดที่มองเห็นต่อเนื่องจากพื้นที่ส่วนกลาง'],
+ ['6. แสงพลวัตและแสงกระจาย',1,'md','พบการกรองแสงผ่านเรือนยอดไม้บริเวณทางเดิน แต่พื้นที่ส่วนกลางยังใช้แสงประดิษฐ์สม่ำเสมอเป็นหลัก'],
+ ['7. การเชื่อมต่อกับระบบธรรมชาติ',0,'md','ไม่พบพื้นที่กักเก็บน้ำฝน รางระบายน้ำชีวภาพ หรือพื้นที่ที่ปล่อยให้เปลี่ยนแปลงตามฤดูกาลในภาพทั้งสี่จุด'],
+ ['8. รูปทรงและรูปแบบชีวภาพ',1,'hi','พบหลังคาทรงโค้งบริเวณศาลาพัก แต่โครงสร้างหลักของอาคารยังใช้เส้นตรงและมุมฉากเป็นหลัก'],
+ ['9. การเชื่อมโยงวัสดุกับธรรมชาติ',2,'hi','พบไม้ท่อนแปรรูปขั้นต่ำเป็นเสาและโครงหลังคา ร่วมกับหลังคามุงจาก ซึ่งเป็นวัสดุพื้นถิ่นในโครงสร้างหลัก มิใช่เพียงวัสดุตกแต่งผิว'],
+ ['10. ความซับซ้อนอย่างมีระเบียบ',1,'hi','พบลวดลายโครงถักไม้ซ้ำกันบริเวณฝ้าเพดาน แต่ยังไม่ปรากฏลำดับชั้นของลวดลายในระดับพื้นและผนัง'],
+ ['11. มุมมองแบบคาดการณ์',2,'hi','พบระเบียงยกระดับที่เปิดทัศนวิสัยต่อเนื่องเกิน 6 เมตรไปยังแนวชายหาด'],
+ ['12. พื้นที่หลบภัย',2,'hi','พบศาลาที่มีหลังคาคลุมและผนังทึบด้านหลัง พร้อมที่นั่งพนักสูง ซึ่งเข้าเกณฑ์การปกป้องทั้งด้านบนและด้านหลัง'],
+ ['13. ความลึกลับ',1,'lo','ทางเดินโค้งถูกบังด้วยพืชพรรณบางส่วน แต่ภาพจากจุดเดียวไม่สามารถยืนยันการบดบังทัศนวิสัยล่วงหน้าตามเส้นทางเดินจริงได้'],
+ ['14. ความเสี่ยงจำลอง',0,'lo','ไม่พบโครงสร้างที่สร้างความรู้สึกเสี่ยงพร้อมกลไกป้องกันในภาพทั้งสี่จุด']
+];
+const PLAN=[
+ ['7. การเชื่อมต่อกับระบบธรรมชาติ','0 → 2','+2','ต่ำ','ทำแปลงกักเก็บน้ำฝนบริเวณลานจอดรถ และเปิดรางระบายน้ำชีวภาพให้มองเห็นได้'],
+ ['4. ความแปรผันของอุณหภูมิและการไหลของอากาศ','1 → 2','+1','ต่ำ','เพิ่มร่มเงาไม้ยืนต้นบริเวณลานกลาง เพื่อสร้างความต่างของอุณหภูมิที่รับรู้ได้'],
+ ['6. แสงพลวัตและแสงกระจาย','1 → 2','+1','ต่ำ','เปลี่ยนหลังคาโปร่งบางส่วนเป็นระแนงกรองแสง'],
+ ['ตัวชี้วัดที่ 2 ความต่อเนื่องของโครงข่ายนิเวศ','0.36 → 0.45','+2.3 คะแนนรวม','ปานกลาง','ปลูกแนวเชื่อมพืชพรรณระหว่างแปลงที่ถูกตัดขาดสองแปลงตามแนวคลอง — เป็นข้อจำกัดร่วมของทั้งสามโซน จึงเป็นการลงทุนที่ให้ผลตอบแทนสูงสุดเชิงระเบียงเศรษฐกิจ'],
+ ['13. ความลึกลับ','1 → 2','+1','ต่ำ','จัดวางพืชพรรณให้บดบังทางเดินบางส่วน สร้างการค้นพบตามเส้นทาง']
+];
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');document.getElementById('p-'+t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* ---------- explorer ---------- */
+function icoHTML(i,v){const d=IND[i];return `<div class="ico"><div class="dot" style="background:${d.c}"><svg width="22" height="22" viewBox="0 0 24 24">${d.ic}</svg></div><b>${v.toFixed(2)}</b><span>${d.k}</span></div>`}
+function badge(l){return `<span class="badge ${LVL[l][1]}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16.3 6.2 19.8l1.6-6.6L2.6 8.8l6.8-.5z"/></svg>${LVL[l][0]}</span>`}
+document.getElementById('siteList').innerHTML=SITES.map(s=>`
+ <div class="card site" onclick="showDetail('${s.id}')">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+    <div><div style="font-weight:600;font-size:15px">${s.name}</div><span class="pill">${s.type}</span></div>
+    <div style="text-align:right"><div class="score">${s.score.toFixed(1)}<span>/100</span></div></div>
+  </div>
+  <div style="margin-top:11px">${badge(s.lvl)}</div>
+  <div class="iconrow">${s.n.map((v,i)=>icoHTML(i,v)).join('')}</div>
+ </div>`).join('');
+
+function radar(n){
+  const cx=130,cy=125,R=95,ang=i=>(-Math.PI/2)+i*Math.PI/2;
+  const pt=(i,r)=>[cx+Math.cos(ang(i))*R*r,cy+Math.sin(ang(i))*R*r];
+  let rings='';[0.25,0.5,0.75,1].forEach(r=>{rings+=`<polygon points="${[0,1,2,3].map(i=>pt(i,r).join(',')).join(' ')}" fill="none" stroke="#dfe7e2"/>`});
+  const poly=[0,1,2,3].map(i=>pt(i,n[i]).join(',')).join(' ');
+  let lbl='';IND.forEach((d,i)=>{const[p,q]=pt(i,1.22);lbl+=`<text x="${p}" y="${q}" font-size="11.5" fill="#4a6157" text-anchor="middle">${d.k}</text>`});
+  return `<svg viewBox="0 0 260 250" style="width:100%;max-width:280px">${rings}<line x1="${cx}" y1="${cy-R}" x2="${cx}" y2="${cy+R}" stroke="#dfe7e2"/><line x1="${cx-R}" y1="${cy}" x2="${cx+R}" y2="${cy}" stroke="#dfe7e2"/><polygon points="${poly}" fill="rgba(47,143,91,.28)" stroke="#2f8f5b" stroke-width="2"/>${[0,1,2,3].map(i=>{const[p,q]=pt(i,n[i]);return `<circle cx="${p}" cy="${q}" r="4" fill="#2f8f5b"/>`}).join('')}${lbl}</svg>`;
+}
+function showDetail(id){
+  const s=SITES.find(x=>x.id===id);
+  const min=Math.min(...s.n),weak=IND[s.n.indexOf(min)];
+  document.getElementById('detail').innerHTML=`
+   <div style="display:grid;grid-template-columns:290px 1fr;gap:22px;align-items:start" class="dg">
+     <div style="text-align:center">${radar(s.n)}</div>
+     <div>
+       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><h3 style="margin:0">${s.name}</h3>${badge(s.lvl)}</div>
+       <p class="muted" style="margin:8px 0 12px">คะแนนรวม <b style="color:var(--ink);font-size:17px">${s.score.toFixed(2)}</b> / 100 · ช่วงความเชื่อมั่น 95% กว้างประมาณ 1.5 คะแนน จากการจำลองมอนติคาร์โล 5,000 รอบ · วัดบนแถบชายฝั่งกว้าง 1 กิโลเมตร · พารามิเตอร์รุ่น v1.2 · ความถูกต้องการจำแนก 82.18%</p>
+       <table>
+         <tr><th>ตัวชี้วัด</th><th class="num">ค่ามาตรฐาน</th><th>สถานะเทียบเกณฑ์ขั้นต่ำระดับถัดไป</th></tr>
+         ${s.n.map((v,i)=>`<tr><td>${IND[i].full}</td><td class="num">${v.toFixed(3)}</td><td>${v>=0.5?'<span style="color:var(--green-d)">ผ่านเกณฑ์ Gold</span>':v>=0.4?'<span style="color:var(--amber)">ผ่านเกณฑ์ Silver</span>':'<span style="color:#a33124">ต่ำกว่าเกณฑ์ Silver</span>'}</td></tr>`).join('')}
+       </table>
+       <div class="note" style="margin-top:13px">ระบบแสดงคะแนนรายตัวชี้วัดควบคู่คะแนนรวมเสมอ และไม่แสดงคะแนนรวมโดยลำพัง เพราะ ${s.name} มีจุดอ่อนชัดเจนที่ <b>${weak.full}</b> (${min.toFixed(3)}) ซึ่งคะแนนรวมเพียงค่าเดียวจะกลบไป</div>
+     </div>
+   </div>`;
+}
+showDetail('n');
+
+/* ---------- project owner ---------- */
+const map=document.getElementById('map');
+map.innerHTML=SITES.map(s=>`<div class="pin" data-id="${s.id}" style="left:${s.x}%;top:${s.y}%"><svg width="26" height="34" viewBox="0 0 26 34"><path d="M13 0C6 0 1 5 1 12c0 8 12 22 12 22s12-14 12-22C25 5 20 0 13 0z" fill="#2f8f5b"/><circle cx="13" cy="12" r="5" fill="#fff"/></svg><b>${s.name.split('·')[1].trim()}</b></div>`).join('')
+ +`<div style="position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.9);border-radius:8px;padding:5px 10px;font-size:11.5px;color:#4a6157">แผนที่จำลอง — ระบบจริงเชื่อม Earth Engine ผ่าน API</div>`;
+let picked=null;
+map.querySelectorAll('.pin').forEach(p=>p.onclick=()=>{
+  map.querySelectorAll('.pin').forEach(x=>x.classList.remove('sel'));p.classList.add('sel');
+  picked=SITES.find(s=>s.id===p.dataset.id);
+  document.getElementById('pinInfo').innerHTML=`<div class="ok"><b>ปักหมุดแล้ว:</b> ${picked.name} · ระบบดึงตัวชี้วัดที่ 1–3 จากดาวเทียมอัตโนมัติ — สีเขียว ${picked.n[0].toFixed(3)} · เชื่อมโยง ${picked.n[1].toFixed(3)} · เข้าถึงน้ำ ${picked.n[2].toFixed(3)} · <b>เหลือเพียงตัวชี้วัดที่ 4 ที่ต้องใช้ภาพถ่ายภาคสนาม</b></div>`;
+  setStep(2);
+});
+const SPOTS=['ทางเข้าหลัก','พื้นที่ส่วนกลาง','แนวเชื่อมสู่ชายหาด','จุดพักผ่อน / ศาลา'];
+let filled=0;
+document.getElementById('photos').innerHTML=SPOTS.map((s,i)=>`<div class="ph" data-i="${i}"><input type="file" accept="image/*" capture="environment"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="lbl">${s}<br>แตะเพื่อถ่ายพาโนรามา</span></div>`).join('');
+document.querySelectorAll('.ph').forEach(el=>el.querySelector('input').onchange=e=>{
+  const file=e.target.files[0];
+  if(!file||el.classList.contains('filled'))return;
+  el.classList.add('filled');
+  const url=URL.createObjectURL(file);
+  el.innerHTML=`<img class="thumb" src="${url}"><svg class="lbl" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M4 12l5 5 11-11"/></svg><span class="lbl" style="color:#fff">${SPOTS[el.dataset.i]}<br>พิกัดและเวลาผ่านการตรวจ</span>`;
+  el.style.cursor='default';
+  filled++;
+  const b=document.getElementById('btnAI');
+  if(filled>=4){b.disabled=false;b.textContent='ส่งให้ AI ประเมิน (4 ภาพพร้อมแล้ว)';setStep(3)}
+  else b.textContent=`ส่งให้ AI ประเมิน (ต้องครบ 4 ภาพ — ขณะนี้ ${filled})`;
+});
+function toast(msg){
+  const t=document.createElement('div');
+  t.className='toast';t.textContent=msg;document.body.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300)},3200);
+}
+function setStep(n){document.querySelectorAll('.fstep').forEach(f=>f.classList.toggle('on',+f.dataset.s<=n))}
+const CONF={hi:['สูง','c-hi'],md:['ปานกลาง','c-md'],lo:['ต่ำ · ต้องให้มนุษย์สอบทาน','c-lo']};
+document.getElementById('btnAI').onclick=()=>{
+  document.getElementById('rubrics').innerHTML=PATTERNS.map(p=>`
+   <div class="rubric">
+     <div class="top">
+       <div class="nm">${p[0]}</div>
+       <div class="sc">${[0,1].map(i=>`<i class="${p[1]>i?'f':''}"></i>`).join('')}</div>
+       <b style="width:34px;text-align:right">${p[1]}/2</b>
+       <span class="conf ${CONF[p[2]][1]}">${CONF[p[2]][0]}</span>
+     </div>
+     <div class="why"><b>หลักฐานที่ AI อ้างอิง:</b> ${p[3]}</div>
+   </div>`).join('');
+  const tot=PATTERNS.reduce((a,p)=>a+p[1],0), nrm=tot/28;
+  const lows=PATTERNS.filter(p=>p[2]==='lo').length;
+  const base=picked||SITES[1];
+  const newScore=((base.n[0]+base.n[1]+base.n[2]+nrm)/4*100);
+  document.getElementById('aiSummary').innerHTML=`<b>คะแนนตั้งต้นตัวชี้วัดที่ 4 = ${tot}/28 (ค่ามาตรฐาน ${nrm.toFixed(3)})</b><br>
+   หากคะแนนชุดนี้ผ่านการสอบทาน คะแนน BEQI รวมของพื้นที่จะเท่ากับ <b>${newScore.toFixed(2)}</b> อยู่ในระดับ <b>${newScore>=80&&Math.min(base.n[0],base.n[1],base.n[2],nrm)>=0.5?'Gold':newScore>=70&&Math.min(base.n[0],base.n[1],base.n[2],nrm)>=0.4?'Silver':'Certified'}</b>
+   — ระดับถูกจำกัดโดยเกณฑ์ขั้นต่ำรายตัวชี้วัด มิใช่โดยคะแนนรวมเพียงอย่างเดียว<br>
+   <span class="muted">มี ${lows} องค์ประกอบที่ AI ให้ความเชื่อมั่นต่ำ ระบบส่งต่อให้ผู้ตรวจประเมินโดยอัตโนมัติ · บันทึกรุ่นแบบจำลองและรุ่น rubric กำกับผลไว้แล้ว</span>`;
+  document.getElementById('s3').style.display='block';
+  document.getElementById('s4').style.display='block';
+  document.getElementById('planTable').innerHTML=`<tr><th>รายการที่ควรลงทุน</th><th>คะแนนที่คาดว่าจะเปลี่ยน</th><th class="num">ส่วนเพิ่ม</th><th>ระดับต้นทุน</th><th>สิ่งที่ต้องทำ</th></tr>`
+   +PLAN.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join('');
+  setStep(4);
+  document.getElementById('s3').scrollIntoView({behavior:'smooth'});
+};
+
+/* ---------- auditor ---------- */
+document.getElementById('queue').innerHTML=[
+ ['รีสอร์ตริมหาดบางเนียง A','ยื่นเมื่อ 3 วันที่แล้ว','19/28','4 ข้อความเชื่อมั่นต่ำ','รอสอบทาน'],
+ ['โฮมสเตย์บ้านน้ำเค็ม','ยื่นเมื่อ 6 วันที่แล้ว','23/28','2 ข้อความเชื่อมั่นต่ำ','ผู้ตรวจปรับคะแนนแล้ว รอผู้ตัดสิน'],
+ ['ศูนย์เรียนรู้ป่าชายเลนบางสัก','ยื่นเมื่อ 11 วันที่แล้ว','25/28','ครบถ้วน','รอออกใบรับรอง']
+].map(q=>`<div class="queue"><div class="th"></div>
+ <div style="flex:1"><b style="font-size:14.5px">${q[0]}</b><div class="muted">${q[1]} · คะแนน AI ตั้งต้น ${q[2]} · ${q[3]}</div></div>
+ <span class="pill">${q[4]}</span>
+ <button class="btn ghost" onclick="alert('เปิดหน้าสอบทานรายข้อ: ภาพต้นฉบับ · คะแนน AI · เหตุผลที่ AI อ้างอิง · ช่องให้ผู้ตรวจปรับคะแนนพร้อมบันทึกเหตุผล · ระบบเก็บส่วนต่างไว้สอบเทียบแบบจำลอง')">เปิดสอบทาน</button></div>`).join('');
+
+/* responsive */
+const mq=window.matchMedia('(max-width:820px)');
+function rs(){document.querySelectorAll('.dg').forEach(d=>d.style.gridTemplateColumns=mq.matches?'1fr':'290px 1fr')}
+mq.addEventListener('change',rs);rs();
+</script>
+</body>
+</html>
