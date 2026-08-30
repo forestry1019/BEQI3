@@ -211,15 +211,15 @@
 <div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
 <a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="#"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span><span class="text-headline-md">BEQI Portfolio for Sustainable Coastal Tourism</span></a>
 <nav class="hidden md:flex gap-8 items-center">
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="#tourists">Tourists</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="#entrepreneurs">Entrepreneurs</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="#evaluators">Evaluators</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html">Tourists</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html">Entrepreneurs</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html">Evaluators</a>
 </nav>
 <div class="flex items-center gap-4"><div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant mr-2"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors">TH</button></div>
 <button class="md:hidden text-primary hover:opacity-80 transition-all duration-300">
 <span class="material-symbols-outlined">menu</span>
 </button>
-<a class="hidden md:inline-flex items-center justify-center bg-primary text-on-primary px-6 py-2 rounded font-label-caps text-label-caps hover:bg-andaman-deep transition-all duration-300 hover:opacity-80" href="prototype-v2.html">
+<a id="portalAccessBtn" class="hidden md:inline-flex items-center justify-center bg-primary text-on-primary px-6 py-2 rounded font-label-caps text-label-caps hover:bg-andaman-deep transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html">
                     Portal Access
                 </a>
 </div>
@@ -237,7 +237,7 @@
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-lg border-l-2 border-limestone-gray pl-6">
                         พอร์ตฟอลิโอดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก ชายฝั่งเขาหลัก
                     </p>
-<a class="inline-flex items-center justify-center bg-primary text-on-primary px-8 py-3 rounded hover:bg-andaman-deep transition-colors group" href="prototype-v2.html">
+<a class="inline-flex items-center justify-center bg-primary text-on-primary px-8 py-3 rounded hover:bg-andaman-deep transition-colors group" href="explore.html">
 <span class="font-label-caps text-label-caps mr-2">Explore the Index</span>
 <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </a>
@@ -270,5 +270,14 @@
 <div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
+<script src="assets/js/beqi-core.js"></script>
+<script>
+(function(){
+  // ถ้ามี session อยู่แล้ว ให้ปุ่ม Portal Access พาเข้าแดชบอร์ดของ role นั้นโดยตรง
+  const s = BeqiCore.getSession();
+  if(s && s.role === 'entrepreneur') document.getElementById('portalAccessBtn').href = 'entrepreneur-dashboard.html';
+  if(s && s.role === 'evaluator') document.getElementById('portalAccessBtn').href = 'evaluator-dashboard.html';
+})();
+</script>
 </body>
 </html>

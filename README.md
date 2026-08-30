@@ -8,6 +8,29 @@
 
 ---
 
+## UI ชุดใหม่ (S0–S3.1) — 2026-08-30
+
+เว็บชุดใหม่ (ธีม Andaman/Tailwind ตาม `andaman_biophilic_index/DESIGN.md`) อยู่คนละไฟล์กับ UI เดิมทั้งหมด
+ไม่มีการทับกัน — UI เดิม (แดชบอร์ด 4 แท็บ: วาดขอบเขต/ภาพรวม/รับรอง/เปรียบเทียบ) ยังอยู่ครบใน `assets/js/{app.js,picker.js}`
+และถูกนำมาเชื่อมใหม่เข้ากับหน้าตาชุดนี้ (ไม่ได้เขียนตรรกะคำนวณใหม่)
+
+| รหัส | ไฟล์ | เนื้อหา | Login |
+|---|---|---|---|
+| Home | `index.html` | Landing page, ลิงก์ไปยัง 3 กลุ่มผู้ใช้ | ไม่ต้อง |
+| S1 | `explore.html` | "Explore the Coast" — โหมดสำรวจ (การ์ดโซนจาก `data/beqi.json`) + โหมด "วาดขอบเขต & เปรียบเทียบ" (สืบทอด Tab 1 + Tab 4 เดิม ผ่าน `picker.js` เดิมทั้งหมด) | ไม่ต้อง (โหมดวาดต้องต่อบัญชี GEE เพื่อคำนวณจริง) |
+| S2 | `entrepreneur-portal.html` | สมัคร/ล็อกอินผู้ประกอบการ (GEE OAuth หรือฟอร์ม) | สมัครที่หน้านี้ |
+| S2.1 | `entrepreneur-dashboard.html` | "Coastal Stewardship" แดชบอร์ดผู้ประกอบการ | ต้องมี session role=entrepreneur ไม่งั้นเด้งกลับ S2 |
+| S3 | `evaluator-portal.html` → `evaluator-dashboard.html` | เกตสมัคร/ล็อกอินผู้ประเมิน (รหัสทดสอบ `BEQI-EVAL-2026`) → คิวรอตรวจ + ตัดสินใบรับรอง | ต้องมี session role=evaluator เท่านั้น — บัญชีอื่น/ไม่ล็อกอินเข้าไม่ได้ |
+| S3.1 | `evaluator-site-audit.html` | แบบตรวจภาคสนามตัวชี้วัดที่ 4 (Materiality/Soundscape/Thermal Comfort) แทนค่าประมาณดาวเทียมเดิม — เติมส่วน FR3 ที่เคยขาด | ต้องมี session role=evaluator เช่นกัน |
+
+**สถานะ auth:** เป็น session แบบ client-side (`localStorage`, ดู `assets/js/beqi-core.js`) สำหรับต้นแบบเท่านั้น
+ยังไม่มี backend/ฐานข้อมูลจริง — คิวส่งงานผู้ประกอบการ→ผู้ประเมิน (`beqi_submissions`) และผลตรวจภาคสนาม (`beqi_site_audits`)
+ใช้งานได้จริงเฉพาะภายในเบราว์เซอร์เดียวกัน (ใช้สาธิต flow ได้ครบ แต่ยังไม่ sync ข้ามเครื่อง/ข้ามผู้ใช้)
+
+`prototype-v2.html` (ต้นแบบ Dual-User + AI Assessment รุ่นก่อนหน้า) ยังเก็บไว้เป็นไฟล์อ้างอิง แต่ไม่มีหน้าไหนลิงก์เข้าไปแล้ว
+
+---
+
 ## การใช้งาน
 
 เว็บนี้เป็น static site ใช้ได้ทันทีกับ GitHub Pages

@@ -1,0 +1,168 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>BEQI Phang Nga - Site Audit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600&amp;family=Epilogue:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#eae8e3","on-primary": "#ffffff","outline-variant": "#bfc8c8","error": "#ba1a1a",
+                      "primary-container": "#2c6b6b","tertiary-fixed": "#b5eedc","on-tertiary-fixed-variant": "#155043","primary": "#095353",
+                      "jungle-leaf": "#2C2C2C","on-secondary-fixed": "#410003","on-secondary-container": "#600006","surface-variant": "#e4e2de",
+                      "tertiary": "#195346","surface-container-low": "#f5f3ee","tertiary-fixed-dim": "#99d2c1","on-primary-container": "#abe9e8",
+                      "surface-container": "#f0eee9","on-error-container": "#93000a","on-tertiary-fixed": "#002019","on-primary-fixed-variant": "#034f50",
+                      "primary-fixed": "#afeeed","error-container": "#ffdad6","limestone-gray": "#D9C8B2","on-secondary-fixed-variant": "#92030f",
+                      "secondary-container": "#ff5a52","on-secondary": "#ffffff","tertiary-container": "#346b5d","on-tertiary": "#ffffff",
+                      "background": "#fbf9f4","secondary": "#b52424","outline": "#6f7978","on-tertiary-container": "#b0e9d7",
+                      "secondary-fixed": "#ffdad6","surface-tint": "#286868","coral-warmth": "#F9564E","surface-container-lowest": "#ffffff",
+                      "surface-bright": "#fbf9f4","surface": "#fbf9f4","surface-container-highest": "#e4e2de","on-surface": "#1b1c19",
+                      "inverse-on-surface": "#f2f1ec","inverse-primary": "#94d1d1","on-background": "#1b1c19","secondary-fixed-dim": "#ffb4ac",
+                      "on-error": "#ffffff","surface-dim": "#dbdad5","inverse-surface": "#30312e","primary-fixed-dim": "#94d1d1",
+                      "andaman-deep": "#1A3D3D","sand-base": "#FCFAF5","on-surface-variant": "#3f4848","on-primary-fixed": "#002020"
+              },
+              "borderRadius": {"DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem"},
+              "spacing": {"container-max": "1280px","margin-desktop": "64px","unit": "8px","gutter": "24px","margin-mobile": "20px"},
+              "fontFamily": {
+                      "body-lg": ["Inter"],"data-viz": ["Space Grotesk"],"display-lg": ["Epilogue"],"label-caps": ["Space Grotesk"],
+                      "body-md": ["Inter"],"headline-md": ["Epilogue"],"display-lg-mobile": ["Epilogue"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px",{"lineHeight": "1.6","fontWeight": "400"}],"data-viz": ["14px",{"lineHeight": "1","fontWeight": "400"}],
+                      "display-lg": ["48px",{"lineHeight": "1.1","letterSpacing": "-0.02em","fontWeight": "700"}],
+                      "label-caps": ["12px",{"lineHeight": "1","letterSpacing": "0.1em","fontWeight": "500"}],
+                      "body-md": ["16px",{"lineHeight": "1.6","fontWeight": "400"}],"headline-md": ["24px",{"lineHeight": "1.3","fontWeight": "600"}],
+                      "display-lg-mobile": ["32px",{"lineHeight": "1.2","fontWeight": "700"}]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body { background-color: #FCFAF5; color: #1b1c19; }
+        .sketch-border { border: 1px solid #D9C8B2; }
+        .sketch-border-b { border-bottom: 1px solid #D9C8B2; }
+        .organic-shadow:hover { box-shadow: 0 10px 30px rgba(44, 107, 107, 0.04); }
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: #095353; cursor: pointer; margin-top: -7px; border: 2px solid #fbf9f4; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; cursor: pointer; background: #D9C8B2; }
+        .hatch-pattern { background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(217, 200, 178, 0.2) 5px, rgba(217, 200, 178, 0.2) 6px); }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased overflow-x-hidden min-h-screen flex">
+<aside class="hidden md:flex bg-sand-base text-primary fixed left-0 top-0 h-screen w-72 flex-col justify-between py-8 border-r border-limestone-gray z-40">
+<div class="px-6 mb-8">
+<a href="index.html" class="font-display-lg text-headline-md text-andaman-deep tracking-tighter mb-1 block">BEQI Index</a>
+<p class="font-label-caps text-label-caps text-on-surface-variant" id="sidebarWho">Coastal Quality Framework</p>
+</div>
+<nav class="flex-1 overflow-y-auto px-4 space-y-2">
+<a class="flex items-center space-x-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 px-4 py-3 transition-all" href="evaluator-dashboard.html">
+<span class="material-symbols-outlined">analytics</span><span class="font-body-md">Biophilic Index</span>
+</a>
+<a class="flex items-center space-x-3 bg-primary-container text-on-primary-container font-semibold rounded-lg mx-2 px-4 py-3 transition-all duration-200 ease-in-out" href="evaluator-site-audit.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fact_check</span><span class="font-body-md">Site Audit</span>
+</a>
+</nav>
+<div class="px-6 mt-auto pt-6 border-t border-limestone-gray/50">
+<button id="logoutBtn" class="w-full bg-transparent border border-primary text-primary font-label-caps text-label-caps py-3 rounded hover:bg-surface-container-high transition-opacity">
+                Log Out
+            </button>
+</div>
+</aside>
+<main class="flex-1 md:ml-72 pt-12 px-margin-mobile md:px-margin-desktop pb-24 max-w-[1400px]">
+<div class="mb-12 border-b border-limestone-gray pb-6 flex justify-between items-end">
+<div>
+<p class="font-label-caps text-label-caps text-primary tracking-widest mb-2 uppercase">Evaluator Portal</p>
+<h2 class="font-display-lg text-display-lg text-andaman-deep">Site Audit</h2>
+<p class="font-body-md text-on-surface-variant mt-2 max-w-xl">แบบตรวจสอบภาคสนามสำหรับตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) — เดิมยังไม่มีระบบรองรับ คะแนนจาก 3 เกณฑ์นี้จะแทนที่ค่าประมาณจากดาวเทียมของตัวชี้วัดที่ 4 ในการคำนวณ BEQI ด้านล่าง</p>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+<div class="xl:col-span-7 flex flex-col gap-8">
+<section class="bg-surface rounded-lg p-8 sketch-border organic-shadow transition-shadow">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-andaman-deep">Active Assessments</h3>
+</div>
+<div class="space-y-4" id="assessmentList"></div>
+</section>
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-surface rounded-lg p-8 sketch-border organic-shadow flex flex-col items-center justify-center text-center relative overflow-hidden">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase tracking-widest">Calculated BEQI</h4>
+<div class="relative w-48 h-48 mb-4">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<circle class="opacity-50" cx="50" cy="50" fill="transparent" r="45" stroke="#eae8e3" stroke-width="2"></circle>
+<circle id="auditGaugeCircle" class="transition-all duration-700 ease-out" cx="50" cy="50" fill="transparent" r="45" stroke="#095353" stroke-dasharray="283" stroke-dashoffset="283" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-display-lg text-primary" id="auditGaugeScore">--</span>
+<span class="font-data-viz text-data-viz text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant">Ecosystem Integrity: <span class="font-medium text-tertiary" id="auditIntegrity">--</span></p>
+</div>
+<div class="bg-surface rounded-lg p-8 sketch-border organic-shadow flex flex-col">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase tracking-widest">ตัวชี้วัดทั้ง 4 ด้าน (หลังปรับด้วยผลตรวจภาคสนาม)</h4>
+<div class="space-y-3" id="auditIndicatorBars"></div>
+</div>
+</section>
+</div>
+<div class="xl:col-span-5">
+<section class="bg-surface-bright rounded-lg p-8 sketch-border organic-shadow sticky top-8">
+<div class="flex justify-between items-center mb-8 pb-4 sketch-border-b">
+<h3 class="font-headline-md text-headline-md text-andaman-deep">Biophilic Criteria</h3>
+<span class="font-data-viz text-data-viz text-on-surface-variant" id="auditSiteLabel">Live Audit</span>
+</div>
+<form class="space-y-10" id="auditForm">
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-body-lg text-body-lg text-andaman-deep font-medium">1. Materiality</label>
+<span class="font-data-viz text-data-viz text-primary font-medium" id="valMateriality">5.0</span>
+</div>
+<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4">Assessment of natural vs. synthetic materials used in structural integration with the coastal environment.</p>
+<div class="relative pt-2">
+<input class="w-full focus:outline-none" id="sliderMateriality" max="10" min="0" step="0.1" type="range" value="5">
+<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span>Synthetic (0)</span><span>Organic (10)</span></div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-body-lg text-body-lg text-andaman-deep font-medium">2. Soundscape</label>
+<span class="font-data-viz text-data-viz text-primary font-medium" id="valSoundscape">5.0</span>
+</div>
+<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4">Ratio of natural biophony (waves, wind, wildlife) to anthropogenic noise pollution.</p>
+<div class="relative pt-2">
+<input class="w-full focus:outline-none" id="sliderSoundscape" max="10" min="0" step="0.1" type="range" value="5">
+<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span>Disruptive (0)</span><span>Harmonious (10)</span></div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-body-lg text-body-lg text-andaman-deep font-medium">3. Thermal Comfort</label>
+<span class="font-data-viz text-data-viz text-primary font-medium" id="valThermal">5.0</span>
+</div>
+<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4">Effectiveness of passive cooling, natural ventilation, and shading mimicking mangrove canopies.</p>
+<div class="relative pt-2">
+<input class="w-full focus:outline-none" id="sliderThermal" max="10" min="0" step="0.1" type="range" value="5">
+<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span>Artificial (0)</span><span>Passive (10)</span></div>
+</div>
+</div>
+<div class="pt-6 sketch-border-b mt-8 mb-6"></div>
+<p class="text-sm hidden" id="auditSavedNote"></p>
+<div class="flex gap-4">
+<button class="flex-1 border border-primary text-primary font-label-caps text-label-caps py-3 rounded hover:bg-surface-container-low transition-colors text-center" id="btnSaveDraft" type="button">Save Draft</button>
+<button class="flex-1 bg-primary text-on-primary font-label-caps text-label-caps py-3 rounded hover:opacity-90 transition-opacity text-center flex justify-center items-center gap-2" id="btnCommit" type="button">
+                                Commit Data <span class="material-symbols-outlined text-[16px]">check_circle</span>
+</button>
+</div>
+</form>
+</section>
+</div>
+</div>
+</main>
+<script src="assets/js/beqi-core.js"></script>
+<script src="assets/js/evaluator-site-audit.js"></script>
+</body></html>
