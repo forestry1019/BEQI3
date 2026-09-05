@@ -45,6 +45,18 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'explore.result.previewTag': {en: '(preview)', th: '(ตัวอย่าง)'},
   'explore.result.pendingCert': {en: 'Pending assessment', th: 'รอการประเมิน'},
 
+  /* ---------- public certification registry ---------- */
+  'explore.registry.heading': {en: 'Certified Properties', th: 'สถานประกอบการที่ผ่านการรับรอง'},
+  'explore.registry.subtitle': {
+    en: 'Businesses that have completed evaluator review and received an official BEQI certification.',
+    th: 'สถานประกอบการที่ผ่านการตรวจสอบจากผู้ประเมินและได้รับการรับรอง BEQI อย่างเป็นทางการแล้ว'
+  },
+  'explore.registry.empty': {en: 'No certified properties yet.', th: 'ยังไม่มีสถานประกอบการที่ผ่านการรับรอง'},
+  'explore.registry.certifiedOn': {en: 'Certified', th: 'รับรองเมื่อ'},
+  'explore.registry.zoneNorth': {en: 'North Zone — Coral Beach & Bustling Beach', th: 'โซนเหนือ — หาดปะการังและหาดคึกคัก'},
+  'explore.registry.zoneCentral': {en: 'Central Zone — Bang Niang Beach & Nang Thong Beach', th: 'โซนกลาง — หาดบางเนียงและหาดนางทอง'},
+  'explore.registry.zoneSouth': {en: 'South Zone — Khao Lak-Lam Ru National Park', th: 'โซนใต้ — อุทยานแห่งชาติเขาหลัก-ลำรู่'},
+
   /* ---------- compare section ---------- */
   'explore.compare.heading': {en: 'Compare Areas', th: 'เปรียบเทียบพื้นที่'},
   'explore.compare.maxReached': {en: 'Maximum 3 areas — remove one above to draw another', th: 'ครบ 3 พื้นที่แล้ว — ลบพื้นที่หนึ่งด้านบนก่อนวาดเพิ่ม'},

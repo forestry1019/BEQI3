@@ -37,6 +37,13 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     en: 'Used to verify your business is a registered legal entity — never shown publicly.',
     th: 'ใช้ยืนยันว่าสถานประกอบการจดทะเบียนถูกต้องตามกฎหมาย — ไม่แสดงต่อสาธารณะ'
   },
+  'entrepreneur.portal.field.phone': {en: 'Phone Number', th: 'เบอร์โทรศัพท์'},
+  'entrepreneur.portal.field.phonePh': {en: 'e.g., 08X-XXX-XXXX', th: 'เช่น 08X-XXX-XXXX'},
+  'entrepreneur.portal.field.zone': {en: 'Coastal Zone', th: 'โซนชายฝั่ง'},
+  'entrepreneur.portal.field.zonePlaceholder': {en: 'Select the zone your property is in...', th: 'เลือกโซนที่สถานประกอบการตั้งอยู่...'},
+  'entrepreneur.portal.field.zoneNorth': {en: 'North Zone — Coral Beach & Bustling Beach', th: 'โซนเหนือ — หาดปะการังและหาดคึกคัก'},
+  'entrepreneur.portal.field.zoneCentral': {en: 'Central Zone — Bang Niang Beach & Nang Thong Beach', th: 'โซนกลาง — หาดบางเนียงและหาดนางทอง'},
+  'entrepreneur.portal.field.zoneSouth': {en: 'South Zone — Khao Lak-Lam Ru National Park', th: 'โซนใต้ — อุทยานแห่งชาติเขาหลัก-ลำรู่'},
   'entrepreneur.portal.formErrorRequired': {en: 'Please fill in all fields.', th: 'กรุณากรอกข้อมูลให้ครบทุกช่อง'},
   'entrepreneur.portal.formErrorTaxId': {en: 'Tax ID must be 13 digits.', th: 'เลขประจำตัวผู้เสียภาษีต้องมี 13 หลัก'},
   'entrepreneur.portal.formErrorSignIn': {en: 'Please sign in with Google first.', th: 'กรุณาลงชื่อเข้าใช้ด้วย Google ก่อน'},
@@ -55,10 +62,23 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     th: 'วาดขอบเขตพื้นที่ของคุณ คำนวณคะแนน BEQI แล้วส่งให้ผู้ประเมินตรวจสอบเพื่อขอการรับรองอย่างเป็นทางการ'
   },
   'entrepreneur.dashboard.submitBtn': {en: 'Submit for Certification Review', th: 'ส่งขอรับรองผลการประเมิน'},
-  'entrepreneur.dashboard.needsInd4': {
-    en: 'Complete an indicator 4 (biophilic composition) assessment before this area can be submitted for certification.',
-    th: 'ต้องประเมินตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) ให้เสร็จก่อน จึงจะส่งพื้นที่นี้ขอรับรองได้'
+  'entrepreneur.dashboard.review.heading': {en: 'Review Before Sending', th: 'ตรวจทานก่อนส่ง'},
+  'entrepreneur.dashboard.review.intro': {en: 'Please check the details below carefully — this is what the evaluator will receive.', th: 'กรุณาตรวจสอบข้อมูลด้านล่างให้ครบถ้วน — นี่คือข้อมูลที่ผู้ประเมินจะได้รับ'},
+  'entrepreneur.dashboard.review.business': {en: 'Business', th: 'สถานประกอบการ'},
+  'entrepreneur.dashboard.review.contact': {en: 'Contact', th: 'ข้อมูลติดต่อ'},
+  'entrepreneur.dashboard.review.zone': {en: 'Registered Zone', th: 'โซนที่ลงทะเบียน'},
+  'entrepreneur.dashboard.review.area': {en: 'Drawn Area', th: 'พื้นที่ที่วาด'},
+  'entrepreneur.dashboard.review.photosLabel': {en: 'Attach photos (indicator 4 evidence) — required', th: 'แนบรูป (หลักฐานตัวชี้วัดที่ 4) — จำเป็นต้องแนบ'},
+  'entrepreneur.dashboard.review.photosHint': {
+    en: 'Attach at least one photo of your property showing natural/biophilic features — these will be reviewed by an evaluator.',
+    th: 'แนบรูปพื้นที่ของคุณอย่างน้อย 1 รูป แสดงองค์ประกอบธรรมชาติ/ไบโอฟิลิก — ผู้ประเมินจะตรวจสอบรูปเหล่านี้'
   },
+  'entrepreneur.dashboard.review.confirmLabel': {
+    en: 'I have reviewed the information above and confirm it is accurate before sending to the evaluator.',
+    th: 'ฉันได้ตรวจทานข้อมูลด้านบนแล้ว และยืนยันว่าถูกต้องก่อนส่งให้ผู้ประเมิน'
+  },
+  'entrepreneur.dashboard.review.confirmBtn': {en: 'Confirm & Send to Evaluator', th: 'ยืนยันและส่งให้ผู้ประเมิน'},
+  'entrepreneur.dashboard.review.cancelBtn': {en: 'Cancel', th: 'ยกเลิก'},
   'entrepreneur.dashboard.submitting': {en: 'Submitting…', th: 'กำลังส่ง…'},
   'entrepreneur.dashboard.submitted': {en: 'Submitted — an evaluator will review it soon.', th: 'ส่งแล้ว — ผู้ประเมินจะตรวจสอบในเร็ว ๆ นี้'},
   'entrepreneur.dashboard.submissionsHeading': {en: 'My Submissions', th: 'รายการที่ส่งไปแล้ว'},

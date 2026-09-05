@@ -56,7 +56,7 @@
         '<div class="flex justify-between items-start mb-3">' +
         '<h4 class="font-headline-md text-lg text-andaman-deep' + (active ? ' font-semibold' : '') + '">' + s.businessName + '</h4>' +
         '<span class="bg-surface-container px-2 py-1 rounded text-xs font-label-caps text-on-surface-variant">' + statusLabel + '</span></div>' +
-        '<p class="text-sm text-on-surface-variant mb-1">' + s.repName + ' · ' + BeqiCore.fx(s.overall, 1) + '/100</p>' +
+        '<p class="text-sm text-on-surface-variant mb-1">' + s.repName + ' · ' + (s.overall == null ? I18N.t('evaluator.dashboard.awaitingInd4Short') : BeqiCore.fx(s.overall, 1) + '/100') + '</p>' +
         '<p class="text-sm text-on-surface-variant">' + I18N.t('evaluator.dashboard.submittedPrefix') + new Date(s.createdAt).toLocaleDateString('th-TH') + '</p></div>';
     }).join('');
     document.querySelectorAll('#reviewList [data-id]').forEach(function(card){
@@ -74,12 +74,45 @@
       return;
     }
     const rules = D.meta.cert_rules;
-    const currentCert = BeqiCore.certLevel(sub.overall, sub.norm, rules);
+    const hasScore = sub.overall != null;
+    const currentCert = hasScore ? BeqiCore.certLevel(sub.overall, sub.norm, rules) : null;
+
+    const photoGallery = (sub.photos && sub.photos.length)
+      ? '<div class="bg-surface-container-lowest organic-border rounded p-8">' +
+        '<h3 class="font-label-caps text-label-caps text-primary border-b border-limestone-gray pb-4 mb-6 uppercase tracking-widest">' + I18N.t('evaluator.dashboard.photosHeading') + '</h3>' +
+        '<div class="flex flex-wrap gap-3">' +
+        sub.photos.map(function(p){ return '<img src="' + p + '" style="width:120px;height:120px;object-fit:cover;border-radius:4px;border:1px solid #D9C8B2">'; }).join('') +
+        '</div></div>'
+      : '';
+
+    const contactLine = [sub.repName, sub.email, sub.phone].filter(Boolean).join(' · ');
+
+    if(!hasScore){
+      pane.innerHTML =
+        '<div class="bg-surface-container-lowest organic-border rounded p-8 text-center">' +
+        '<h2 class="font-headline-md text-2xl text-andaman-deep mb-2">' + sub.businessName + '</h2>' +
+        '<p class="font-body-md text-sm text-on-surface-variant mb-1">' + contactLine + '</p>' +
+        '<p class="font-label-caps text-on-surface-variant tracking-widest">' + I18N.t('evaluator.dashboard.scoreCaption') + fmtLatLng(sub.polygon) + ')</p>' +
+        '<p class="font-body-md text-sm text-coral-warmth mt-4">' + I18N.t('evaluator.dashboard.awaitingInd4') + '</p>' +
+        '</div>' +
+        photoGallery +
+        '<div class="bg-surface-container-lowest organic-border rounded p-8">' +
+        '<p class="text-sm text-on-surface-variant mb-4" id="decisionNote">' +
+        (sub.status === 'revision' ? I18N.t('evaluator.dashboard.decisionRevision') : I18N.t('evaluator.dashboard.decisionPending')) + '</p>' +
+        '<div class="flex justify-end gap-4 border-t border-limestone-gray pt-6">' +
+        '<button id="btnRevision" class="font-label-caps text-label-caps border border-primary text-primary px-6 py-3 rounded hover:bg-surface-container-high transition-all">' + I18N.t('evaluator.dashboard.btnRevision') + '</button>' +
+        '</div></div>';
+      document.getElementById('btnRevision').addEventListener('click', function(){
+        updateSub(sub.id, {status: 'revision'});
+      });
+      return;
+    }
 
     pane.innerHTML =
       '<div class="relative bg-surface-container-lowest organic-border rounded overflow-hidden p-8 flex flex-col items-center justify-center min-h-[280px]">' +
       '<div class="relative z-10 text-center space-y-4">' +
       '<h2 class="font-headline-md text-2xl text-andaman-deep mb-2">' + sub.businessName + '</h2>' +
+      '<p class="font-body-md text-sm text-on-surface-variant mb-1">' + contactLine + '</p>' +
       '<p class="font-label-caps text-on-surface-variant tracking-widest">' + I18N.t('evaluator.dashboard.scoreCaption') + fmtLatLng(sub.polygon) + ')</p>' +
       '<div class="text-7xl font-display-lg text-primary tracking-tighter">' + BeqiCore.fx(sub.overall, 0) + '<span class="text-3xl text-outline">/100</span></div>' +
       (sub.ci ? '<p class="font-data-viz text-data-viz text-on-surface-variant">' + I18N.t('evaluator.dashboard.ciLabel') + ' ' + BeqiCore.fx(sub.ci.lo,1) + ' – ' + BeqiCore.fx(sub.ci.hi,1) + '</p>' : '') +
@@ -87,6 +120,8 @@
       '<span>' + I18N.t('evaluator.dashboard.scalePoor') + '</span><span>' + I18N.t('evaluator.dashboard.scaleModerate') + '</span><span>' + I18N.t('evaluator.dashboard.scaleExcellent') + '</span></div>' +
       '<div class="w-full max-w-md mx-auto h-2 bg-surface-container-high rounded overflow-hidden">' +
       '<div class="h-full bg-primary" style="width:' + Math.min(sub.overall, 100) + '%"></div></div></div></div>' +
+
+      photoGallery +
 
       '<div class="bg-surface-container-lowest organic-border rounded p-8">' +
       '<h3 class="font-label-caps text-label-caps text-primary border-b border-limestone-gray pb-4 mb-6 uppercase tracking-widest">' + I18N.t('evaluator.dashboard.metricsHeading') + '</h3>' +

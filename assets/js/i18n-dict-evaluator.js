@@ -56,6 +56,12 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'evaluator.dashboard.scaleModerate': {en: 'Moderate (41-70)', th: 'ปานกลาง (41-70)'},
   'evaluator.dashboard.scaleExcellent': {en: 'Excellent (71-100)', th: 'ดีเยี่ยม (71-100)'},
   'evaluator.dashboard.metricsHeading': {en: 'Detailed Comparison Metrics', th: 'รายละเอียดตัวชี้วัดเปรียบเทียบ'},
+  'evaluator.dashboard.photosHeading': {en: 'Submitted Evidence Photos', th: 'รูปหลักฐานที่ส่งมา'},
+  'evaluator.dashboard.awaitingInd4': {
+    en: 'Awaiting indicator 4 (biophilic composition) assessment — review the submitted photos below and score against the 14-pattern checklist before a total score can be shown.',
+    th: 'รอการประเมินตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) — ตรวจสอบรูปที่ส่งมาด้านล่างแล้วให้คะแนนตามแบบตรวจสอบ 14 รูปแบบ ก่อนจึงจะแสดงคะแนนรวมได้'
+  },
+  'evaluator.dashboard.awaitingInd4Short': {en: 'Awaiting indicator 4', th: 'รอตัวชี้วัดที่ 4'},
   'evaluator.dashboard.colMetric': {en: 'Metric', th: 'ตัวชี้วัด'},
   'evaluator.dashboard.colSubmission': {en: 'Submission Data', th: 'ข้อมูลที่ส่ง'},
   'evaluator.dashboard.colStandardPrefix': {en: 'BEQI Standard (', th: 'มาตรฐาน BEQI ('},

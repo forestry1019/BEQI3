@@ -130,6 +130,32 @@
 <div class="organic-border bg-white p-6 overflow-x-auto mt-6"><table id="compareTable" class="w-full text-sm"></table></div>
 </section>
 
+<section class="mt-16 organic-border bg-white p-8" id="submitReview" hidden>
+<h2 class="font-headline-md text-headline-md text-andaman-deep mb-2" data-i18n="entrepreneur.dashboard.review.heading">Review Before Sending</h2>
+<p class="font-body-md text-sm text-on-surface-variant mb-6" data-i18n="entrepreneur.dashboard.review.intro">Please check the details below carefully — this is what the evaluator will receive.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="flex flex-col gap-1"><span class="font-label-caps text-label-caps text-outline" data-i18n="entrepreneur.dashboard.review.business">Business</span><b id="reviewBusiness" class="text-andaman-deep">--</b></div>
+<div class="flex flex-col gap-1"><span class="font-label-caps text-label-caps text-outline" data-i18n="entrepreneur.dashboard.review.contact">Contact</span><b id="reviewContact" class="text-andaman-deep">--</b></div>
+<div class="flex flex-col gap-1"><span class="font-label-caps text-label-caps text-outline" data-i18n="entrepreneur.dashboard.review.zone">Registered Zone</span><b id="reviewZone" class="text-andaman-deep">--</b></div>
+<div class="flex flex-col gap-1"><span class="font-label-caps text-label-caps text-outline" data-i18n="entrepreneur.dashboard.review.area">Drawn Area</span><b id="reviewArea" class="text-andaman-deep">--</b></div>
+</div>
+<div class="mb-6">
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.dashboard.review.photosLabel">Attach photos (indicator 4 evidence) — required</label>
+<input type="file" id="reviewPhotoInput" accept="image/*" multiple class="block w-full text-sm">
+<p class="font-body-md text-xs text-outline mt-2" data-i18n="entrepreneur.dashboard.review.photosHint">Attach at least one photo of your property showing natural/biophilic features — these will be reviewed by an evaluator.</p>
+<div id="reviewPhotoPreview" class="flex flex-wrap gap-2 mt-3"></div>
+</div>
+<label class="flex items-start gap-2 font-body-md text-sm text-on-surface-variant mb-6 cursor-pointer">
+<input type="checkbox" id="reviewConfirmChk" class="mt-1">
+<span data-i18n="entrepreneur.dashboard.review.confirmLabel">I have reviewed the information above and confirm it is accurate before sending to the evaluator.</span>
+</label>
+<p class="text-sm text-coral-warmth hidden mb-4" id="reviewError"></p>
+<div class="flex flex-wrap gap-3">
+<button class="tool-btn primary" id="reviewConfirmBtn" disabled data-i18n="entrepreneur.dashboard.review.confirmBtn">Confirm &amp; Send to Evaluator</button>
+<button class="tool-btn ghost" id="reviewCancelBtn" data-i18n="entrepreneur.dashboard.review.cancelBtn">Cancel</button>
+</div>
+</section>
+
 <section class="mt-16">
 <h2 class="font-headline-md text-headline-md text-andaman-deep mb-6" data-i18n="entrepreneur.dashboard.submissionsHeading">My Submissions</h2>
 <div id="submissionsEmpty" class="organic-border bg-surface-container-low p-10 text-center text-on-surface-variant text-sm">

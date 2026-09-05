@@ -63,6 +63,9 @@ function boot(){
   }
   refreshButtons();
   document.addEventListener('beqi:langchange', onLangChange);
+  // ให้หน้าที่เรียก window.BEQI_SUBMIT_TO_EVALUATOR (entrepreneur-dashboard.js) เรียกกลับมา re-render
+  // การ์ดได้ หลังจากผู้ใช้ยืนยันส่งจริงในหน้าจอตรวจทานของตัวเอง (ตั้ง site.submitted=true เองก่อนเรียก)
+  window.BEQI_RERENDER_SITES = renderSiteCards;
 }
 
 function onLangChange(){
@@ -468,12 +471,13 @@ function renderSiteCards(){
       '<b class="font-data-viz text-on-surface-variant">'+fx(s.ci.lo,1)+' – '+fx(s.ci.hi,1)+'</b></div>'
     ):'';
 
+    // ตามลำดับงานในหัวข้อ 5.3.9 การส่งขอรับรองเกิด "ก่อน" การให้คะแนนตัวชี้วัดที่ 4 เสมอ (ผู้ประกอบการส่ง
+    // หลักฐาน/รูปถ่ายก่อน แบบจำลอง/ผู้ประเมินให้คะแนนทีหลัง) ปุ่มนี้จึงใช้งานได้ทันทีที่มีตัวชี้วัด 1-3 แล้ว
+    // ไม่ต้องรอ ind4Source==='assessed' — คลิกแล้วเปิดหน้าจอตรวจทาน+แนบรูปแทนการส่งทันที
     const submitHtml=canSubmit?(
-      s.ind4Source!=='assessed'
-        ? '<p class="font-body-md text-xs text-center text-outline mt-2">'+t('entrepreneur.dashboard.needsInd4')+'</p>'
-        : (s.submitted
-            ? '<p class="font-body-md text-xs text-center text-tertiary mt-2">'+t('entrepreneur.dashboard.submitted')+'</p>'
-            : '<button class="tool-btn primary w-full mt-2" data-submit="'+s.id+'">'+t('entrepreneur.dashboard.submitBtn')+'</button>')
+      s.submitted
+        ? '<p class="font-body-md text-xs text-center text-tertiary mt-2">'+t('entrepreneur.dashboard.submitted')+'</p>'
+        : '<button class="tool-btn primary w-full mt-2" data-submit="'+s.id+'">'+t('entrepreneur.dashboard.submitBtn')+'</button>'
     ):'';
 
     return '<div class="organic-border bg-white p-6 sketch-shadow flex flex-col gap-4" style="border-left:4px solid '+s.color+'">'+
@@ -488,13 +492,14 @@ function renderSiteCards(){
     b.addEventListener('click',function(){ removeSite(+b.dataset.remove); });
   });
   if(canSubmit){
+    // ปุ่มนี้แค่ "เปิด" หน้าจอตรวจทานก่อนส่งของ entrepreneur-dashboard.js เท่านั้น — ยังไม่ถือว่าส่งจริง
+    // จนกว่าผู้ใช้จะยืนยันที่นั่น (แนบรูป + ติ๊กยืนยัน) ตัวนั้นเป็นคนตั้ง site.submitted=true แล้วเรียก
+    // window.BEQI_RERENDER_SITES() กลับมาที่นี่เพื่ออัปเดตการ์ดให้ตรงสถานะ
     list.querySelectorAll('[data-submit]').forEach(function(b){
       b.addEventListener('click',function(){
         const site=sites.find(s=>s.id===+b.dataset.submit);
         if(!site) return;
         window.BEQI_SUBMIT_TO_EVALUATOR(site,b);
-        site.submitted=true;
-        renderSiteCards();
       });
     });
   }

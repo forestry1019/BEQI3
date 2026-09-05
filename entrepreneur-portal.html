@@ -121,6 +121,19 @@
 <input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="taxId" inputmode="numeric" maxlength="13" pattern="[0-9]{13}" placeholder="13-digit tax ID" data-i18n-placeholder="entrepreneur.portal.field.taxIdPh" type="text">
 <p class="font-body-md text-xs text-outline mt-2" data-i18n="entrepreneur.portal.field.taxIdHint">Used to verify your business is a registered legal entity — never shown publicly.</p>
 </div>
+<div>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.portal.field.phone">Phone Number</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="phone" inputmode="tel" placeholder="e.g., 08X-XXX-XXXX" data-i18n-placeholder="entrepreneur.portal.field.phonePh" type="tel">
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.portal.field.zone">Coastal Zone</label>
+<select required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors" id="zoneId">
+<option disabled selected value="" data-i18n="entrepreneur.portal.field.zonePlaceholder">Select the zone your property is in...</option>
+<option value="North" data-i18n="entrepreneur.portal.field.zoneNorth">North Zone — Coral Beach &amp; Bustling Beach</option>
+<option value="Central" data-i18n="entrepreneur.portal.field.zoneCentral">Central Zone — Bang Niang Beach &amp; Nang Thong Beach</option>
+<option value="South" data-i18n="entrepreneur.portal.field.zoneSouth">South Zone — Khao Lak-Lam Ru National Park</option>
+</select>
+</div>
 <p class="text-sm text-coral-warmth hidden" id="formError"></p>
 <button class="mt-4 bg-primary-container text-on-primary-container font-body-md font-medium py-3 px-8 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center gap-2 w-full md:w-auto" type="submit">
 <span data-i18n="entrepreneur.portal.submitBtn">Verify &amp; Continue</span>
@@ -207,7 +220,9 @@
     const repName = document.getElementById('repName').value.trim();
     const businessName = document.getElementById('businessName').value.trim();
     const taxId = document.getElementById('taxId').value.trim();
-    if(!repName || !businessName || !taxId){
+    const phone = document.getElementById('phone').value.trim();
+    const zoneId = document.getElementById('zoneId').value;
+    if(!repName || !businessName || !taxId || !phone || !zoneId){
       errEl.textContent = I18N.t('entrepreneur.portal.formErrorRequired');
       errEl.classList.remove('hidden');
       return;
@@ -219,7 +234,7 @@
     }
     errEl.classList.add('hidden');
     BeqiCore.setSession({
-      role: 'entrepreneur', repName, businessName, taxId,
+      role: 'entrepreneur', repName, businessName, taxId, phone, zoneId,
       email: profile.email, googleSub: profile.sub, picture: profile.picture,
       createdAt: new Date().toISOString()
     });
