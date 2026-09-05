@@ -55,6 +55,10 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     th: 'วาดขอบเขตพื้นที่ของคุณ คำนวณคะแนน BEQI แล้วส่งให้ผู้ประเมินตรวจสอบเพื่อขอการรับรองอย่างเป็นทางการ'
   },
   'entrepreneur.dashboard.submitBtn': {en: 'Submit for Certification Review', th: 'ส่งขอรับรองผลการประเมิน'},
+  'entrepreneur.dashboard.needsInd4': {
+    en: 'Complete an indicator 4 (biophilic composition) assessment before this area can be submitted for certification.',
+    th: 'ต้องประเมินตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) ให้เสร็จก่อน จึงจะส่งพื้นที่นี้ขอรับรองได้'
+  },
   'entrepreneur.dashboard.submitting': {en: 'Submitting…', th: 'กำลังส่ง…'},
   'entrepreneur.dashboard.submitted': {en: 'Submitted — an evaluator will review it soon.', th: 'ส่งแล้ว — ผู้ประเมินจะตรวจสอบในเร็ว ๆ นี้'},
   'entrepreneur.dashboard.submissionsHeading': {en: 'My Submissions', th: 'รายการที่ส่งไปแล้ว'},

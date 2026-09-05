@@ -12,9 +12,15 @@
       ผู้ใช้ต้องล็อกอินบัญชี Google Earth Engine ของตัวเองก่อน (เหมือนต้นแบบเดิม/BEQI1 ทุกประการ)
       วิธีนี้ใช้งานได้ทันทีเพราะ OAuth Client ID + Cloud Project ถูกตั้งค่าไว้แล้วใน gee-config.js
 
-   ตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) ตามระเบียบวิธีต้นแบบต้องมาจากแบบตรวจสอบภาคสนาม 14 รูปแบบที่คนลงพื้นที่จริงกรอก
-   (ไม่ใช่ลูกค้า) ซึ่งยังไม่มีระบบเบื้องหลังรองรับในต้นแบบนี้ จึงประมาณค่าแทนจากข้อมูลดาวเทียมที่คำนวณอยู่แล้วในหน้านี้
-   (สัดส่วนพื้นที่สีเขียว + สัดส่วนพื้นที่ใกล้แหล่งน้ำ + ความหลากหลายเชิงพื้นผิวของพืชพรรณ) ไม่ใช่ผลการสำรวจภาคสนามจริง
+   ตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) ตามระเบียบวิธีของดุษฎีนิพนธ์ (หัวข้อ 5.3.8) ต้องมาจากแบบตรวจสอบ 14 รูปแบบ
+   ที่ประเมินจากภาพถ่าย/ลงพื้นที่จริง — ห้ามประมาณจากภาพดาวเทียมเด็ดขาด เพราะทำลายคุณสมบัติ "หลักฐานเชิงกายภาพล้วน"
+   ของดัชนี พื้นที่ที่เพิ่งวาดขึ้นใหม่จึงมี 3 สถานะสำหรับตัวชี้วัดที่ 4 เท่านั้น:
+     'none'         ยังไม่มีข้อมูลเลย — แสดงเฉพาะตัวชี้วัดที่ 1-3 ไม่มีคะแนนรวม ไม่มีการรับรอง
+     'zone_context' ยืมค่าของโซนที่พื้นที่นี้ตกอยู่ในนั้นมาแสดงเป็นค่าตัวอย่างชั่วคราว (กำกับชัดเจนว่ายืมมา
+                    ไม่ใช่ค่าที่วัดจากแปลงนี้จริง) — มีคะแนนรวม/ช่วงความเชื่อมั่นให้ดูเป็นตัวอย่าง แต่ **ห้ามสรุป
+                    สถานะการรับรองจากสถานะนี้เด็ดขาด** (บังคับในโค้ด ไม่ใช่แค่ข้อความกำกับ)
+     'assessed'     ประเมินจริงแล้ว (ผ่านรูปถ่าย+AI ร่างคะแนน+ผู้ประเมินยืนยัน) — สถานะเดียวที่สรุปการรับรองได้
+   ปุ่ม "ส่งขอรับรอง" จึงใช้งานได้เฉพาะพื้นที่ที่อยู่ในสถานะ assessed เท่านั้น
 
    ช่วงความเชื่อมั่น 95% เป็นการประมาณการแบบเรียลไทม์ในเบราว์เซอร์จากความแม่นยำของแบบจำแนกภาพ
    (meta.accuracy.producers) — คนละวิธีกับ Monte Carlo 5,000 รอบที่คำนวณไว้ล่วงหน้าแบบออฟไลน์สำหรับ
@@ -316,6 +322,23 @@ function runAnalysis(){
   }
 }
 
+// จุดกึ่งกลางของรูปหลายเหลี่ยมที่วาด ตกอยู่ในโซนอ้างอิงใดหรือไม่ (ray-casting point-in-polygon) —
+// ใช้สำหรับสถานะ 'zone_context' เท่านั้น (ยืมค่าตัวชี้วัดที่ 4 ของโซนนั้นมาแสดงเป็นตัวอย่างชั่วคราว)
+function pointInPolygon(pt,poly){
+  let inside=false;
+  for(let i=0,j=poly.length-1;i<poly.length;j=i++){
+    const xi=poly[i][0], yi=poly[i][1], xj=poly[j][0], yj=poly[j][1];
+    const intersect=((yi>pt[1])!==(yj>pt[1]))&&(pt[0]<(xj-xi)*(pt[1]-yi)/(yj-yi)+xi);
+    if(intersect) inside=!inside;
+  }
+  return inside;
+}
+function findContainingZone(ring){
+  const lons=ring.map(p=>p[0]), lats=ring.map(p=>p[1]);
+  const cx=lons.reduce((a,b)=>a+b,0)/lons.length, cy=lats.reduce((a,b)=>a+b,0)/lats.length;
+  return zones.find(z=>pointInPolygon([cx,cy],z.boundary))||null;
+}
+
 function certLevel(score,norm){
   const mn=Math.min(...norm);
   for(const rule of meta.cert_rules) if(score>=rule.min_score&&mn>=rule.min_ind) return rule.level;
@@ -351,20 +374,28 @@ function estimateCI(norm){
 
 // แปลงผลดิบ (จาก client-side GEE หรือ backend ก็ตาม รูปแบบผลลัพธ์เดียวกัน) เป็นพื้นที่หนึ่งรายการ
 // วาดรูปถาวรลงแผนที่ด้วยสีประจำลำดับพื้นที่ แล้วเพิ่มเข้าชุดเปรียบเทียบ (สูงสุด MAX_SITES พื้นที่)
+// ตัวชี้วัดที่ 1-3 มาจากดาวเทียมเสมอ (เชื่อถือได้) ส่วนตัวชี้วัดที่ 4 มี 3 สถานะตามหัวข้อ 5.3.8 ของดุษฎีนิพนธ์
 function onResult(r,ring){
   const green=(r.g||0)*100, pc=clamp01((r.p||0)/256), w800=(r.w||0)*100;
-  const complexity=clamp01((r.sd||0)/0.25);
-  const ind4=clamp01(0.4*clamp01(green/100)+0.3*clamp01(w800/100)+0.3*complexity);
-  const norm=[clamp01(green/100),pc,clamp01(w800/100),ind4];
-  const overall=norm.reduce((a,b)=>a+b,0)/norm.length*100;
-  const level=certLevel(overall,norm);
-  const ci=estimateCI(norm);
+  const norm3=[clamp01(green/100),pc,clamp01(w800/100)];
+
+  const zone=findContainingZone(ring);
+  const ind4Source=zone?'zone_context':'none';
+  const ind4Value=zone?zone.norm[3]:null;
+  const norm=norm3.concat([ind4Value]);
+
+  let overall=null, level=null, ci=null;
+  if(ind4Source!=='none'){
+    overall=norm.reduce((a,b)=>a+b,0)/norm.length*100;
+    ci=estimateCI(norm);
+    if(ind4Source==='assessed') level=certLevel(overall,norm);
+  }
 
   if(polygon){map.removeLayer(polygon);polygon=null;}
   const color=SITE_COL[sites.length%SITE_COL.length];
   const layer=L.polygon(ring.map(([lng,lat])=>[lat,lng]),{color,weight:2,fillColor:color,fillOpacity:.22}).addTo(map);
 
-  const site={id:++siteSeq,overall,level,ci,norm,polygon:ring,layer,color};
+  const site={id:++siteSeq,norm,overall,level,ci,ind4Source,ind4ZoneName:zone?zone.name_th:null,polygon:ring,layer,color};
   sites.push(site);
   renderSiteCards();
   renderCompare();
@@ -386,8 +417,11 @@ function removeSite(id){
   statusNote();
 }
 
-// การ์ดผลลัพธ์ต่อพื้นที่ (สูงสุด 3 การ์ด) — แต่ละใบแสดง 3 ค่า: คะแนนรวม/ระดับการรับรอง/ช่วงความเชื่อมั่น 95%
-// ปุ่ม "ส่งขอรับรอง" จะโผล่เฉพาะหน้าที่กำหนด window.BEQI_SUBMIT_TO_EVALUATOR ไว้ (entrepreneur-dashboard.html)
+// การ์ดผลลัพธ์ต่อพื้นที่ (สูงสุด 3 การ์ด) — แสดงตัวชี้วัดรายตัวทั้ง 4 ด้านคู่กับคะแนนรวมเสมอ (ห้ามสรุปด้วย
+// คะแนนรวมเพียงตัวเดียวโดยลำพัง ตามหัวข้อ 3.4.2) และบังคับ 3 สถานะของตัวชี้วัดที่ 4 ตามหัวข้อ 5.3.8:
+// none = ยังไม่มีคะแนนรวม/การรับรอง, zone_context = คะแนนรวมเป็นตัวอย่างเท่านั้น ห้ามสรุปการรับรอง,
+// assessed = สถานะเดียวที่สรุปการรับรองและส่งขอรับรองได้ ปุ่ม "ส่งขอรับรอง" จะโผล่เฉพาะหน้าที่กำหนด
+// window.BEQI_SUBMIT_TO_EVALUATOR ไว้ (entrepreneur-dashboard.html)
 function renderSiteCards(){
   const empty=el('pickerResultEmpty');
   const list=el('siteCards');
@@ -395,27 +429,59 @@ function renderSiteCards(){
   if(empty) empty.hidden=sites.length>0;
   const canSubmit=typeof window.BEQI_SUBMIT_TO_EVALUATOR==='function';
   list.innerHTML=sites.map((s,i)=>{
-    const submitHtml=canSubmit?(
-      s.submitted
-        ? '<p class="font-body-md text-xs text-center text-tertiary mt-2">'+t('entrepreneur.dashboard.submitted')+'</p>'
-        : '<button class="tool-btn primary w-full mt-2" data-submit="'+s.id+'">'+t('entrepreneur.dashboard.submitBtn')+'</button>'
+    const indLabels=IND_LABEL_KEYS.map(t);
+    const ind4Cell=s.ind4Source==='none'
+      ? '<span class="text-outline">'+t('explore.result.ind4NoneShort')+'</span>'
+      : '<b>'+fx(s.norm[3],3)+'</b>'+(s.ind4Source==='zone_context'?' <span class="text-outline">('+t('explore.compare.referenceSuffix')+')</span>':'');
+    const indicatorRows='<div class="flex flex-col gap-1 text-xs border-t border-limestone-gray pt-3">'+
+      [0,1,2].map(function(idx){
+        return '<div class="flex justify-between"><span class="text-on-surface-variant">'+indLabels[idx]+'</span><b>'+fx(s.norm[idx],3)+'</b></div>';
+      }).join('')+
+      '<div class="flex justify-between"><span class="text-on-surface-variant">'+indLabels[3]+'</span>'+ind4Cell+'</div>'+
+      '</div>';
+
+    const noteHtml=s.ind4Source==='none'
+      ? '<p class="font-body-md text-xs text-coral-warmth">'+t('explore.result.ind4Pending')+'</p>'
+      : s.ind4Source==='zone_context'
+        ? '<p class="font-body-md text-xs text-coral-warmth">'+t('explore.result.ind4ZoneContext').replace('{zone}',s.ind4ZoneName)+'</p>'
+        : '';
+
+    const scoreBlock=s.overall==null
+      ? '<div class="font-body-md text-sm text-on-surface-variant py-2">'+t('explore.result.awaitingScore')+'</div>'
+      : '<div class="flex items-baseline gap-2">'+
+          '<span class="font-display-lg text-[36px] text-primary leading-none">'+fx(s.overall,1)+'</span>'+
+          '<span class="font-body-md text-sm text-outline">/ 100</span>'+
+          (s.ind4Source==='zone_context'?' <span class="font-label-caps text-label-caps text-coral-warmth">'+t('explore.result.previewTag')+'</span>':'')+
+          '</div>';
+
+    const levelBlock=s.overall==null?'':(
+      '<div class="flex items-center justify-between text-sm">'+
+      '<span class="text-on-surface-variant">'+t('explore.result.bandLabel')+'</span>'+
+      (s.ind4Source==='assessed'
+        ? '<b class="text-andaman-deep">'+(s.level||t('explore.result.notCertified'))+'</b>'
+        : '<b class="text-outline">'+t('explore.result.pendingCert')+'</b>')+
+      '</div>');
+
+    const ciBlock=s.ci?(
+      '<div class="flex items-center justify-between text-sm">'+
+      '<span class="text-on-surface-variant">'+t('explore.result.ciLabel')+'</span>'+
+      '<b class="font-data-viz text-on-surface-variant">'+fx(s.ci.lo,1)+' – '+fx(s.ci.hi,1)+'</b></div>'
     ):'';
+
+    const submitHtml=canSubmit?(
+      s.ind4Source!=='assessed'
+        ? '<p class="font-body-md text-xs text-center text-outline mt-2">'+t('entrepreneur.dashboard.needsInd4')+'</p>'
+        : (s.submitted
+            ? '<p class="font-body-md text-xs text-center text-tertiary mt-2">'+t('entrepreneur.dashboard.submitted')+'</p>'
+            : '<button class="tool-btn primary w-full mt-2" data-submit="'+s.id+'">'+t('entrepreneur.dashboard.submitBtn')+'</button>')
+    ):'';
+
     return '<div class="organic-border bg-white p-6 sketch-shadow flex flex-col gap-4" style="border-left:4px solid '+s.color+'">'+
       '<div class="flex items-center justify-between">'+
       '<span class="font-label-caps text-label-caps text-outline">'+t('explore.result.areaLabel').replace('{n}',i+1)+'</span>'+
       '<button class="text-outline hover:text-coral-warmth material-symbols-outlined text-[18px]" data-remove="'+s.id+'" title="'+t('explore.result.removeBtn')+'">close</button>'+
       '</div>'+
-      '<div class="flex items-baseline gap-2">'+
-      '<span class="font-display-lg text-[36px] text-primary leading-none">'+fx(s.overall,1)+'</span>'+
-      '<span class="font-body-md text-sm text-outline">/ 100</span>'+
-      '</div>'+
-      '<div class="flex items-center justify-between text-sm">'+
-      '<span class="text-on-surface-variant">'+t('explore.result.bandLabel')+'</span>'+
-      '<b class="text-andaman-deep">'+(s.level||t('explore.result.notCertified'))+'</b></div>'+
-      '<div class="flex items-center justify-between text-sm">'+
-      '<span class="text-on-surface-variant">'+t('explore.result.ciLabel')+'</span>'+
-      '<b class="font-data-viz text-on-surface-variant">'+fx(s.ci.lo,1)+' – '+fx(s.ci.hi,1)+'</b></div>'+
-      submitHtml+
+      scoreBlock+noteHtml+levelBlock+ciBlock+indicatorRows+submitHtml+
       '</div>';
   }).join('');
   list.querySelectorAll('[data-remove]').forEach(function(b){
@@ -460,11 +526,11 @@ function renderCompare(){
     '</tr></thead><tbody>'+
     indLabels.map(function(nm,i){
       return '<tr class="border-t border-limestone-gray"><td class="py-2 pr-4">'+nm+'</td>'+
-        allNorm.map(function(n){ return '<td class="text-right py-2 pl-4 font-data-viz">'+fx(n[i],3)+'</td>'; }).join('')+
+        allNorm.map(function(n){ return '<td class="text-right py-2 pl-4 font-data-viz">'+(n[i]==null?'–':fx(n[i],3))+'</td>'; }).join('')+
         '</tr>';
     }).join('')+
     '<tr class="border-t border-limestone-gray font-semibold"><td class="py-2 pr-4">'+t('explore.compare.totalScoreRow')+'</td>'+
-    allOverall.map(function(v){ return '<td class="text-right py-2 pl-4 font-data-viz">'+fx(v,1)+'</td>'; }).join('')+
+    allOverall.map(function(v){ return '<td class="text-right py-2 pl-4 font-data-viz">'+(v==null?'–':fx(v,1))+'</td>'; }).join('')+
     '</tr></tbody>';
 
   if(typeof Chart==='undefined') return;

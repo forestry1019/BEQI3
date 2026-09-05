@@ -20,18 +20,30 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'explore.draw.mapLoading': {en: 'Loading map…', th: 'กำลังโหลดแผนที่…'},
   'explore.draw.mapLoadError': {en: 'Failed to load parameters', th: 'โหลดพารามิเตอร์ไม่สำเร็จ'},
 
-  /* ---------- result cards (up to 3 areas, 3 values each) ---------- */
+  /* ---------- result cards (up to 3 areas, 4 indicators always shown + total when available) ---------- */
   'explore.result.areaLabel': {en: 'Area {n}', th: 'พื้นที่ {n}'},
   'explore.result.removeBtn': {en: 'Remove', th: 'ลบ'},
   'explore.result.scoreLabel': {en: 'BEQI Score', th: 'คะแนน BEQI'},
   'explore.result.bandLabel': {en: 'Certification Level', th: 'ระดับการรับรอง'},
   'explore.result.ciLabel': {en: '95% CI', th: 'ช่วงความเชื่อมั่น 95%'},
   'explore.result.notCertified': {en: 'Not certified', th: 'ไม่ผ่านการรับรอง'},
-  'explore.result.empty': {en: 'Draw an area on the map and click "Calculate BEQI" to see its score here — draw up to 3 areas to compare them.', th: 'วาดพื้นที่บนแผนที่แล้วกด "คำนวณ BEQI" เพื่อดูผลคะแนนที่นี่ — วาดได้สูงสุด 3 พื้นที่เพื่อเปรียบเทียบกัน'},
+  'explore.result.empty': {en: 'Draw an area on the map and click "Calculate BEQI" to see indicators 1–3 here — draw up to 3 areas to compare them.', th: 'วาดพื้นที่บนแผนที่แล้วกด "คำนวณ BEQI" เพื่อดูตัวชี้วัดที่ 1-3 ที่นี่ — วาดได้สูงสุด 3 พื้นที่เพื่อเปรียบเทียบกัน'},
   'explore.result.footnote': {
-    en: 'Indicator 4 is a satellite-based estimate, not a field survey result. The 95% confidence interval is a real-time approximation for this drawn area, not the offline Monte Carlo used for the 3 reference zones. Certification must still be confirmed with the 14-form field audit.',
-    th: 'ตัวชี้วัดที่ 4 เป็นค่าประมาณจากดาวเทียม ไม่ใช่ผลการสำรวจภาคสนามจริง ช่วงความเชื่อมั่น 95% เป็นค่าประมาณแบบเรียลไทม์เฉพาะพื้นที่ที่วาดนี้ ไม่ใช่วิธี Monte Carlo แบบออฟไลน์ที่ใช้กับ 3 โซนอ้างอิง การรับรองต้องยืนยันด้วยแบบตรวจสอบภาคสนาม 14 รูปแบบอีกครั้ง'
+    en: 'Indicators 1-3 are computed live from satellite imagery. Indicator 4 (biophilic composition) requires photo/on-site assessment per the 14-pattern checklist and is never estimated from satellite data — see the note on each card. The 95% confidence interval shown is a real-time approximation for this drawn area, not the offline Monte Carlo used for the 3 reference zones.',
+    th: 'ตัวชี้วัดที่ 1-3 คำนวณสดจากภาพถ่ายดาวเทียม ส่วนตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) ต้องประเมินจากภาพถ่าย/ลงพื้นที่จริงตามแบบตรวจสอบ 14 รูปแบบเท่านั้น ไม่มีการประมาณจากดาวเทียมเด็ดขาด — ดูข้อความกำกับในแต่ละการ์ด ช่วงความเชื่อมั่น 95% ที่แสดงเป็นค่าประมาณแบบเรียลไทม์เฉพาะพื้นที่ที่วาดนี้ ไม่ใช่วิธี Monte Carlo แบบออฟไลน์ที่ใช้กับ 3 โซนอ้างอิง'
   },
+  'explore.result.ind4NoneShort': {en: 'Pending', th: 'รอข้อมูล'},
+  'explore.result.ind4Pending': {
+    en: 'Indicator 4 not yet assessed — this area has no total score or certification yet.',
+    th: 'ยังไม่มีการประเมินตัวชี้วัดที่ 4 — พื้นที่นี้ยังไม่มีคะแนนรวมหรือการรับรอง'
+  },
+  'explore.result.ind4ZoneContext': {
+    en: 'Indicator 4 shown is borrowed from the {zone} zone\'s surrounding context — not measured from this exact plot. Certification cannot be issued from this preview.',
+    th: 'ตัวชี้วัดที่ 4 ที่แสดงยืมมาจากค่าบริบทของโซน{zone} — ไม่ใช่ค่าที่วัดจากแปลงนี้จริง ไม่สามารถออกใบรับรองจากตัวอย่างนี้ได้'
+  },
+  'explore.result.awaitingScore': {en: 'Awaiting indicator 4 assessment', th: 'รอการประเมินตัวชี้วัดที่ 4'},
+  'explore.result.previewTag': {en: '(preview)', th: '(ตัวอย่าง)'},
+  'explore.result.pendingCert': {en: 'Pending assessment', th: 'รอการประเมิน'},
 
   /* ---------- compare section ---------- */
   'explore.compare.heading': {en: 'Compare Areas', th: 'เปรียบเทียบพื้นที่'},
