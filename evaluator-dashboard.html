@@ -55,11 +55,11 @@
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
 <a href="index.html" class="font-display-lg text-headline-md tracking-tighter text-andaman-deep">BEQI Portfolio for Sustainable Coastal Tourism</a>
 <nav class="hidden md:flex gap-8 items-center font-label-caps text-label-caps">
-<a class="text-on-surface-variant hover:text-primary transition-colors" href="explore.html">Tourists</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors" href="entrepreneur-portal.html">Entrepreneurs</a>
-<a class="text-primary border-b border-primary pb-1" href="evaluator-dashboard.html">Evaluators</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
+<a class="text-primary border-b border-primary pb-1" href="evaluator-dashboard.html" data-i18n="common.nav.evaluators">Evaluators</a>
 </nav>
-<button id="logoutBtn" class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-6 py-2 rounded transition-all duration-300 hover:opacity-80 active:scale-95">
+<button id="logoutBtn" class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-6 py-2 rounded transition-all duration-300 hover:opacity-80 active:scale-95" data-i18n="evaluator.dashboard.logout">
                 Log Out
             </button>
 </div>
@@ -68,48 +68,51 @@
 <aside class="hidden md:flex flex-col w-72 bg-sand-base border-r border-limestone-gray sticky top-[73px] h-[calc(100vh-73px)] py-8 z-40">
 <div class="px-6 mb-8">
 <h2 class="font-headline-md text-headline-md text-andaman-deep mb-1">BEQI Index</h2>
-<p class="font-label-caps text-label-caps text-on-surface-variant" id="sidebarWho">Coastal Quality Framework</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant" id="sidebarWho" data-i18n="evaluator.dashboard.sidebarSubtitle">Coastal Quality Framework</p>
 </div>
 <nav class="flex-1 px-4 space-y-2">
 <a class="flex items-center gap-3 bg-primary-container text-on-primary-container font-semibold rounded-lg px-4 py-3 transition-all duration-200" href="evaluator-dashboard.html">
 <span class="material-symbols-outlined">analytics</span>
-<span class="font-body-md text-body-md">Biophilic Index</span>
+<span class="font-body-md text-body-md" data-i18n="evaluator.dashboard.navBiophilic">Biophilic Index</span>
 </a>
 <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 transition-all duration-200" href="evaluator-site-audit.html">
 <span class="material-symbols-outlined">fact_check</span>
-<span class="font-body-md text-body-md">Site Audit</span>
+<span class="font-body-md text-body-md" data-i18n="evaluator.dashboard.navSiteAudit">Site Audit</span>
 </a>
 <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 transition-all duration-200 comingsoon" href="#">
 <span class="material-symbols-outlined">description</span>
-<span class="font-body-md text-body-md">Local Reports</span>
+<span class="font-body-md text-body-md" data-i18n="evaluator.dashboard.navReports">Local Reports</span>
 </a>
 <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 transition-all duration-200 comingsoon" href="#">
 <span class="material-symbols-outlined">settings</span>
-<span class="font-body-md text-body-md">Settings</span>
+<span class="font-body-md text-body-md" data-i18n="evaluator.dashboard.navSettings">Settings</span>
 </a>
 </nav>
 </aside>
 <main class="flex-1 p-margin-mobile md:p-10 lg:p-16 space-y-12 overflow-y-auto">
 <header class="flex justify-between items-end border-b border-limestone-gray pb-6">
 <div>
-<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-andaman-deep mb-2">Evaluator Dashboard</h1>
-<p class="font-body-md text-on-surface-variant max-w-2xl">Review incoming entrepreneur submissions against BEQI standards to maintain biophilic integrity along the Andaman coast.</p>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-andaman-deep mb-2" data-i18n="evaluator.dashboard.title">Evaluator Dashboard</h1>
+<p class="font-body-md text-on-surface-variant max-w-2xl" data-i18n="evaluator.dashboard.subtitle">Review incoming entrepreneur submissions against BEQI standards to maintain biophilic integrity along the Andaman coast.</p>
 </div>
 </header>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 <div class="lg:col-span-4 space-y-6">
-<h3 class="font-label-caps text-label-caps text-primary border-b border-limestone-gray pb-2 uppercase tracking-widest">Pending Reviews</h3>
+<h3 class="font-label-caps text-label-caps text-primary border-b border-limestone-gray pb-2 uppercase tracking-widest" data-i18n="evaluator.dashboard.pendingReviews">Pending Reviews</h3>
 <div class="space-y-4" id="reviewList"></div>
-<p class="text-sm text-on-surface-variant hidden" id="reviewEmpty">ยังไม่มีคำขอจากผู้ประกอบการ — เมื่อมีการสมัคร Entrepreneur Portal (S2) ในเบราว์เซอร์นี้ รายการจะปรากฏที่นี่</p>
+<p class="text-sm text-on-surface-variant hidden" id="reviewEmpty" data-i18n="evaluator.dashboard.reviewEmpty">ยังไม่มีคำขอจากผู้ประกอบการ — เมื่อมีการสมัคร Entrepreneur Portal (S2) ในเบราว์เซอร์นี้ รายการจะปรากฏที่นี่</p>
 </div>
 <div class="lg:col-span-8 space-y-8" id="detailPane"></div>
 </div>
 </main>
 </div>
 <footer class="bg-sand-base border-t border-limestone-gray/50 mt-12">
-<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
+<script src="assets/js/i18n-dict.js"></script>
+<script src="assets/js/i18n-dict-evaluator.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/beqi-core.js"></script>
 <script src="assets/js/evaluator-dashboard.js"></script>
 </body></html>

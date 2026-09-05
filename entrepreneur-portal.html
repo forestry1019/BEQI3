@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>BEQI Portfolio - Entrepreneur Portal</title>
+<title>BEQI Portfolio - Entrepreneur Verification</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&amp;family=Inter:wght@400&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script id="tailwind-config">
         tailwind.config = {
@@ -47,6 +47,7 @@
         }
       </script>
 <style>
+        [hidden] { display: none !important; }
         body { background-color: #fbf9f4; color: #1b1c19; }
         .sketch-border { border: 1px solid #D9C8B2; border-radius: 4px; }
         .nav-link { position: relative; display: inline-block; }
@@ -55,6 +56,8 @@
         .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); transform-origin: bottom left; }
         .tech-grid { background-image: linear-gradient(to right, #D9C8B2 1px, transparent 1px), linear-gradient(to bottom, #D9C8B2 1px, transparent 1px);
             background-size: 20px 20px; opacity: 0.3; }
+        .step-num { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #095353; color: #fff; font-size: 13px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
@@ -62,14 +65,11 @@
 <div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
 <a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="index.html"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span><span class="text-headline-md">BEQI Portfolio for Sustainable Coastal Tourism</span></a>
 <nav class="hidden md:flex gap-8 items-center">
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html">Tourists</a>
-<a class="nav-link active text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html">Entrepreneurs</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html">Evaluators</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
+<a class="nav-link active text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html" data-i18n="common.nav.evaluators">Evaluators</a>
 </nav>
-<div class="flex items-center gap-4"><div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant mr-2"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors">TH</button></div>
-<a class="hidden md:inline-flex items-center justify-center bg-primary text-on-primary px-6 py-2 rounded font-label-caps text-label-caps hover:bg-andaman-deep transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html">
-                    Portal Access
-                </a>
+<div class="flex items-center gap-4"><div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant mr-2"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors" data-lang-btn="en">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors" data-lang-btn="th">TH</button></div>
 </div>
 </div>
 </header>
@@ -77,70 +77,53 @@
 <div class="w-full md:w-1/2 relative bg-surface rounded-lg sketch-border overflow-hidden min-h-[400px] flex items-center justify-center p-8 transition-all duration-300">
 <div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 via-transparent to-coral-warmth/10"></div>
 <div class="absolute inset-0 tech-grid pointer-events-none"></div>
-<div class="relative z-10 bg-white/90 backdrop-blur-sm p-6 sketch-border max-w-sm">
-<div class="flex items-center gap-3 mb-4">
-<span class="material-symbols-outlined text-primary">satellite_alt</span>
-<h3 class="font-label-caps text-label-caps text-primary tracking-widest uppercase">GEE Integration</h3>
-</div>
-<p class="font-body-md text-sm text-on-surface-variant">
-                    เชื่อมต่อบัญชี Google Earth Engine เพื่อให้ BEQI ดึงข้อมูลชีวภาพพื้นฐาน (NDVI, coastal buffer zones) ของพื้นที่คุณโดยอัตโนมัติ
-                </p>
-<div class="mt-4 pt-4 border-t border-limestone-gray flex justify-between items-center font-data-viz text-data-viz text-andaman-deep">
-<span id="geeStatusCoord">Khao Lak, Phang Nga</span>
-<span id="geeStatusDot" class="text-outline">● Not linked</span>
-</div>
+<div class="relative z-10 max-w-sm">
+<h3 class="font-headline-md text-headline-md text-andaman-deep mb-3" data-i18n="entrepreneur.portal.sideTitle">Verified Entrepreneurs Only</h3>
+<p class="font-body-md text-sm text-on-surface-variant mb-8" data-i18n="entrepreneur.portal.sideDesc">BEQI certification review is limited to registered business representatives. Your Google account confirms who you are; the details below confirm which business you represent.</p>
+<ol class="flex flex-col gap-4">
+<li class="flex items-center gap-3"><span class="step-num">1</span><span class="font-body-md text-sm text-andaman-deep font-medium" data-i18n="entrepreneur.portal.step1">Sign in with your Google account</span></li>
+<li class="flex items-center gap-3"><span class="step-num">2</span><span class="font-body-md text-sm text-andaman-deep font-medium" data-i18n="entrepreneur.portal.step2">Confirm your business details</span></li>
+<li class="flex items-center gap-3"><span class="step-num">3</span><span class="font-body-md text-sm text-andaman-deep font-medium" data-i18n="entrepreneur.portal.step3">Draw your property and submit for review</span></li>
+</ol>
 </div>
 </div>
 <div class="w-full md:w-1/2 flex flex-col justify-center px-margin-mobile md:px-12 py-8">
 <div class="mb-10">
-<h2 class="font-headline-md text-headline-md text-andaman-deep mb-2">Entrepreneur Portal</h2>
-<p class="font-body-md text-on-surface-variant">เชื่อมต่อสถานประกอบการของคุณกับดัชนี BEQI เพื่อคำนวณคะแนนเชิงนิเวศและปลดล็อกทรัพยากรด้านความยั่งยืนโดยอัตโนมัติ</p>
+<h2 class="font-headline-md text-headline-md text-andaman-deep mb-2" data-i18n="entrepreneur.portal.heading">Entrepreneur Verification</h2>
+<p class="font-body-md text-on-surface-variant" data-i18n="entrepreneur.portal.subheading">Verify your business identity to submit properties for BEQI review and track certification status.</p>
 </div>
-<div class="mb-12">
-<button id="geeBtn" type="button" class="w-full flex items-center justify-center gap-3 bg-white sketch-border hover:bg-surface-container-low transition-colors py-4 px-6 rounded-DEFAULT group relative overflow-hidden">
-<div class="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-<span class="material-symbols-outlined text-primary relative z-10">travel_explore</span>
-<span class="font-body-md font-medium text-andaman-deep relative z-10">Continue with Google Earth Engine</span>
-</button>
-<div class="mt-3 flex items-start gap-2">
-<span class="material-symbols-outlined text-coral-warmth text-sm mt-0.5">info</span>
-<p class="font-body-md text-sm text-outline" id="geeNote">
-                        การเชื่อมต่อ GEE เป็นฟีเจอร์ต้นแบบ — ต้องตั้งค่า OAuth Client ID ใน <code>assets/js/gee-config.js</code> ก่อนใช้งานจริง ระหว่างนี้สามารถลงทะเบียนด้วยตนเองด้านล่างได้ทันที
-                    </p>
+
+<div id="signInStep">
+<div id="googleSignInDiv"></div>
+<p id="googleNotConfigured" class="font-body-md text-sm text-coral-warmth mt-3" data-i18n="entrepreneur.portal.googleNotConfigured" hidden>Google Sign-In isn't configured yet — set clientId in assets/js/gee-config.js first.</p>
+<p class="font-body-md text-xs text-outline mt-3" data-i18n="entrepreneur.portal.googleNote">Used only to verify your identity in this prototype — no data is sent anywhere besides your browser.</p>
 </div>
+
+<form class="space-y-6" id="signupForm" hidden>
+<div class="flex items-center gap-3 bg-surface-container-low sketch-border p-4">
+<img alt="" class="w-10 h-10 rounded-full" id="googleAvatar" src="">
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-sm text-outline" data-i18n="entrepreneur.portal.signedInAs">Signed in as</p>
+<p class="font-body-md text-sm font-semibold text-andaman-deep truncate" id="googleIdentity"></p>
 </div>
-<div class="relative flex items-center py-5 mb-8">
-<div class="flex-grow border-t border-limestone-gray"></div>
-<span class="flex-shrink-0 mx-4 font-label-caps text-label-caps text-outline">OR REGISTER MANUALLY</span>
-<div class="flex-grow border-t border-limestone-gray"></div>
-</div>
-<form class="space-y-6" id="signupForm">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div>
-<label class="block font-label-caps text-label-caps text-andaman-deep mb-2">Property Name</label>
-<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="propertyName" placeholder="e.g., Phang Nga Eco Lodge" type="text">
+<button class="font-label-caps text-label-caps text-primary hover:opacity-70 shrink-0" id="switchAccountBtn" data-i18n="entrepreneur.portal.switchAccount" type="button">Not you? Switch account</button>
 </div>
 <div>
-<label class="block font-label-caps text-label-caps text-andaman-deep mb-2">Representative Name</label>
-<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="repName" placeholder="Jane Doe" type="text">
-</div>
-</div>
-<div>
-<label class="block font-label-caps text-label-caps text-andaman-deep mb-2">Business Email</label>
-<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="email" placeholder="contact@ecolodge.com" type="email">
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.portal.field.repName">Representative Name</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors" id="repName" type="text">
 </div>
 <div>
-<label class="block font-label-caps text-label-caps text-andaman-deep mb-2">Primary Coastal Zone</label>
-<select required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors" id="zoneId">
-<option disabled selected value="">Select designated zone...</option>
-<option value="North">โซนเหนือ — หาดปะการังและหาดคึกคัก</option>
-<option value="Central">โซนกลาง — หาดบางเนียงและหาดนางทอง</option>
-<option value="South">โซนใต้ — อุทยานแห่งชาติแหลมรู่</option>
-</select>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.portal.field.businessName">Business / Establishment Name</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="businessName" placeholder="e.g., Phang Nga Eco Lodge" data-i18n-placeholder="entrepreneur.portal.field.businessNamePh" type="text">
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.portal.field.taxId">Tax ID Number</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="taxId" inputmode="numeric" maxlength="13" pattern="[0-9]{13}" placeholder="13-digit tax ID" data-i18n-placeholder="entrepreneur.portal.field.taxIdPh" type="text">
+<p class="font-body-md text-xs text-outline mt-2" data-i18n="entrepreneur.portal.field.taxIdHint">Used to verify your business is a registered legal entity — never shown publicly.</p>
 </div>
 <p class="text-sm text-coral-warmth hidden" id="formError"></p>
-<button class="mt-8 bg-primary-container text-on-primary-container font-body-md font-medium py-3 px-8 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center gap-2 w-full md:w-auto" type="submit">
-<span>Create Portal Account</span>
+<button class="mt-4 bg-primary-container text-on-primary-container font-body-md font-medium py-3 px-8 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center gap-2 w-full md:w-auto" type="submit">
+<span data-i18n="entrepreneur.portal.submitBtn">Verify &amp; Continue</span>
 <span class="material-symbols-outlined text-sm">arrow_forward</span>
 </button>
 </form>
@@ -149,65 +132,97 @@
 <footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
 <div class="w-full py-16 px-margin-desktop max-w-container-max mx-auto font-body-md text-body-md">
 <div class="text-on-surface-variant max-w-xs">
-<div>AN INNOVATIVE PROTOTYPE OF BIOPHILIC ENVIRONMENTAL QUALITY INDEX PORTFOLIO FOR SUSTAINABLE COASTAL TOURISM:&nbsp;</div>
-<div>A CASE STUDY OF PHANG-NGA PROVINCE, THAILAND</div>
+<div data-i18n="entrepreneur.footer.tagline1">AN INNOVATIVE PROTOTYPE OF BIOPHILIC ENVIRONMENTAL QUALITY INDEX PORTFOLIO FOR SUSTAINABLE COASTAL TOURISM:&nbsp;</div>
+<div data-i18n="entrepreneur.footer.tagline2">A CASE STUDY OF PHANG-NGA PROVINCE, THAILAND</div>
 </div>
 </div>
-<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
+<script src="assets/js/i18n-dict.js"></script>
+<script src="assets/js/i18n-dict-entrepreneur.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/beqi-core.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/earthengine/1.7.31/earthengine-api.min.js"></script>
 <script src="assets/js/gee-config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 (function(){
-  // ถ้ามี session ผู้ประกอบการอยู่แล้ว ให้เด้งเข้าแดชบอร์ดทันที ไม่ต้องกรอกฟอร์มซ้ำ
+  // ถ้ามี session ผู้ประกอบการอยู่แล้ว ให้เด้งเข้าแดชบอร์ดทันที ไม่ต้องยืนยันตัวตนซ้ำ
   const existing = BeqiCore.getSession();
-  if(existing && existing.role === 'entrepreneur') window.location.href = 'entrepreneur-dashboard.html';
+  if(existing && existing.role === 'entrepreneur'){ window.location.href = 'entrepreneur-dashboard.html'; return; }
 
-  let geeLinked = false;
-  document.getElementById('geeBtn').addEventListener('click', function(){
-    const note = document.getElementById('geeNote');
-    if(typeof ee === 'undefined' || !GEE_CONFIG || !GEE_CONFIG.clientId){
-      note.textContent = 'ยังไม่ได้ตั้งค่า GEE OAuth Client ID ในต้นแบบนี้ — กรุณาลงทะเบียนด้วยตนเองด้านล่างไปก่อน';
+  let profile = null; // {name, email, picture, sub} จาก Google ID token — decode ฝั่ง client เท่านั้น
+                       // (ต้นแบบนี้ไม่มี backend ตรวจสอบลายเซ็นจริง ใช้สาธิต flow เท่านั้น)
+
+  function decodeJwt(token){
+    try{
+      const payload = token.split('.')[1];
+      const json = decodeURIComponent(atob(payload.replace(/-/g,'+').replace(/_/g,'/'))
+        .split('').map(function(c){ return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join(''));
+      return JSON.parse(json);
+    }catch(e){ return null; }
+  }
+
+  function showForm(){
+    profile.picture && (document.getElementById('googleAvatar').src = profile.picture);
+    document.getElementById('googleIdentity').textContent = (profile.name || '') + ' · ' + (profile.email || '');
+    document.getElementById('repName').value = profile.name || '';
+    document.getElementById('signInStep').hidden = true;
+    document.getElementById('signupForm').hidden = false;
+  }
+
+  function handleCredentialResponse(response){
+    profile = decodeJwt(response.credential);
+    if(profile) showForm();
+  }
+
+  function initGoogleSignIn(){
+    if(typeof google === 'undefined' || !google.accounts || !GEE_CONFIG || !GEE_CONFIG.clientId || GEE_CONFIG.clientId.indexOf('YOUR_') === 0){
+      document.getElementById('googleNotConfigured').hidden = false;
       return;
     }
-    ee.data.authenticateViaOauth(GEE_CONFIG.clientId, function(){
-      geeLinked = true;
-      document.getElementById('geeStatusDot').textContent = '● Live';
-      document.getElementById('geeStatusDot').className = 'text-coral-warmth';
-      note.textContent = 'เชื่อมต่อบัญชี Google Earth Engine สำเร็จ — กรอกฟอร์มด้านล่างให้ครบเพื่อสร้างบัญชี Portal';
-    }, function(){
-      ee.data.authenticateViaPopup(function(){
-        geeLinked = true;
-        document.getElementById('geeStatusDot').textContent = '● Live';
-        note.textContent = 'เชื่อมต่อบัญชี Google Earth Engine สำเร็จ — กรอกฟอร์มด้านล่างให้ครบเพื่อสร้างบัญชี Portal';
-      }, function(err){ note.textContent = 'เชื่อมต่อ GEE ไม่สำเร็จ: ' + err; });
-    }, null, ['https://www.googleapis.com/auth/earthengine.readonly']);
+    google.accounts.id.initialize({client_id: GEE_CONFIG.clientId, callback: handleCredentialResponse});
+    google.accounts.id.renderButton(document.getElementById('googleSignInDiv'),
+      {theme: 'outline', size: 'large', width: 320, text: 'signin_with'});
+  }
+  // GSI โหลดแบบ async — ลองตั้งค่าเมื่อพร้อม (retry สั้น ๆ กันกรณีสคริปต์ยังโหลดไม่เสร็จตอน DOMContentLoaded)
+  let tries = 0;
+  (function waitForGoogle(){
+    if(typeof google !== 'undefined' && google.accounts){ initGoogleSignIn(); return; }
+    if(++tries > 40){ document.getElementById('googleNotConfigured').hidden = false; return; }
+    setTimeout(waitForGoogle, 100);
+  })();
+
+  document.getElementById('switchAccountBtn').addEventListener('click', function(){
+    profile = null;
+    document.getElementById('signupForm').hidden = true;
+    document.getElementById('signInStep').hidden = false;
+    if(typeof google !== 'undefined' && google.accounts) google.accounts.id.prompt();
   });
 
   document.getElementById('signupForm').addEventListener('submit', function(e){
     e.preventDefault();
-    const propertyName = document.getElementById('propertyName').value.trim();
-    const repName = document.getElementById('repName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const zoneId = document.getElementById('zoneId').value;
     const errEl = document.getElementById('formError');
-    if(!propertyName || !repName || !email || !zoneId){
-      errEl.textContent = 'กรุณากรอกข้อมูลให้ครบทุกช่อง';
+    if(!profile){ errEl.textContent = I18N.t('entrepreneur.portal.formErrorSignIn'); errEl.classList.remove('hidden'); return; }
+    const repName = document.getElementById('repName').value.trim();
+    const businessName = document.getElementById('businessName').value.trim();
+    const taxId = document.getElementById('taxId').value.trim();
+    if(!repName || !businessName || !taxId){
+      errEl.textContent = I18N.t('entrepreneur.portal.formErrorRequired');
+      errEl.classList.remove('hidden');
+      return;
+    }
+    if(!/^\d{13}$/.test(taxId)){
+      errEl.textContent = I18N.t('entrepreneur.portal.formErrorTaxId');
       errEl.classList.remove('hidden');
       return;
     }
     errEl.classList.add('hidden');
-    const createdAt = new Date().toISOString();
     BeqiCore.setSession({
-      role: 'entrepreneur', propertyName, repName, email, zoneId, geeLinked, createdAt
+      role: 'entrepreneur', repName, businessName, taxId,
+      email: profile.email, googleSub: profile.sub, picture: profile.picture,
+      createdAt: new Date().toISOString()
     });
-    // เพิ่มเข้าคิวรอตรวจของผู้ประเมิน (S3) — ต้นแบบยังไม่มี backend กลาง จึงใช้ localStorage
-    // ของเบราว์เซอร์เดียวกันจำลองคิวส่งงานจริง (ใช้ทดสอบ flow ผู้ประกอบการ → ผู้ประเมินในเครื่องเดียว)
-    const submissions = JSON.parse(localStorage.getItem('beqi_submissions') || '[]');
-    submissions.push({id: 'sub_' + Date.now(), propertyName, repName, email, zoneId, geeLinked, createdAt, status: 'pending'});
-    localStorage.setItem('beqi_submissions', JSON.stringify(submissions));
     window.location.href = 'entrepreneur-dashboard.html';
   });
 })();

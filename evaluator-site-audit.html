@@ -57,18 +57,18 @@
 <aside class="hidden md:flex bg-sand-base text-primary fixed left-0 top-0 h-screen w-72 flex-col justify-between py-8 border-r border-limestone-gray z-40">
 <div class="px-6 mb-8">
 <a href="index.html" class="font-display-lg text-headline-md text-andaman-deep tracking-tighter mb-1 block">BEQI Index</a>
-<p class="font-label-caps text-label-caps text-on-surface-variant" id="sidebarWho">Coastal Quality Framework</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant" id="sidebarWho" data-i18n="evaluator.dashboard.sidebarSubtitle">Coastal Quality Framework</p>
 </div>
 <nav class="flex-1 overflow-y-auto px-4 space-y-2">
 <a class="flex items-center space-x-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 px-4 py-3 transition-all" href="evaluator-dashboard.html">
-<span class="material-symbols-outlined">analytics</span><span class="font-body-md">Biophilic Index</span>
+<span class="material-symbols-outlined">analytics</span><span class="font-body-md" data-i18n="evaluator.dashboard.navBiophilic">Biophilic Index</span>
 </a>
 <a class="flex items-center space-x-3 bg-primary-container text-on-primary-container font-semibold rounded-lg mx-2 px-4 py-3 transition-all duration-200 ease-in-out" href="evaluator-site-audit.html">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fact_check</span><span class="font-body-md">Site Audit</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fact_check</span><span class="font-body-md" data-i18n="evaluator.dashboard.navSiteAudit">Site Audit</span>
 </a>
 </nav>
 <div class="px-6 mt-auto pt-6 border-t border-limestone-gray/50">
-<button id="logoutBtn" class="w-full bg-transparent border border-primary text-primary font-label-caps text-label-caps py-3 rounded hover:bg-surface-container-high transition-opacity">
+<button id="logoutBtn" class="w-full bg-transparent border border-primary text-primary font-label-caps text-label-caps py-3 rounded hover:bg-surface-container-high transition-opacity" data-i18n="evaluator.dashboard.logout">
                 Log Out
             </button>
 </div>
@@ -76,22 +76,22 @@
 <main class="flex-1 md:ml-72 pt-12 px-margin-mobile md:px-margin-desktop pb-24 max-w-[1400px]">
 <div class="mb-12 border-b border-limestone-gray pb-6 flex justify-between items-end">
 <div>
-<p class="font-label-caps text-label-caps text-primary tracking-widest mb-2 uppercase">Evaluator Portal</p>
-<h2 class="font-display-lg text-display-lg text-andaman-deep">Site Audit</h2>
-<p class="font-body-md text-on-surface-variant mt-2 max-w-xl">แบบตรวจสอบภาคสนามสำหรับตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) — เดิมยังไม่มีระบบรองรับ คะแนนจาก 3 เกณฑ์นี้จะแทนที่ค่าประมาณจากดาวเทียมของตัวชี้วัดที่ 4 ในการคำนวณ BEQI ด้านล่าง</p>
+<p class="font-label-caps text-label-caps text-primary tracking-widest mb-2 uppercase" data-i18n="evaluator.audit.eyebrow">Evaluator Portal</p>
+<h2 class="font-display-lg text-display-lg text-andaman-deep" data-i18n="evaluator.dashboard.navSiteAudit">Site Audit</h2>
+<p class="font-body-md text-on-surface-variant mt-2 max-w-xl" data-i18n="evaluator.audit.subtitle">แบบตรวจสอบภาคสนามสำหรับตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) — เดิมยังไม่มีระบบรองรับ คะแนนจาก 3 เกณฑ์นี้จะแทนที่ค่าประมาณจากดาวเทียมของตัวชี้วัดที่ 4 ในการคำนวณ BEQI ด้านล่าง</p>
 </div>
 </div>
 <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
 <div class="xl:col-span-7 flex flex-col gap-8">
 <section class="bg-surface rounded-lg p-8 sketch-border organic-shadow transition-shadow">
 <div class="flex justify-between items-center mb-6">
-<h3 class="font-headline-md text-headline-md text-andaman-deep">Active Assessments</h3>
+<h3 class="font-headline-md text-headline-md text-andaman-deep" data-i18n="evaluator.audit.activeAssessments">Active Assessments</h3>
 </div>
 <div class="space-y-4" id="assessmentList"></div>
 </section>
 <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
 <div class="bg-surface rounded-lg p-8 sketch-border organic-shadow flex flex-col items-center justify-center text-center relative overflow-hidden">
-<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase tracking-widest">Calculated BEQI</h4>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase tracking-widest" data-i18n="evaluator.audit.calculatedBeqi">Calculated BEQI</h4>
 <div class="relative w-48 h-48 mb-4">
 <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
 <circle class="opacity-50" cx="50" cy="50" fill="transparent" r="45" stroke="#eae8e3" stroke-width="2"></circle>
@@ -102,10 +102,10 @@
 <span class="font-data-viz text-data-viz text-on-surface-variant">/ 100</span>
 </div>
 </div>
-<p class="font-body-md text-on-surface-variant">Ecosystem Integrity: <span class="font-medium text-tertiary" id="auditIntegrity">--</span></p>
+<p class="font-body-md text-on-surface-variant"><span data-i18n="evaluator.audit.ecosystemIntegrity">Ecosystem Integrity: </span><span class="font-medium text-tertiary" id="auditIntegrity">--</span></p>
 </div>
 <div class="bg-surface rounded-lg p-8 sketch-border organic-shadow flex flex-col">
-<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase tracking-widest">ตัวชี้วัดทั้ง 4 ด้าน (หลังปรับด้วยผลตรวจภาคสนาม)</h4>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase tracking-widest" data-i18n="evaluator.audit.indicatorsHeading">ตัวชี้วัดทั้ง 4 ด้าน (หลังปรับด้วยผลตรวจภาคสนาม)</h4>
 <div class="space-y-3" id="auditIndicatorBars"></div>
 </div>
 </section>
@@ -113,49 +113,49 @@
 <div class="xl:col-span-5">
 <section class="bg-surface-bright rounded-lg p-8 sketch-border organic-shadow sticky top-8">
 <div class="flex justify-between items-center mb-8 pb-4 sketch-border-b">
-<h3 class="font-headline-md text-headline-md text-andaman-deep">Biophilic Criteria</h3>
-<span class="font-data-viz text-data-viz text-on-surface-variant" id="auditSiteLabel">Live Audit</span>
+<h3 class="font-headline-md text-headline-md text-andaman-deep" data-i18n="evaluator.audit.criteriaHeading">Biophilic Criteria</h3>
+<span class="font-data-viz text-data-viz text-on-surface-variant" id="auditSiteLabel" data-i18n="evaluator.audit.liveAudit">Live Audit</span>
 </div>
 <form class="space-y-10" id="auditForm">
 <div class="space-y-4">
 <div class="flex justify-between items-end">
-<label class="font-body-lg text-body-lg text-andaman-deep font-medium">1. Materiality</label>
+<label class="font-body-lg text-body-lg text-andaman-deep font-medium" data-i18n="evaluator.audit.materialityLabel">1. Materiality</label>
 <span class="font-data-viz text-data-viz text-primary font-medium" id="valMateriality">5.0</span>
 </div>
-<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4">Assessment of natural vs. synthetic materials used in structural integration with the coastal environment.</p>
+<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4" data-i18n="evaluator.audit.materialityDesc">Assessment of natural vs. synthetic materials used in structural integration with the coastal environment.</p>
 <div class="relative pt-2">
 <input class="w-full focus:outline-none" id="sliderMateriality" max="10" min="0" step="0.1" type="range" value="5">
-<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span>Synthetic (0)</span><span>Organic (10)</span></div>
+<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span data-i18n="evaluator.audit.materialitySynthetic">Synthetic (0)</span><span data-i18n="evaluator.audit.materialityOrganic">Organic (10)</span></div>
 </div>
 </div>
 <div class="space-y-4">
 <div class="flex justify-between items-end">
-<label class="font-body-lg text-body-lg text-andaman-deep font-medium">2. Soundscape</label>
+<label class="font-body-lg text-body-lg text-andaman-deep font-medium" data-i18n="evaluator.audit.soundscapeLabel">2. Soundscape</label>
 <span class="font-data-viz text-data-viz text-primary font-medium" id="valSoundscape">5.0</span>
 </div>
-<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4">Ratio of natural biophony (waves, wind, wildlife) to anthropogenic noise pollution.</p>
+<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4" data-i18n="evaluator.audit.soundscapeDesc">Ratio of natural biophony (waves, wind, wildlife) to anthropogenic noise pollution.</p>
 <div class="relative pt-2">
 <input class="w-full focus:outline-none" id="sliderSoundscape" max="10" min="0" step="0.1" type="range" value="5">
-<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span>Disruptive (0)</span><span>Harmonious (10)</span></div>
+<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span data-i18n="evaluator.audit.soundscapeDisruptive">Disruptive (0)</span><span data-i18n="evaluator.audit.soundscapeHarmonious">Harmonious (10)</span></div>
 </div>
 </div>
 <div class="space-y-4">
 <div class="flex justify-between items-end">
-<label class="font-body-lg text-body-lg text-andaman-deep font-medium">3. Thermal Comfort</label>
+<label class="font-body-lg text-body-lg text-andaman-deep font-medium" data-i18n="evaluator.audit.thermalLabel">3. Thermal Comfort</label>
 <span class="font-data-viz text-data-viz text-primary font-medium" id="valThermal">5.0</span>
 </div>
-<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4">Effectiveness of passive cooling, natural ventilation, and shading mimicking mangrove canopies.</p>
+<p class="text-sm text-on-surface-variant font-data-viz leading-relaxed mb-4" data-i18n="evaluator.audit.thermalDesc">Effectiveness of passive cooling, natural ventilation, and shading mimicking mangrove canopies.</p>
 <div class="relative pt-2">
 <input class="w-full focus:outline-none" id="sliderThermal" max="10" min="0" step="0.1" type="range" value="5">
-<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span>Artificial (0)</span><span>Passive (10)</span></div>
+<div class="flex justify-between mt-2 font-label-caps text-label-caps text-outline text-[10px]"><span data-i18n="evaluator.audit.thermalArtificial">Artificial (0)</span><span data-i18n="evaluator.audit.thermalPassive">Passive (10)</span></div>
 </div>
 </div>
 <div class="pt-6 sketch-border-b mt-8 mb-6"></div>
 <p class="text-sm hidden" id="auditSavedNote"></p>
 <div class="flex gap-4">
-<button class="flex-1 border border-primary text-primary font-label-caps text-label-caps py-3 rounded hover:bg-surface-container-low transition-colors text-center" id="btnSaveDraft" type="button">Save Draft</button>
+<button class="flex-1 border border-primary text-primary font-label-caps text-label-caps py-3 rounded hover:bg-surface-container-low transition-colors text-center" id="btnSaveDraft" type="button" data-i18n="evaluator.audit.btnSaveDraft">Save Draft</button>
 <button class="flex-1 bg-primary text-on-primary font-label-caps text-label-caps py-3 rounded hover:opacity-90 transition-opacity text-center flex justify-center items-center gap-2" id="btnCommit" type="button">
-                                Commit Data <span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span data-i18n="evaluator.audit.btnCommit">Commit Data</span> <span class="material-symbols-outlined text-[16px]">check_circle</span>
 </button>
 </div>
 </form>
@@ -163,10 +163,13 @@
 </div>
 </div>
 <footer class="border-t border-limestone-gray/50 mt-16">
-<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
 </main>
+<script src="assets/js/i18n-dict.js"></script>
+<script src="assets/js/i18n-dict-evaluator.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/beqi-core.js"></script>
 <script src="assets/js/evaluator-site-audit.js"></script>
 </body></html>

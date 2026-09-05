@@ -1,194 +1,150 @@
-<!DOCTYPE html><html class="light" lang="en"><head>
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Entrepreneur Dashboard - BEQI Portfolio for Sustainable Coastal Tourism</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;700&amp;family=Epilogue:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Epilogue:wght@600;700&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-high": "#eae8e3","on-primary": "#ffffff","outline-variant": "#bfc8c8","error": "#ba1a1a",
-                        "primary-container": "#2c6b6b","tertiary-fixed": "#b5eedc","on-tertiary-fixed-variant": "#155043","primary": "#095353",
-                        "jungle-leaf": "#2C2C2C","on-secondary-fixed": "#410003","on-secondary-container": "#600006","surface-variant": "#e4e2de",
-                        "tertiary": "#195346","surface-container-low": "#f5f3ee","tertiary-fixed-dim": "#99d2c1","on-primary-container": "#abe9e8",
-                        "surface-container": "#f0eee9","on-error-container": "#93000a","on-tertiary-fixed": "#002019","on-primary-fixed-variant": "#034f50",
-                        "primary-fixed": "#afeeed","error-container": "#ffdad6","limestone-gray": "#D9C8B2","on-secondary-fixed-variant": "#92030f",
-                        "secondary-container": "#ff5a52","on-secondary": "#ffffff","tertiary-container": "#346b5d","on-tertiary": "#ffffff",
-                        "background": "#fbf9f4","secondary": "#b52424","outline": "#6f7978","on-tertiary-container": "#b0e9d7",
-                        "secondary-fixed": "#ffdad6","surface-tint": "#286868","coral-warmth": "#F9564E","surface-container-lowest": "#ffffff",
-                        "surface-bright": "#fbf9f4","surface": "#fbf9f4","surface-container-highest": "#e4e2de","on-surface": "#1b1c19",
-                        "inverse-on-surface": "#f2f1ec","inverse-primary": "#94d1d1","on-background": "#1b1c19","secondary-fixed-dim": "#ffb4ac",
-                        "on-error": "#ffffff","surface-dim": "#dbdad5","inverse-surface": "#30312e","primary-fixed-dim": "#94d1d1",
-                        "andaman-deep": "#1A3D3D","sand-base": "#FCFAF5","on-surface-variant": "#3f4848","on-primary-fixed": "#002020"
-                    },
-                    "borderRadius": {"DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem"},
-                    "spacing": {"container-max": "1280px","margin-desktop": "64px","unit": "8px","gutter": "24px","margin-mobile": "20px"},
-                    "fontFamily": {
-                        "body-lg": ["Inter", "sans-serif"],"data-viz": ["Space Grotesk", "sans-serif"],"display-lg": ["Epilogue", "sans-serif"],
-                        "label-caps": ["Space Grotesk", "sans-serif"],"body-md": ["Inter", "sans-serif"],"headline-md": ["Epilogue", "sans-serif"],
-                        "display-lg-mobile": ["Epilogue", "sans-serif"]
-                    },
-                    "fontSize": {
-                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],"data-viz": ["14px", { "lineHeight": "1", "fontWeight": "400" }],
-                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500" }],
-                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],"headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
-                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }]
-                    }
-                }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#eae8e3","on-primary": "#ffffff","outline-variant": "#bfc8c8","error": "#ba1a1a",
+                    "primary-container": "#2c6b6b","tertiary-fixed": "#b5eedc","on-tertiary-fixed-variant": "#155043","primary": "#095353",
+                    "jungle-leaf": "#2C2C2C","on-secondary-fixed": "#410003","on-secondary-container": "#600006","surface-variant": "#e4e2de",
+                    "tertiary": "#195346","surface-container-low": "#f5f3ee","tertiary-fixed-dim": "#99d2c1","on-primary-container": "#abe9e8",
+                    "surface-container": "#f0eee9","on-error-container": "#93000a","on-tertiary-fixed": "#002019","on-primary-fixed-variant": "#034f50",
+                    "primary-fixed": "#afeeed","error-container": "#ffdad6","limestone-gray": "#D9C8B2","on-secondary-fixed-variant": "#92030f",
+                    "secondary-container": "#ff5a52","on-secondary": "#ffffff","tertiary-container": "#346b5d","on-tertiary": "#ffffff",
+                    "background": "#fbf9f4","secondary": "#b52424","outline": "#6f7978","on-tertiary-container": "#b0e9d7",
+                    "secondary-fixed": "#ffdad6","surface-tint": "#286868","coral-warmth": "#F9564E","surface-container-lowest": "#ffffff",
+                    "surface-bright": "#fbf9f4","surface": "#fbf9f4","surface-container-highest": "#e4e2de","on-surface": "#1b1c19",
+                    "inverse-on-surface": "#f2f1ec","inverse-primary": "#94d1d1","on-background": "#1b1c19","secondary-fixed-dim": "#ffb4ac",
+                    "on-error": "#ffffff","surface-dim": "#dbdad5","inverse-surface": "#30312e","primary-fixed-dim": "#94d1d1",
+                    "andaman-deep": "#1A3D3D","sand-base": "#FCFAF5","on-surface-variant": "#3f4848","on-primary-fixed": "#002020"
+            },
+            "borderRadius": {"DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem"},
+            "spacing": {"container-max": "1280px","margin-desktop": "64px","unit": "8px","gutter": "24px","margin-mobile": "20px"},
+            "fontFamily": {
+                    "body-lg": ["Inter"],"data-viz": ["Space Grotesk"],"display-lg": ["Epilogue"],"label-caps": ["Space Grotesk"],
+                    "body-md": ["Inter"],"headline-md": ["Epilogue"],"display-lg-mobile": ["Epilogue"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px",{"lineHeight": "1.6","fontWeight": "400"}],"data-viz": ["14px",{"lineHeight": "1","fontWeight": "400"}],
+                    "display-lg": ["48px",{"lineHeight": "1.1","letterSpacing": "-0.02em","fontWeight": "700"}],
+                    "label-caps": ["12px",{"lineHeight": "1","letterSpacing": "0.1em","fontWeight": "500"}],
+                    "body-md": ["16px",{"lineHeight": "1.6","fontWeight": "400"}],"headline-md": ["24px",{"lineHeight": "1.3","fontWeight": "600"}],
+                    "display-lg-mobile": ["32px",{"lineHeight": "1.2","fontWeight": "700"}]
             }
-        }
+    },
+        },
+      }
     </script>
 <style>
-        body { background-color: #FCFAF5; color: #1b1c19; -webkit-font-smoothing: antialiased; }
-        .sketch-border { border: 1px solid #D9C8B2; border-radius: 0.125rem; }
-        .organic-shadow { box-shadow: 0 10px 30px rgba(44, 107, 107, 0.04); }
-        .organic-shadow-hover:hover { box-shadow: 0 15px 40px rgba(44, 107, 107, 0.08); transform: translateY(-2px); transition: all 0.3s ease; }
-        .hand-drawn-underline { position: relative; display: inline-block; }
-        .hand-drawn-underline::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px;
-            background: currentColor; border-radius: 50%; opacity: 0.6; transform: skewX(-15deg); }
-        .gauge-container { position: relative; width: 300px; height: 300px; margin: 0 auto; }
-        .gauge-circle { fill: none; stroke-width: 8; stroke-linecap: round; }
-        .gauge-background { stroke: #eae8e3; }
-        .gauge-progress { stroke: url(#gauge-gradient); stroke-dasharray: 754; stroke-dashoffset: 754; transition: stroke-dashoffset 1.5s ease-out; }
-        .hatched-bg { background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(217, 200, 178, 0.2) 10px, rgba(217, 200, 178, 0.2) 11px); }
+        [hidden] { display: none !important; }
+        body { background-color: #FCFAF5; color: #1b1c19; background-image: radial-gradient(#D9C8B2 1px, transparent 1px); background-size: 20px 20px; }
+        .organic-border { border: 1px solid #D9C8B2; border-radius: 4px; }
+        .sketch-shadow:hover { box-shadow: 0 10px 30px rgba(44, 107, 107, 0.04); }
+        .nav-link { position: relative; display: inline-block; }
+        .nav-link::after { content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 2px; bottom: 0; left: 0;
+            background-color: currentColor; transform-origin: bottom right; transition: transform 0.25s ease-out; border-radius: 2px; }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); transform-origin: bottom left; }
+        .tool-btn{font:inherit;font-size:14px;font-weight:600;padding:10px 18px;border-radius:4px;cursor:pointer;transition:.15s;background:#EEF4F4;color:#1A3D3D;border:0}
+        .tool-btn:disabled{background:#F0F3F3;color:#A9BCBE;cursor:not-allowed}
+        .tool-btn:hover:not(:disabled){background:#DEEAEA}
+        .tool-btn.primary{background:#095353;color:#fff}
+        .tool-btn.primary:hover:not(:disabled){background:#1A3D3D}
+        .tool-btn.primary:disabled{background:#B7CBCE}
+        .tool-btn.ghost{background:transparent;border:1px solid #D9C8B2;color:#6f7978}
+        .status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;letter-spacing:.03em}
+        .status-pending{background:#FDF8E9;color:#8a6d1f}
+        .status-approved{background:#E8F4EE;color:#155043}
+        .status-revision{background:#FCEBEA;color:#a3352c}
     </style>
 </head>
-<body class="font-body-md overflow-x-hidden flex h-screen">
-<nav class="hidden md:flex bg-sand-base border-r border-limestone-gray h-full w-72 flex-col justify-between py-8 fixed left-0 top-0 z-40 transition-all duration-200 ease-in-out">
-<div>
-<div class="px-6 mb-12">
-<a href="index.html" class="font-display-lg text-headline-md text-andaman-deep mb-1 block">BEQI Index</a>
-<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Coastal Quality Framework</p>
-</div>
-<div class="flex flex-col gap-2 px-4">
-<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 px-4 py-3 transition-all flex items-center gap-3" href="explore.html">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">eco</span>
-<span class="font-body-md">Ecosystem Overview</span>
-</a>
-<a class="bg-primary-container text-on-primary-container font-semibold rounded-lg mx-2 px-4 py-3 flex items-center gap-3 shadow-sm" href="entrepreneur-dashboard.html">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
-<span class="font-body-md">Biophilic Index</span>
-</a>
-<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 px-4 py-3 transition-all flex items-center gap-3 comingsoon" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">description</span>
-<span class="font-body-md">Local Reports</span>
-</a>
-<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 px-4 py-3 transition-all flex items-center gap-3 comingsoon" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">auto_awesome</span>
-<span class="font-body-md">Sustainability Tools</span>
-</a>
-<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 px-4 py-3 transition-all flex items-center gap-3 comingsoon" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
-<span class="font-body-md">Settings</span>
-</a>
-</div>
-</div>
-<div class="px-4">
-<p class="font-label-caps text-label-caps text-outline px-2 mb-3 truncate" id="sidebarWho"></p>
-<a href="explore.html#draw" class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-3 rounded hover:opacity-90 transition-opacity mb-3 uppercase tracking-widest border border-primary flex items-center justify-center">
-                New Assessment
-            </a>
-<button id="logoutBtn" class="w-full bg-transparent text-on-surface-variant font-label-caps text-label-caps py-3 rounded hover:bg-surface-container-high transition-colors mb-8 uppercase tracking-widest border border-limestone-gray">
-                Log Out
-            </button>
-<div class="flex flex-col gap-2">
-<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 px-4 py-3 transition-all flex items-center gap-3 comingsoon" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">help</span>
-<span class="font-body-md">Support</span>
-</a>
-</div>
-</div>
+<body class="font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<header class="bg-background/80 backdrop-blur-md font-label-caps text-label-caps top-0 sticky z-50 border-b border-limestone-gray">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="index.html"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span></a>
+<div class="flex items-center gap-8">
+<nav class="hidden md:flex gap-8 items-center">
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
+<a class="nav-link active text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html" data-i18n="common.nav.evaluators">Evaluators</a>
 </nav>
-<main class="flex-1 ml-0 md:ml-72 bg-sand-base h-full overflow-y-auto w-full">
-<header class="md:hidden flex justify-between items-center w-full px-margin-mobile py-4 border-b border-limestone-gray bg-background/80 backdrop-blur-md sticky top-0 z-30">
-<h1 class="font-display-lg-mobile text-headline-md tracking-tighter text-andaman-deep">BEQI</h1>
+<div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors" data-lang-btn="en">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors" data-lang-btn="th">TH</button></div>
+<span class="hidden md:inline text-on-surface-variant text-sm truncate max-w-[160px]" id="whoami"></span>
+<button id="logoutBtn" class="inline-flex items-center justify-center gap-2 border border-limestone-gray text-on-surface-variant px-4 py-2 rounded font-label-caps text-label-caps hover:bg-surface-container-high transition-all duration-300">
+<span data-i18n="entrepreneur.dashboard.portalAccessBtn">Log Out</span>
+<span class="material-symbols-outlined text-[16px]">logout</span>
+</button>
+</div>
+</div>
 </header>
-<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-16">
-<div class="mb-16">
-<h2 class="font-label-caps text-label-caps text-outline uppercase tracking-widest mb-2">Entrepreneur Dashboard</h2>
-<h1 class="font-display-lg text-display-lg text-andaman-deep">Coastal Stewardship</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant mt-4 max-w-2xl" id="pageIntro">
-                    Track and enhance your business's integration with the Khao Lak coastal ecosystem.
-                </p>
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+<div class="mb-10">
+<h1 class="font-display-lg text-display-lg text-andaman-deep mb-2" data-i18n="entrepreneur.dashboard.hero.title">Assess Your Property</h1>
+<p class="font-body-md text-body-lg text-on-surface-variant max-w-2xl" data-i18n="entrepreneur.dashboard.hero.subtitle">Draw your property boundary, calculate its BEQI score, then submit it for official certification review.</p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-<section class="col-span-1 md:col-span-8 bg-surface-container-lowest sketch-border p-8 md:p-12 organic-shadow-hover relative overflow-hidden group">
-<div class="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
-<div class="flex-1 w-full">
-<h3 class="font-headline-md text-headline-md text-andaman-deep mb-2 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">water_drop</span>
-                                Current Assessment
-                            </h3>
-<p class="font-body-md text-body-md text-on-surface-variant mb-8">
-                                คะแนนตัวชี้วัดทั้ง 4 ด้านของ BEQI (แสดงคู่กับคะแนนรวมเสมอ ไม่สรุปด้วยคะแนนรวมเพียงตัวเดียวโดยลำพัง)
-                            </p>
-<div class="space-y-6" id="indicatorRows"></div>
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<section class="lg:col-span-7 flex flex-col gap-4">
+<div id="geeAuthBox" class="organic-border bg-white p-4 font-body-md text-sm"></div>
+<div class="organic-border overflow-hidden bg-white">
+<div id="pickerMap" style="height:480px"></div>
 </div>
-<div class="gauge-container flex-shrink-0">
-<svg class="w-full h-full transform -rotate-90" viewBox="0 0 300 300">
-<defs>
-<linearGradient id="gauge-gradient" x1="0%" x2="100%" y1="0%" y2="0%">
-<stop offset="0%" stop-color="#F9564E"></stop>
-<stop offset="100%" stop-color="#095353"></stop>
-</linearGradient>
-</defs>
-<circle class="gauge-circle gauge-background" cx="150" cy="150" r="120"></circle>
-<circle class="gauge-circle gauge-progress" id="gaugeProgress" cx="150" cy="150" r="120"></circle>
-</svg>
-<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-<span class="font-display-lg text-[64px] font-bold text-andaman-deep leading-none tracking-tighter" id="gaugeScore">--</span>
-<span class="font-label-caps text-label-caps text-outline uppercase tracking-widest mt-2">Overall Score</span>
+<div class="flex flex-wrap items-center gap-3">
+<button class="tool-btn" id="undoBtn" disabled data-i18n="explore.draw.undoBtn">Undo last point</button>
+<button class="tool-btn" id="closeBtn" disabled data-i18n="explore.draw.closeBtn">Close shape</button>
+<button class="tool-btn ghost" id="clearBtn" data-i18n="explore.draw.clearBtn">Clear</button>
+<button class="tool-btn primary ml-auto" id="runBtn" disabled data-i18n="explore.draw.runBtn">Calculate BEQI</button>
 </div>
+<p class="font-body-md text-sm text-on-surface-variant" id="pickerMapNote" data-i18n="explore.draw.mapLoading">Loading map…</p>
+</section>
+
+<aside class="lg:col-span-5 flex flex-col gap-4">
+<div id="siteCards" class="flex flex-col gap-4"></div>
+<div class="organic-border bg-surface-container-low p-10 text-center text-on-surface-variant text-sm" id="pickerResultEmpty">
+<span class="material-symbols-outlined text-primary/30 text-[48px] mb-3 block">draw</span>
+<span data-i18n="explore.result.empty">Draw an area on the map and click "Calculate BEQI" to see its score here — draw up to 3 areas to compare them.</span>
 </div>
+<p class="font-body-md text-xs text-on-surface-variant" data-i18n="explore.result.footnote">Indicator 4 is a satellite-based estimate, not a field survey result. The 95% confidence interval is a real-time approximation for this drawn area, not the offline Monte Carlo used for the 3 reference zones. Certification must still be confirmed with the 14-form field audit.</p>
+</aside>
+</div>
+
+<section id="compareSection" class="mt-16" hidden>
+<h2 class="font-headline-md text-headline-md text-andaman-deep mb-6" data-i18n="explore.compare.heading">Compare Areas</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<div class="organic-border bg-white p-6"><canvas id="compareBar" height="220"></canvas></div>
+<div class="organic-border bg-white p-6 overflow-x-auto"><table id="compareTable" class="w-full text-sm"></table></div>
 </div>
 </section>
-<section class="col-span-1 md:col-span-4 bg-surface-container-lowest sketch-border p-8 organic-shadow flex flex-col justify-between">
-<div>
-<div class="flex justify-between items-start mb-6">
-<h3 class="font-headline-md text-headline-md text-andaman-deep">Official Badge</h3>
-<span class="material-symbols-outlined text-outline">verified</span>
+
+<section class="mt-16">
+<h2 class="font-headline-md text-headline-md text-andaman-deep mb-6" data-i18n="entrepreneur.dashboard.submissionsHeading">My Submissions</h2>
+<div id="submissionsEmpty" class="organic-border bg-surface-container-low p-10 text-center text-on-surface-variant text-sm">
+<span data-i18n="entrepreneur.dashboard.submissionsEmpty">No submissions yet — calculate a BEQI score above, then submit it for review.</span>
 </div>
-<p class="font-body-md text-body-md text-on-surface-variant mb-6 text-sm">
-                            Display this credential to visitors to demonstrate your commitment to coastal preservation.
-                        </p>
-</div>
-<div class="border border-limestone-gray p-6 flex flex-col items-center justify-center text-center bg-sand-base hatched-bg relative">
-<div class="w-16 h-16 rounded-full border-2 border-primary flex items-center justify-center mb-4 bg-surface-container-lowest">
-<span class="material-symbols-outlined text-primary text-3xl">park</span>
-</div>
-<h4 class="font-display-lg text-[20px] text-andaman-deep mb-1" id="badgeTier">--</h4>
-<p class="font-label-caps text-label-caps text-on-surface-variant uppercase text-[10px]" id="badgeSub">Khao Lak Biophilic Index</p>
-<p class="font-data-viz text-data-viz text-outline mt-4" id="badgeYear">--</p>
-<div class="absolute top-2 left-2 w-2 h-2 border-t border-l border-primary"></div>
-<div class="absolute top-2 right-2 w-2 h-2 border-t border-r border-primary"></div>
-<div class="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-primary"></div>
-<div class="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-primary"></div>
-</div>
-<button class="w-full mt-6 bg-transparent border border-primary text-primary font-label-caps text-label-caps py-3 rounded hover:bg-primary-container hover:text-on-primary-container transition-colors uppercase tracking-widest comingsoon">
-                        Download Assets
-                    </button>
+<div id="submissionsList" class="flex flex-col gap-3"></div>
 </section>
-<section class="col-span-1 md:col-span-12 mt-4">
-<div class="flex items-center justify-between mb-8">
-<h3 class="font-headline-md text-headline-md text-andaman-deep flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">psychology</span>
-                            Strategic Recommendations
-                        </h3>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="recoCards"></div>
-</section>
-</div>
-</div>
-<footer class="border-t border-limestone-gray/50 mt-16">
-<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+</main>
+<footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
+<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
-</main>
+<script src="assets/js/i18n-dict.js"></script>
+<script src="assets/js/i18n-dict-entrepreneur.js"></script>
+<script src="assets/js/i18n-dict-explore.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/beqi-core.js"></script>
 <script src="assets/js/entrepreneur-dashboard.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/earthengine/1.7.31/earthengine-api.min.js"></script>
+<script src="assets/js/gee-config.js"></script>
+<script src="assets/js/api-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="assets/js/picker.js"></script>
 </body></html>

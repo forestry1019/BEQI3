@@ -44,6 +44,7 @@
       }
     </script>
 <style>
+        [hidden] { display: none !important; }
         body { background-color: #FCFAF5; color: #1b1c19; background-image: radial-gradient(#D9C8B2 1px, transparent 1px); background-size: 20px 20px; }
         .organic-border { border: 1px solid #D9C8B2; border-radius: 4px; }
         .sketch-shadow:hover { box-shadow: 0 10px 30px rgba(44, 107, 107, 0.04); }
@@ -51,222 +52,84 @@
         .nav-link::after { content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 2px; bottom: 0; left: 0;
             background-color: currentColor; transform-origin: bottom right; transition: transform 0.25s ease-out; border-radius: 2px; }
         .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); transform-origin: bottom left; }
-        .modetab { cursor: pointer; }
-        .modetab.on { background: #095353; color: #fff; }
-
-        /* ---- Legacy draw+GEE tool (Tab1+Tab4 เดิม) — สไตล์ใหม่ scoped เฉพาะโซนนี้ ---- */
-        .legacy-tool .card{background:#fff;border:1px solid #D9C8B2;border-radius:4px;padding:22px;margin-top:16px}
-        .legacy-tool h3{font-size:17px;margin:0 0 14px;color:#1A3D3D;font-weight:700}
-        .legacy-tool .steplist{list-style:none;margin:0 0 4px;padding:0;display:grid;gap:14px}
-        .legacy-tool .steplist li{display:flex;gap:14px;align-items:flex-start}
-        .legacy-tool .stepnum{flex:none;width:26px;height:26px;border-radius:50%;background:#095353;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
-        .legacy-tool .steplist b{color:#1A3D3D}
-        .legacy-tool .note{font-size:13px;color:#6f7978;margin-top:10px;line-height:1.65}
-        .legacy-tool .warn{background:#FDF8E9;border:1px solid #EEDFAD;border-radius:8px;padding:16px 18px;font-size:14.5px;margin:18px 0;line-height:1.7}
-        .legacy-tool .ctl{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:14px;font-size:14.5px}
-        .legacy-tool .ctl label{display:flex;gap:7px;align-items:center;cursor:pointer}
-        .legacy-tool input[type=text],.legacy-tool select{font:inherit;font-size:14px;padding:9px 11px;border:1px solid #D9C8B2;border-radius:4px;color:#1b1c19;background:#fff;min-width:220px}
-        .legacy-tool input[type=checkbox]{accent-color:#095353}
-        .legacy-tool .btn{background:#EEF4F4;color:#1A3D3D;border:0;padding:10px 18px;border-radius:4px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:.15s}
-        .legacy-tool .btn:disabled{background:#F0F3F3;color:#A9BCBE;cursor:not-allowed}
-        .legacy-tool .btn:hover:not(:disabled){background:#DEEAEA}
-        .legacy-tool .btn.primary{background:#095353;color:#fff}
-        .legacy-tool .btn.primary:hover:not(:disabled){background:#1A3D3D}
-        .legacy-tool .btn.primary:disabled{background:#B7CBCE}
-        .legacy-tool .btn.ghost{background:transparent;border:1px solid #D9C8B2;color:#6f7978}
-        .legacy-tool #pickerMap{height:420px;border-radius:4px;border:1px solid #D9C8B2}
-        .legacy-tool .score{font-size:44px;font-weight:700;color:#095353;line-height:1.1;margin:14px 0 0;letter-spacing:-1px}
-        .legacy-tool .score small{font-size:13.5px;color:#6f7978;font-weight:500;letter-spacing:0}
-        .legacy-tool .ci{font-size:13px;color:#6f7978;margin:3px 0 14px}
-        .legacy-tool .bars{margin-top:4px}
-        .legacy-tool .bar{margin:9px 0}
-        .legacy-tool .bl{display:flex;justify-content:space-between;font-size:12.5px;color:#6f7978;margin-bottom:4px}
-        .legacy-tool .bt{height:8px;background:#EDF2F2;border-radius:99px;overflow:hidden}
-        .legacy-tool .bf{height:100%;border-radius:99px;transition:width .5s ease}
-        .legacy-tool .kv{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #D9C8B2;font-size:14.5px}
-        .legacy-tool .kv b{font-weight:600;font-variant-numeric:tabular-nums}
-        .legacy-tool table{width:100%;border-collapse:collapse;font-size:14.5px}
-        .legacy-tool th,.legacy-tool td{padding:11px 12px;border-bottom:1px solid #D9C8B2;text-align:left}
-        .legacy-tool th{background:#F3F8F8;color:#1A3D3D;font-weight:600;font-size:13px}
-        .legacy-tool td.n,.legacy-tool th.n{text-align:right;font-variant-numeric:tabular-nums}
-        .legacy-tool .hl{background:#EAF4F2;font-weight:600}
-        .legacy-tool .sitelist{display:flex;flex-direction:column;gap:8px;margin-top:4px}
-        .legacy-tool .siterow{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #D9C8B2;border-radius:8px;font-size:14px;flex-wrap:wrap}
-        .legacy-tool .sitedot{width:12px;height:12px;border-radius:50%;flex:none}
-        .legacy-tool .sitename{font-weight:600;color:#1A3D3D}
-        .legacy-tool .sitetype{font-size:12px;color:#6f7978}
-        .legacy-tool .sitescore{margin-left:auto;font-weight:700;color:#095353;font-variant-numeric:tabular-nums}
-        .legacy-tool .siterow .btn{padding:6px 12px;font-size:12.5px}
+        .tool-btn{font:inherit;font-size:14px;font-weight:600;padding:10px 18px;border-radius:4px;cursor:pointer;transition:.15s;background:#EEF4F4;color:#1A3D3D;border:0}
+        .tool-btn:disabled{background:#F0F3F3;color:#A9BCBE;cursor:not-allowed}
+        .tool-btn:hover:not(:disabled){background:#DEEAEA}
+        .tool-btn.primary{background:#095353;color:#fff}
+        .tool-btn.primary:hover:not(:disabled){background:#1A3D3D}
+        .tool-btn.primary:disabled{background:#B7CBCE}
+        .tool-btn.ghost{background:transparent;border:1px solid #D9C8B2;color:#6f7978}
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
 <header class="bg-background/80 backdrop-blur-md border-b border-limestone-gray top-0 sticky z-50">
 <div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto md:px-margin-desktop px-margin-mobile">
 <a href="index.html" class="font-display-lg text-headline-md tracking-tighter text-andaman-deep">BEQI Portfolio for Sustainable Coastal Tourism</a>
+<div class="flex items-center gap-8">
 <nav class="hidden md:flex gap-8 items-center">
-<a class="nav-link active text-primary pb-1" href="explore.html">Tourists</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="entrepreneur-portal.html">Entrepreneurs</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="evaluator-portal.html">Evaluators</a>
+<a class="nav-link active text-primary pb-1" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="evaluator-portal.html" data-i18n="common.nav.evaluators">Evaluators</a>
 </nav>
+<div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors" data-lang-btn="en">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors" data-lang-btn="th">TH</button></div>
 <a href="entrepreneur-portal.html" class="hidden md:flex items-center gap-2 font-label-caps text-label-caps px-4 py-2 bg-primary-container text-on-primary-container organic-border hover:opacity-80 transition-all">
-                Portal Access
-                <span class="material-symbols-outlined text-[16px]">login</span>
+<span data-i18n="explore.header.portalAccess">Portal Access</span>
+<span class="material-symbols-outlined text-[16px]">login</span>
 </a>
+</div>
 </div>
 </header>
 <main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
-<div class="flex items-center justify-between mb-8 flex-wrap gap-4">
-<div>
-<h1 class="font-display-lg text-display-lg text-andaman-deep mb-2">Explore the Coast</h1>
-<p class="font-body-md text-body-md text-on-surface-variant">Discover sustainable destinations certified by the Biophilic Ecosystem Quality Index.</p>
-</div>
-<div class="flex organic-border overflow-hidden font-label-caps text-label-caps">
-<button class="modetab px-4 py-2 on" id="tabExplore">สำรวจพื้นที่</button>
-<button class="modetab px-4 py-2" id="tabDraw">วาดขอบเขต &amp; เปรียบเทียบ</button>
-</div>
+<div class="mb-10">
+<h1 class="font-display-lg text-display-lg text-andaman-deep mb-2" data-i18n="explore.hero.title">Explore the Coast</h1>
+<p class="font-body-md text-body-lg text-on-surface-variant max-w-2xl" data-i18n="explore.hero.subtitle">Discover sustainable destinations certified by the Biophilic Environmental Quality Index.</p>
 </div>
 
-<div id="viewExplore" class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-<aside class="md:col-span-4 flex flex-col gap-8">
-<div class="bg-white organic-border p-6 sketch-shadow">
-<h3 class="font-label-caps text-label-caps text-outline mb-4">GEOGRAPHICAL ZONES</h3>
-<div class="flex flex-col gap-3 mb-6" id="zoneFilterList"></div>
-<h3 class="font-label-caps text-label-caps text-outline mb-4">ACTIVITY</h3>
-<div class="flex flex-wrap gap-2">
-<button class="font-label-caps text-label-caps px-3 py-1 bg-surface-container-low text-primary organic-border hover:bg-surface-container-high transition-colors">Diving</button>
-<button class="font-label-caps text-label-caps px-3 py-1 bg-surface-container-low text-primary organic-border hover:bg-surface-container-high transition-colors">Kayaking</button>
-<button class="font-label-caps text-label-caps px-3 py-1 bg-surface-container-low text-primary organic-border hover:bg-surface-container-high transition-colors">Relaxing</button>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<section class="lg:col-span-7 flex flex-col gap-4">
+<div id="geeAuthBox" class="organic-border bg-white p-4 font-body-md text-sm"></div>
+<div class="organic-border overflow-hidden bg-white">
+<div id="pickerMap" style="height:480px"></div>
 </div>
+<div class="flex flex-wrap items-center gap-3">
+<button class="tool-btn" id="undoBtn" disabled data-i18n="explore.draw.undoBtn">Undo last point</button>
+<button class="tool-btn" id="closeBtn" disabled data-i18n="explore.draw.closeBtn">Close shape</button>
+<button class="tool-btn ghost" id="clearBtn" data-i18n="explore.draw.clearBtn">Clear</button>
+<button class="tool-btn primary ml-auto" id="runBtn" disabled data-i18n="explore.draw.runBtn">Calculate BEQI</button>
 </div>
-<div class="flex flex-col gap-4 overflow-y-auto pr-2" id="zoneCardList" style="max-height: 600px;"></div>
+<p class="font-body-md text-sm text-on-surface-variant" id="pickerMapNote" data-i18n="explore.draw.mapLoading">Loading map…</p>
+</section>
+
+<aside class="lg:col-span-5 flex flex-col gap-4">
+<div id="siteCards" class="flex flex-col gap-4"></div>
+<div class="organic-border bg-surface-container-low p-10 text-center text-on-surface-variant text-sm" id="pickerResultEmpty">
+<span class="material-symbols-outlined text-primary/30 text-[48px] mb-3 block">draw</span>
+<span data-i18n="explore.result.empty">Draw an area on the map and click "Calculate BEQI" to see its score here — draw up to 3 areas to compare them.</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant" data-i18n="explore.result.footnote">Indicator 4 is a satellite-based estimate, not a field survey result. The 95% confidence interval is a real-time approximation for this drawn area, not the offline Monte Carlo used for the 3 reference zones. Certification must still be confirmed with the 14-form field audit.</p>
 </aside>
-<section class="md:col-span-8 flex flex-col gap-8">
-<div class="bg-white organic-border p-8 sketch-shadow flex flex-col md:flex-row gap-8 items-center">
-<div class="w-full md:w-1/2 h-64 md:h-auto aspect-video relative organic-border overflow-hidden flex items-center justify-center bg-surface-container-low">
-<span class="material-symbols-outlined text-primary/30 text-[96px]">terrain</span>
-<div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 font-label-caps text-label-caps organic-border" id="detailPlace">Khao Lak Coast</div>
 </div>
-<div class="w-full md:w-1/2 flex flex-col gap-6">
-<div>
-<div class="flex items-center gap-3 mb-2">
-<span class="font-display-lg text-[32px] text-primary" id="detailScore">--</span>
-<span class="font-body-md text-sm text-outline">Overall Index Score</span>
-</div>
-<h2 class="font-headline-md text-headline-md text-andaman-deep mb-3" id="detailName">--</h2>
-<p class="font-body-md text-body-md text-on-surface-variant" id="detailDesc"></p>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div class="bg-white organic-border p-6 sketch-shadow">
-<h3 class="font-label-caps text-label-caps text-outline mb-6">GREEN AREA DENSITY &amp; CONNECTIVITY</h3>
-<div class="flex items-end gap-4 mb-4">
-<span class="font-display-lg text-[40px] text-primary leading-none" id="detailGrade">--</span>
-</div>
-<p class="font-body-md text-sm text-on-surface-variant" id="detailAirNote"></p>
-</div>
-<div class="bg-white organic-border p-6 sketch-shadow">
-<h3 class="font-label-caps text-label-caps text-outline mb-6">VISUAL CONNECTION TO NATURE</h3>
-<div class="flex gap-4 items-center mb-4">
-<span class="font-display-lg text-[28px] text-andaman-deep" id="detailVisualPct">--</span>
-<div class="flex-1">
-<div class="h-2 w-full bg-surface-container mb-2 organic-border"><div class="h-full bg-coral-warmth" id="detailBarA" style="width:0%"></div></div>
-<div class="h-2 w-full bg-surface-container organic-border"><div class="h-full bg-primary-container" id="detailBarB" style="width:0%"></div></div>
-</div>
-</div>
-<p class="font-body-md text-sm text-on-surface-variant" id="detailVisualNote"></p>
-</div>
+
+<section id="compareSection" class="mt-16" hidden>
+<h2 class="font-headline-md text-headline-md text-andaman-deep mb-6" data-i18n="explore.compare.heading">Compare Areas</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<div class="organic-border bg-white p-6"><canvas id="compareBar" height="220"></canvas></div>
+<div class="organic-border bg-white p-6 overflow-x-auto"><table id="compareTable" class="w-full text-sm"></table></div>
 </div>
 </section>
-</div>
-
-<div id="viewDraw" class="legacy-tool" style="display:none">
-<p class="font-body-md text-body-md text-on-surface-variant mb-2">เครื่องมือนี้ให้คุณวาดขอบเขตแปลงที่ดินจริงบนแผนที่แล้วคำนวณ BEQI สดจากภาพดาวเทียมผ่าน Google Earth Engine ตรงในเบราว์เซอร์ พร้อมเปรียบเทียบหลายพื้นที่พร้อมกัน (สืบทอดมาจากแท็บ "วาดขอบเขตแปลงที่ดิน" และ "วิเคราะห์และเปรียบเทียบหลายพื้นที่" ของต้นแบบเดิม)</p>
-
-<div class="card" id="howtoCard">
-<h3>แนะนำการใช้งาน</h3>
-<ol class="steplist">
-<li><span class="stepnum">1</span><div><b>เข้าสู่ระบบ:</b> ลงชื่อเข้าใช้ผ่านบัญชี Google Earth Engine</div></li>
-<li><span class="stepnum">2</span><div><b>วาดพื้นที่:</b> คลิกวาดขอบเขตที่ดินที่ต้องการประเมินบนแผนที่</div></li>
-<li><span class="stepnum">3</span><div><b>ประมวลผล:</b> ระบบจะคำนวณค่าดัชนี BEQI จากภาพดาวเทียมให้อัตโนมัติ</div></li>
-<li><span class="stepnum">4</span><div><b>เปรียบเทียบ:</b> วาดพื้นที่เพิ่มเติมเพื่อเปรียบเทียบค่าดัชนี</div></li>
-</ol>
-<p class="note">หมายเหตุ: กรอบเส้นประ 3 สีบนแผนที่ คือโซนอ้างอิงของงานวิจัย ท่านสามารถวาดพื้นที่ย่อยอื่นๆ เพื่อเปรียบเทียบสมรรถนะเชิงพื้นที่ได้อย่างอิสระ</p>
-</div>
-
-<div class="card" id="geeAuthBox"></div>
-
-<div class="card">
-<h3>วาดขอบเขตแปลงที่ดิน</h3>
-<div id="pickerMap"></div>
-<div class="ctl" style="margin-top:12px">
-<button class="btn" id="undoBtn" disabled>ย้อนจุดล่าสุด</button>
-<button class="btn" id="closeBtn" disabled>ปิดรูปหลายเหลี่ยม</button>
-<button class="btn ghost" id="clearBtn">ล้างจุดที่วาดค้างอยู่</button>
-</div>
-<div class="ctl" id="siteMetaCtl">
-<label style="flex-direction:column;align-items:flex-start;gap:4px">ชื่อพื้นที่ย่อย
-<input type="text" id="siteName" placeholder="เช่น หาดหน้าอ่าว, จุดชมวิวเขาหลัก">
-</label>
-<label style="flex-direction:column;align-items:flex-start;gap:4px">ประเภทพื้นที่ย่อย
-<select id="siteType"></select>
-</label>
-<button class="btn primary" id="runBtn" disabled style="align-self:flex-end">คำนวณ BEQI และเพิ่มเข้าเปรียบเทียบ</button>
-</div>
-<p class="note" id="pickerMapNote">กำลังโหลดแผนที่…</p>
-</div>
-
-<div class="card" id="pickerResultCard" hidden>
-<h3>ผลการคำนวณของพื้นที่ย่อยล่าสุด</h3>
-<div id="pickerResult"></div>
-</div>
-
-<div class="card" id="compareCard" hidden>
-<h3>เปรียบเทียบหลายพื้นที่พร้อมกัน</h3>
-<div class="ctl" style="margin-bottom:0">
-<label><input type="checkbox" id="includeZonesChk" checked> เทียบกับ 3 โซนหลักของ Portfolio เป็นมาตรฐานอ้างอิง</label>
-<button class="btn ghost" id="clearSitesBtn">ล้างการเปรียบเทียบทั้งหมด</button>
-</div>
-<div id="siteList" class="sitelist"></div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6" style="margin-top:16px">
-<div><canvas id="compareRadar" height="280"></canvas></div>
-<div><canvas id="compareBar" height="280"></canvas></div>
-</div>
-<div style="overflow-x:auto;margin-top:16px"><table id="compareTable"></table></div>
-</div>
-<div class="card" id="compareEmpty">
-<p class="note" style="margin:0">ยังไม่มีพื้นที่ย่อยให้เปรียบเทียบ — วาดขอบเขตอย่างน้อย 1 พื้นที่ย่อยด้านบน พร้อมตั้งชื่อและเลือกประเภท ก่อนกด "คำนวณ BEQI และเพิ่มเข้าเปรียบเทียบ"</p>
-</div>
-</div>
 </main>
 <footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
 <div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
+<script src="assets/js/i18n-dict.js"></script>
+<script src="assets/js/i18n-dict-explore.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/beqi-core.js"></script>
-<script src="assets/js/explore-gallery.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/earthengine/1.7.31/earthengine-api.min.js"></script>
 <script src="assets/js/gee-config.js"></script>
+<script src="assets/js/api-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="assets/js/picker.js"></script>
-<script>
-(function(){
-  const tabExplore = document.getElementById('tabExplore');
-  const tabDraw = document.getElementById('tabDraw');
-  const viewExplore = document.getElementById('viewExplore');
-  const viewDraw = document.getElementById('viewDraw');
-  function showDraw(){
-    tabDraw.classList.add('on'); tabExplore.classList.remove('on');
-    viewDraw.style.display = ''; viewExplore.style.display = 'none';
-  }
-  function showExplore(){
-    tabExplore.classList.add('on'); tabDraw.classList.remove('on');
-    viewExplore.style.display = ''; viewDraw.style.display = 'none';
-  }
-  tabExplore.addEventListener('click', showExplore);
-  tabDraw.addEventListener('click', showDraw);
-  if(window.location.hash === '#draw') showDraw();
-})();
-</script>
 </body></html>

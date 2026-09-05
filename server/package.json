@@ -1,0 +1,17 @@
+{
+  "name": "beqi-compute-function",
+  "version": "1.0.0",
+  "description": "Cloud Function proxy for BEQI live area computation — runs Google Earth Engine under the function's own service account so site visitors never need to log in themselves.",
+  "main": "index.js",
+  "scripts": {
+    "start": "functions-framework --target=computeBeqi"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.0",
+    "@google/earthengine": "^1.4.2",
+    "google-auth-library": "^9.14.1"
+  }
+}

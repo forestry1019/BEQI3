@@ -60,9 +60,9 @@
 <div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
 <a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="index.html"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span><span class="text-headline-md">BEQI Portfolio for Sustainable Coastal Tourism</span></a>
 <nav class="hidden md:flex gap-8 items-center">
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html">Tourists</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html">Entrepreneurs</a>
-<a class="nav-link active text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html">Evaluators</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
+<a class="nav-link active text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html" data-i18n="common.nav.evaluators">Evaluators</a>
 </nav>
 </div>
 </header>
@@ -70,44 +70,47 @@
 <div class="w-full max-w-md bg-surface-container-lowest sketch-border p-10">
 <div class="flex items-center gap-3 mb-2">
 <span class="material-symbols-outlined text-primary text-3xl">verified</span>
-<h1 class="font-headline-md text-headline-md text-andaman-deep">Evaluator Access</h1>
+<h1 class="font-headline-md text-headline-md text-andaman-deep" data-i18n="evaluator.portal.title">Evaluator Access</h1>
 </div>
-<p class="font-body-md text-on-surface-variant mb-8">
+<p class="font-body-md text-on-surface-variant mb-8" data-i18n="evaluator.portal.intro">
   หน้านี้สงวนไว้สำหรับผู้ประเมินที่ได้รับมอบหมายเท่านั้น ต้องลงทะเบียนด้วยรหัสผู้ประเมินก่อนจึงจะเข้าสู่ Evaluator Dashboard และ Site Audit ได้
 </p>
-<p id="blockedNote" class="hidden text-sm text-coral-warmth bg-error-container/30 sketch-border p-3 mb-6">
+<p id="blockedNote" class="hidden text-sm text-coral-warmth bg-error-container/30 sketch-border p-3 mb-6" data-i18n="evaluator.portal.blockedNote">
   บัญชีที่ล็อกอินอยู่ไม่ใช่บัญชีผู้ประเมิน กรุณาลงทะเบียนด้วยรหัสผู้ประเมินด้านล่างก่อนเข้าใช้งานหน้านี้
 </p>
 <form class="space-y-6" id="evalForm">
 <div>
-<label class="block font-label-caps text-label-caps text-andaman-deep mb-2">Evaluator Name</label>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="evaluator.portal.nameLabel">Evaluator Name</label>
 <input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2" id="evalName" placeholder="Dr. Somchai Prasert" type="text">
 </div>
 <div>
-<label class="block font-label-caps text-label-caps text-andaman-deep mb-2">Evaluator Email</label>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="evaluator.portal.emailLabel">Evaluator Email</label>
 <input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2" id="evalEmail" placeholder="evaluator@beqi.org" type="email">
 </div>
 <div>
-<label class="block font-label-caps text-label-caps text-andaman-deep mb-2">Organization</label>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="evaluator.portal.orgLabel">Organization</label>
 <input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2" id="evalOrg" placeholder="e.g., DASTA / อบต. เขาหลัก" type="text">
 </div>
 <div>
-<label class="block font-label-caps text-label-caps text-andaman-deep mb-2">Evaluator Access Code</label>
-<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2" id="evalCode" placeholder="รหัสที่ได้รับจากผู้ดูแลระบบ" type="password">
-<p class="text-xs text-outline mt-2">ต้นแบบนี้ใช้รหัสทดสอบ <code>BEQI-EVAL-2026</code> — เวอร์ชันจริงจะเปลี่ยนเป็นการยืนยันตัวตนโดยผู้ดูแลระบบ</p>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="evaluator.portal.codeLabel">Evaluator Access Code</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2" id="evalCode" placeholder="รหัสที่ได้รับจากผู้ดูแลระบบ" type="password" data-i18n-placeholder="evaluator.portal.codePlaceholder">
+<p class="text-xs text-outline mt-2" data-i18n-html="evaluator.portal.codeHint">ต้นแบบนี้ใช้รหัสทดสอบ <code>BEQI-EVAL-2026</code> — เวอร์ชันจริงจะเปลี่ยนเป็นการยืนยันตัวตนโดยผู้ดูแลระบบ</p>
 </div>
 <p class="text-sm text-coral-warmth hidden" id="evalError"></p>
 <button class="bg-primary text-on-primary font-body-md font-medium py-3 px-8 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center gap-2 w-full" type="submit">
-<span>Enter Evaluator Dashboard</span>
+<span data-i18n="evaluator.portal.submitBtn">Enter Evaluator Dashboard</span>
 <span class="material-symbols-outlined text-sm">arrow_forward</span>
 </button>
 </form>
 </div>
 </main>
 <footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
-<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
+<script src="assets/js/i18n-dict.js"></script>
+<script src="assets/js/i18n-dict-evaluator.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/beqi-core.js"></script>
 <script>
 (function(){
@@ -124,12 +127,12 @@
     const code = document.getElementById('evalCode').value.trim();
     const errEl = document.getElementById('evalError');
     if(code !== 'BEQI-EVAL-2026'){
-      errEl.textContent = 'รหัสผู้ประเมินไม่ถูกต้อง';
+      errEl.textContent = I18N.t('evaluator.portal.errCode');
       errEl.classList.remove('hidden');
       return;
     }
     if(!name || !email || !org){
-      errEl.textContent = 'กรุณากรอกข้อมูลให้ครบทุกช่อง';
+      errEl.textContent = I18N.t('evaluator.portal.errRequired');
       errEl.classList.remove('hidden');
       return;
     }

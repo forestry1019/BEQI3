@@ -28,6 +28,7 @@
     wireSliders();
     loadIntoForm();
   });
+  document.addEventListener('beqi:langchange', function(){ if(D) { renderList(); updateGauge(); } });
 
   function renderList(){
     const audits = loadAudits();
@@ -35,12 +36,16 @@
       const a = audits[z.id];
       const status = a ? a.status : 'not_started';
       const dotColor = {committed: '#94d1d1', draft: '#ff5a52', not_started: '#e4e2de'}[status];
-      const label = {committed: 'Completed', draft: 'In Progress', not_started: 'Not Started'}[status];
+      const label = {
+        committed: I18N.t('evaluator.audit.statusCompleted'),
+        draft: I18N.t('evaluator.audit.statusInProgress'),
+        not_started: I18N.t('evaluator.audit.statusNotStarted')
+      }[status];
       const active = z.id === selectedZoneId;
       return '<div class="flex items-center justify-between p-4 border rounded hover:bg-surface-container-low transition-colors cursor-pointer" ' +
         'data-zone="' + z.id + '" style="border-color:' + (active ? '#095353' : 'rgba(217,200,178,.5)') + '">' +
         '<div class="flex items-start gap-4"><div class="mt-1 h-3 w-3 rounded-full" style="background:' + dotColor + '"></div>' +
-        '<div><h4 class="font-body-md font-medium text-andaman-deep">' + z.name_th + ' — Site Audit</h4>' +
+        '<div><h4 class="font-body-md font-medium text-andaman-deep">' + z.name_th + I18N.t('evaluator.audit.siteAuditSuffix') + '</h4>' +
         '<p class="font-data-viz text-data-viz text-on-surface-variant mt-1">' + z.sub_th + '</p></div></div>' +
         '<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-variant/50 px-2 py-1 rounded">' + label + '</span></div>';
     }).join('');
@@ -91,7 +96,7 @@
     document.getElementById('auditGaugeScore').textContent = BeqiCore.fx(score, 0);
     const circumference = 2 * Math.PI * 45;
     document.getElementById('auditGaugeCircle').style.strokeDashoffset = circumference * (1 - Math.min(score, 100) / 100);
-    document.getElementById('auditIntegrity').textContent = score >= 71 ? 'Excellent' : score >= 41 ? 'Favorable' : 'Needs Improvement';
+    document.getElementById('auditIntegrity').textContent = score >= 71 ? I18N.t('evaluator.audit.integrityExcellent') : score >= 41 ? I18N.t('evaluator.audit.integrityFavorable') : I18N.t('evaluator.audit.integrityNeeds');
     document.getElementById('auditIndicatorBars').innerHTML = norm.map(function(v, i){
       return '<div><div class="flex justify-between text-xs font-data-viz text-on-surface-variant mb-1"><span>' + IND_LABEL[i] + '</span><span>' + BeqiCore.fx(v, 3) + '</span></div>' +
         '<div class="h-1.5 bg-surface-container-high rounded overflow-hidden"><div class="h-full bg-primary" style="width:' + (v * 100) + '%"></div></div></div>';
@@ -106,8 +111,8 @@
     renderList();
     const note = document.getElementById('auditSavedNote');
     note.textContent = status === 'committed'
-      ? 'บันทึกผลตรวจภาคสนามของ ' + zone.name_th + ' เรียบร้อย — ใช้แทนค่าประมาณดาวเทียมของตัวชี้วัดที่ 4 แล้ว'
-      : 'บันทึกร่างไว้แล้ว ยังไม่ยืนยันเป็นข้อมูลทางการ';
+      ? I18N.t('evaluator.audit.savedCommittedPrefix') + zone.name_th + I18N.t('evaluator.audit.savedCommittedSuffix')
+      : I18N.t('evaluator.audit.savedDraft');
     note.className = status === 'committed' ? 'text-sm text-primary' : 'text-sm text-outline';
     note.classList.remove('hidden');
   }

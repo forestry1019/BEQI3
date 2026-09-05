@@ -209,19 +209,17 @@
 <!-- TopAppBar -->
 <header class="bg-background/80 backdrop-blur-md font-label-caps text-label-caps top-0 sticky z-50 border-b border-limestone-gray">
 <div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
-<a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="#"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span><span class="text-headline-md">BEQI Portfolio for Sustainable Coastal Tourism</span></a>
+<a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="index.html"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span></a>
+<div class="flex items-center gap-8">
 <nav class="hidden md:flex gap-8 items-center">
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html">Tourists</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html">Entrepreneurs</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html">Evaluators</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html" data-i18n="common.nav.evaluators">Evaluators</a>
 </nav>
-<div class="flex items-center gap-4"><div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant mr-2"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors">TH</button></div>
+<div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors" data-lang-btn="en">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors" data-lang-btn="th">TH</button></div>
 <button class="md:hidden text-primary hover:opacity-80 transition-all duration-300">
 <span class="material-symbols-outlined">menu</span>
 </button>
-<a id="portalAccessBtn" class="hidden md:inline-flex items-center justify-center bg-primary text-on-primary px-6 py-2 rounded font-label-caps text-label-caps hover:bg-andaman-deep transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html">
-                    Portal Access
-                </a>
 </div>
 </div>
 </header>
@@ -230,15 +228,15 @@
 <section class="relative pt-24 pb-32 px-margin-desktop overflow-hidden">
 <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter items-center relative z-10">
 <div class="md:col-span-6 flex flex-col items-start">
-<span class="font-label-caps text-label-caps text-primary tracking-[0.2em] mb-4 uppercase">Ecosystem Health Index</span>
+<span class="font-label-caps text-label-caps text-primary tracking-[0.2em] mb-4 uppercase" data-i18n="index.hero.label">Biophilic Environmental Quality Index</span>
 <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-andaman-deep mb-6">
                         BEQI Portfolio
                     </h1><div class="w-24 h-1 bg-secondary-container mb-6 rounded-full"></div>
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-lg border-l-2 border-limestone-gray pl-6">
-                        พอร์ตฟอลิโอดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก ชายฝั่งเขาหลัก
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-lg border-l-2 border-limestone-gray pl-6" data-i18n-html="index.hero.quote">
+                        "If you can't measure it, you can't improve it."<br>- Lord Kelvin
                     </p>
 <a class="inline-flex items-center justify-center bg-primary text-on-primary px-8 py-3 rounded hover:bg-andaman-deep transition-colors group" href="explore.html">
-<span class="font-label-caps text-label-caps mr-2">Explore the Index</span>
+<span class="font-label-caps text-label-caps mr-2" data-i18n="index.hero.cta">Explore the Index</span>
 <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </a>
 </div>
@@ -252,24 +250,12 @@
 </section>
 </main>
 <!-- Footer -->
-<footer class="bg-sand-base border-t border-limestone-gray/50">
-<div class="w-full py-16 px-margin-desktop max-w-container-max mx-auto font-body-md text-body-md">
-<div class="text-on-surface-variant max-w-xs">
-<div>AN INNOVATIVE PROTOTYPE OF BIOPHILIC ENVIRONMENTAL QUALITY INDEX PORTFOLIO FOR SUSTAINABLE COASTAL TOURISM:&nbsp;</div>
-<div>A CASE STUDY OF PHANG-NGA PROVINCE, THAILAND</div>
-</div>
-</div>
-<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+<footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
+<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
+<script src="assets/js/i18n-dict.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/beqi-core.js"></script>
-<script>
-(function(){
-  // ถ้ามี session อยู่แล้ว ให้ปุ่ม Portal Access พาเข้าแดชบอร์ดของ role นั้นโดยตรง
-  const s = BeqiCore.getSession();
-  if(s && s.role === 'entrepreneur') document.getElementById('portalAccessBtn').href = 'entrepreneur-dashboard.html';
-  if(s && s.role === 'evaluator') document.getElementById('portalAccessBtn').href = 'evaluator-dashboard.html';
-})();
-</script>
 </body>
 </html>
