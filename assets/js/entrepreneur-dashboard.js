@@ -283,6 +283,7 @@
     document.getElementById('submitResult').hidden=true;
   });
   document.getElementById('reviewConfirmBtn').addEventListener('click', function(){
+    console.log('BEQI_DEBUG confirm click', {reviewSite: !!reviewSite, photos: reviewPhotos.length, rubric: rubricComplete(), api: !!API, submitUrl: !!(API&&API.submitUrl)});
     if(!reviewSite || !reviewPhotos.length || !rubricComplete() || !API || !API.submitUrl) return;
     const btn=this;
     const errEl=document.getElementById('reviewError');
