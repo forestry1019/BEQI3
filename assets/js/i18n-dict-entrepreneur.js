@@ -48,6 +48,7 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'entrepreneur.portal.formErrorTaxId': {en: 'Tax ID must be 13 digits.', th: 'เลขประจำตัวผู้เสียภาษีต้องมี 13 หลัก'},
   'entrepreneur.portal.formErrorSignIn': {en: 'Please sign in with Google first.', th: 'กรุณาลงชื่อเข้าใช้ด้วย Google ก่อน'},
   'entrepreneur.portal.submitBtn': {en: 'Verify & Continue', th: 'ยืนยันและดำเนินการต่อ'},
+  'entrepreneur.portal.checkStatusLink': {en: 'Already submitted before? Check your status', th: 'เคยส่งข้อมูลไปแล้ว? ตรวจสอบสถานะที่นี่'},
   'entrepreneur.footer.tagline1': {
     en: 'AN INNOVATIVE PROTOTYPE OF BIOPHILIC ENVIRONMENTAL QUALITY INDEX PORTFOLIO FOR SUSTAINABLE COASTAL TOURISM: ',
     th: 'ต้นแบบนวัตกรรมพอร์ตฟอลิโอดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิกเพื่อการท่องเที่ยวชายฝั่งอย่างยั่งยืน: '
@@ -67,7 +68,10 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     en: 'Score indicator 4 using the 14 Patterns of Biophilic Design checklist that appears — a rubric score is calculated live as you go.',
     th: 'ให้คะแนนตัวชี้วัดที่ 4 ตามแบบตรวจสอบ 14 รูปแบบของการออกแบบเชิงไบโอฟิลิกที่ปรากฏขึ้น — ระบบคำนวณคะแนนให้ทันทีระหว่างทำ'
   },
-  'entrepreneur.dashboard.howto.step5': {en: 'Review everything, tick the confirmation box, then send it to the evaluator.', th: 'ตรวจทานข้อมูลทั้งหมด ติ๊กยืนยัน แล้วส่งให้ผู้ประเมิน'},
+  'entrepreneur.dashboard.howto.step5': {
+    en: 'Review everything, tick the confirmation box, then send it to the evaluator — save the Submission ID and PIN you receive to check your result later.',
+    th: 'ตรวจทานข้อมูลทั้งหมด ติ๊กยืนยัน แล้วส่งให้ผู้ประเมิน — บันทึกเลขที่ใบสมัครและ PIN ที่ได้รับไว้เพื่อตรวจสอบผลภายหลัง'
+  },
   'entrepreneur.dashboard.rubric.heading': {en: 'Indicator 4 — 14 Patterns of Biophilic Design', th: 'ตัวชี้วัดที่ 4 — 14 รูปแบบของการออกแบบเชิงไบโอฟิลิก'},
   'entrepreneur.dashboard.rubric.hint': {
     en: 'Score only what is objectively visible as physical structure or material in your photos — not opinion or feeling. A short evidence note is required for every pattern.',
@@ -89,8 +93,8 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'entrepreneur.dashboard.review.area': {en: 'Drawn Area', th: 'พื้นที่ที่วาด'},
   'entrepreneur.dashboard.review.photosLabel': {en: 'Attach photos (indicator 4 evidence) — required', th: 'แนบรูป (หลักฐานตัวชี้วัดที่ 4) — จำเป็นต้องแนบ'},
   'entrepreneur.dashboard.review.photosHint': {
-    en: 'Attach at least one photo of your property showing natural/biophilic features — these will be reviewed by an evaluator.',
-    th: 'แนบรูปพื้นที่ของคุณอย่างน้อย 1 รูป แสดงองค์ประกอบธรรมชาติ/ไบโอฟิลิก — ผู้ประเมินจะตรวจสอบรูปเหล่านี้'
+    en: 'Upload photos of your property, including the building itself and its surrounding environment — especially the coastline. These will be reviewed by an evaluator.',
+    th: 'อัปโหลดภาพถ่ายสถานประกอบการ ได้แก่ ภาพอาคาร และสภาพแวดล้อมโดยรอบ โดยเฉพาะบริเวณริมชายฝั่ง — ผู้ประเมินจะตรวจสอบรูปเหล่านี้'
   },
   'entrepreneur.dashboard.review.confirmLabel': {
     en: 'I have reviewed the information above and confirm it is accurate before sending to the evaluator.',
@@ -100,10 +104,27 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'entrepreneur.dashboard.review.cancelBtn': {en: 'Cancel', th: 'ยกเลิก'},
   'entrepreneur.dashboard.submitting': {en: 'Submitting…', th: 'กำลังส่ง…'},
   'entrepreneur.dashboard.submitted': {en: 'Submitted — an evaluator will review it soon.', th: 'ส่งแล้ว — ผู้ประเมินจะตรวจสอบในเร็ว ๆ นี้'},
+  'entrepreneur.dashboard.submitErr': {
+    en: 'Could not send your submission. Please check your connection and try again.',
+    th: 'ส่งข้อมูลไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อแล้วลองใหม่อีกครั้ง'
+  },
+  'entrepreneur.dashboard.result.heading': {en: 'Submission Received', th: 'ส่งข้อมูลสำเร็จ'},
+  'entrepreneur.dashboard.result.body': {
+    en: 'Save your Submission ID and PIN below — you\'ll need both to check your evaluation result later, from any device, without logging in.',
+    th: 'บันทึกเลขที่ใบสมัครและ PIN ด้านล่างนี้ไว้ — ต้องใช้ทั้งสองอย่างเพื่อตรวจสอบผลการประเมินภายหลัง จากอุปกรณ์ใดก็ได้ โดยไม่ต้องเข้าสู่ระบบ'
+  },
+  'entrepreneur.dashboard.result.idLabel': {en: 'Submission ID', th: 'เลขที่ใบสมัคร'},
+  'entrepreneur.dashboard.result.pinLabel': {en: 'PIN', th: 'รหัส PIN'},
+  'entrepreneur.dashboard.result.checkLink': {en: 'Check status', th: 'ตรวจสอบสถานะ'},
+  'entrepreneur.dashboard.result.closeBtn': {en: 'Done', th: 'เสร็จสิ้น'},
   'entrepreneur.dashboard.submissionsHeading': {en: 'My Submissions', th: 'รายการที่ส่งไปแล้ว'},
   'entrepreneur.dashboard.submissionsEmpty': {
     en: 'No submissions yet — calculate a BEQI score above, then submit it for review.',
     th: 'ยังไม่มีรายการที่ส่ง — คำนวณคะแนน BEQI ด้านบนแล้วส่งขอรับรอง'
+  },
+  'entrepreneur.dashboard.submissionsHint': {
+    en: 'This list is a local convenience on this device only — your Submission ID and PIN are the real record. Save them somewhere safe.',
+    th: 'รายการนี้เป็นเพียงทางลัดในเครื่องนี้เท่านั้น — เลขที่ใบสมัครและ PIN คือหลักฐานตัวจริง กรุณาบันทึกเก็บไว้ในที่ปลอดภัย'
   },
   'entrepreneur.dashboard.statusPending': {en: 'Pending Review', th: 'รอตรวจสอบ'},
   'entrepreneur.dashboard.statusApproved': {en: 'Approved', th: 'อนุมัติแล้ว'},

@@ -22,13 +22,22 @@
 const functions = require('@google-cloud/functions-framework');
 const {GoogleAuth} = require('google-auth-library');
 const ee = require('@google/earthengine');
+const {Firestore} = require('@google-cloud/firestore');
+const {Storage} = require('@google-cloud/storage');
+const crypto = require('crypto');
 const PARAMS = require('./params.json');
 
 const EE_CLOUD_PROJECT = process.env.GEE_CLOUD_PROJECT || 'beqi-488814';
 const API_SECRET = process.env.BEQI_API_SECRET || '';
+const EVALUATOR_ACCESS_CODE = process.env.EVALUATOR_ACCESS_CODE || '';
+const SUBMISSIONS_BUCKET = process.env.SUBMISSIONS_BUCKET || 'beqi-488814-submissions';
 // จำกัดขนาดกรอบพื้นที่ที่ยอมรับ (องศา) กันการวาดพื้นที่ใหญ่เกินสมควร (~0.3° ราว ๆ 30 กม.) — ปรับได้ตามความเหมาะสม
 const MAX_BBOX_DEG = 0.3;
 const ALLOWED_ORIGIN = process.env.BEQI_ALLOWED_ORIGIN || '*';
+
+const firestore = new Firestore();
+const storage = new Storage();
+const SUBMISSIONS_COL = 'submissions';
 
 const auth = new GoogleAuth({scopes: ['https://www.googleapis.com/auth/earthengine']});
 let eeInitPromise = null;
@@ -108,10 +117,10 @@ function computeIndicators(polygon){
   });
 }
 
-function setCors(res){
+function setCors(res, methods){
   res.set('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
-  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.set('Access-Control-Allow-Headers', 'Content-Type');
+  res.set('Access-Control-Allow-Methods', methods || 'POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, X-Evaluator-Code');
 }
 
 functions.http('computeBeqi', async (req, res) => {
@@ -136,5 +145,175 @@ functions.http('computeBeqi', async (req, res) => {
   }catch(err){
     console.error('computeBeqi error:', err);
     res.status(500).json({error: 'Earth Engine computation failed', detail: String(err && err.message ? err.message : err)});
+  }
+});
+
+/* -----------------------------------------------------------------------
+ * submitApplication / checkStatus / listSubmissions / updateSubmission
+ * -----------------------------------------------------------------------
+ * เก็บใบสมัครขอรับรองของผู้ประกอบการไว้ใน Firestore แทน localStorage ของเบราว์เซอร์
+ * (ต้นแบบเดิมใช้ localStorage ทำให้ผู้ประกอบการกับผู้ประเมินที่อยู่คนละเครื่อง/เบราว์เซอร์กัน
+ * ไม่เห็นข้อมูลเดียวกัน) รูปถ่ายหลักฐานถูกอัปโหลดขึ้น Cloud Storage bucket แยกต่างหาก
+ * (เก็บเฉพาะ URL ไว้ใน Firestore เพื่อไม่ให้เอกสารใหญ่เกินขีดจำกัด 1MiB ของ Firestore)
+ *
+ * ผู้ประกอบการจะได้รับเลขที่ใบสมัคร (id) + PIN 6 หลักกลับไปตอนส่งสำเร็จ ใช้ทั้งคู่ตรวจสอบผลได้เอง
+ * ภายหลังโดยไม่ต้องล็อกอิน (checkStatus) — ฝั่งผู้ประเมินต้องส่ง header X-Evaluator-Code ที่ตรงกับ
+ * EVALUATOR_ACCESS_CODE จึงจะเรียก listSubmissions/updateSubmission ได้ (ตัวกันการเรียกพร่ำเพรื่อ
+ * เท่านั้น ไม่ใช่กลไกความปลอดภัยจริงจัง เช่นเดียวกับ BEQI_API_SECRET ด้านบน) */
+
+const ID_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // ตัดตัวที่สับสนกันง่าย (0/O, 1/I) ออก
+function genId(){
+  let s = '';
+  for(let i = 0; i < 6; i++) s += ID_ALPHABET[crypto.randomInt(ID_ALPHABET.length)];
+  return 'BQ-' + s;
+}
+function genPin(){
+  return String(crypto.randomInt(0, 1000000)).padStart(6, '0');
+}
+
+function isFiniteNum(v){ return typeof v === 'number' && isFinite(v); }
+
+// Firestore ไม่รองรับ array ซ้อน array — เก็บรูปหลายเหลี่ยมเป็น array ของ {lng,lat} แทน [lng,lat]
+// แล้วแปลงกลับเป็น [lng,lat] ตอนส่งคืนให้ frontend (รูปแบบเดิมที่ picker.js/evaluator-dashboard.js ใช้)
+function ringToFirestore(ring){ return ring.map(([lng, lat]) => ({lng, lat})); }
+function ringFromFirestore(ring){ return (ring || []).map(p => [p.lng, p.lat]); }
+
+function validateSubmissionPayload(b){
+  if(!b || typeof b !== 'object') return 'Missing body';
+  if(!b.businessName || !b.repName || !b.email || !b.taxId || !b.phone || !b.zoneId) return 'Missing required applicant fields';
+  if(!isValidPolygon(b.polygon)) return 'Invalid polygon';
+  if(!Array.isArray(b.norm) || b.norm.length !== 4 || !b.norm.every(v => isFiniteNum(v) && v >= 0 && v <= 1)) return 'Invalid norm array';
+  if(!isFiniteNum(b.overall) || b.overall < 0 || b.overall > 100) return 'Invalid overall score';
+  if(!isFiniteNum(b.ind4Raw) || b.ind4Raw < 0 || b.ind4Raw > 28) return 'Invalid ind4Raw';
+  if(!Array.isArray(b.patternScores) || b.patternScores.length !== 14) return 'Invalid patternScores';
+  if(!Array.isArray(b.photos) || b.photos.length < 1 || b.photos.length > 6) return 'Attach between 1 and 6 photos';
+  for(const p of b.photos){ if(typeof p !== 'string' || !/^data:image\/(jpeg|jpg|png|webp);base64,/.test(p)) return 'Invalid photo data URL'; }
+  return null;
+}
+
+async function uploadPhotos(id, photos){
+  const bucket = storage.bucket(SUBMISSIONS_BUCKET);
+  const urls = [];
+  for(let i = 0; i < photos.length; i++){
+    const match = /^data:image\/(jpeg|jpg|png|webp);base64,(.+)$/.exec(photos[i]);
+    const ext = match[1] === 'jpeg' ? 'jpg' : match[1];
+    const buf = Buffer.from(match[2], 'base64');
+    if(buf.length > 8 * 1024 * 1024) throw new Error('Photo ' + (i + 1) + ' exceeds 8MB');
+    const objectPath = 'submissions/' + id + '/' + (i + 1) + '-' + Date.now() + '.' + ext;
+    const file = bucket.file(objectPath);
+    await file.save(buf, {contentType: 'image/' + (ext === 'jpg' ? 'jpeg' : ext), resumable: false});
+    urls.push('https://storage.googleapis.com/' + SUBMISSIONS_BUCKET + '/' + objectPath);
+  }
+  return urls;
+}
+
+functions.http('submitApplication', async (req, res) => {
+  setCors(res);
+  if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
+  if(req.method !== 'POST'){ res.status(405).json({error: 'Method not allowed'}); return; }
+
+  const body = req.body || {};
+  if(!API_SECRET || body.secret !== API_SECRET){
+    res.status(401).json({error: 'Invalid or missing access code'});
+    return;
+  }
+  const err = validateSubmissionPayload(body);
+  if(err){ res.status(400).json({error: err}); return; }
+
+  try{
+    const id = genId();
+    const pin = genPin();
+    const photoUrls = await uploadPhotos(id, body.photos);
+    const doc = {
+      id, pin,
+      businessName: body.businessName, repName: body.repName, email: body.email,
+      taxId: body.taxId, phone: body.phone, zoneId: body.zoneId,
+      polygon: ringToFirestore(body.polygon), overall: body.overall, norm: body.norm,
+      ind4Source: 'assessed', ind4Raw: body.ind4Raw, ind4AssessedPatterns: 14,
+      patternScores: body.patternScores, photos: photoUrls,
+      status: 'pending', certLevel: null,
+      createdAt: new Date().toISOString()
+    };
+    await firestore.collection(SUBMISSIONS_COL).doc(id).set(doc);
+    res.status(200).json({id, pin});
+  }catch(e){
+    console.error('submitApplication error:', e);
+    res.status(500).json({error: 'Failed to save submission', detail: String(e && e.message ? e.message : e)});
+  }
+});
+
+functions.http('checkStatus', async (req, res) => {
+  setCors(res, 'GET, OPTIONS');
+  if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
+  if(req.method !== 'GET'){ res.status(405).json({error: 'Method not allowed'}); return; }
+
+  const id = String(req.query.id || '').trim().toUpperCase();
+  const pin = String(req.query.pin || '').trim();
+  if(!id || !pin){ res.status(400).json({error: 'Missing id or pin'}); return; }
+
+  try{
+    const snap = await firestore.collection(SUBMISSIONS_COL).doc(id).get();
+    if(!snap.exists || snap.data().pin !== pin){
+      res.status(404).json({error: 'No submission found for that ID and PIN'});
+      return;
+    }
+    const {pin: _pin, ...sub} = snap.data();
+    sub.polygon = ringFromFirestore(sub.polygon);
+    res.status(200).json(sub);
+  }catch(e){
+    console.error('checkStatus error:', e);
+    res.status(500).json({error: 'Failed to look up submission'});
+  }
+});
+
+function checkEvaluatorAuth(req, res){
+  const code = req.get('X-Evaluator-Code') || '';
+  if(!EVALUATOR_ACCESS_CODE || code !== EVALUATOR_ACCESS_CODE){
+    res.status(401).json({error: 'Invalid or missing evaluator access code'});
+    return false;
+  }
+  return true;
+}
+
+functions.http('listSubmissions', async (req, res) => {
+  setCors(res, 'GET, OPTIONS');
+  if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
+  if(req.method !== 'GET'){ res.status(405).json({error: 'Method not allowed'}); return; }
+  if(!checkEvaluatorAuth(req, res)) return;
+
+  try{
+    const snap = await firestore.collection(SUBMISSIONS_COL).orderBy('createdAt', 'desc').get();
+    const subs = snap.docs.map(d => { const {pin, ...rest} = d.data(); rest.polygon = ringFromFirestore(rest.polygon); return rest; });
+    res.status(200).json(subs);
+  }catch(e){
+    console.error('listSubmissions error:', e);
+    res.status(500).json({error: 'Failed to list submissions'});
+  }
+});
+
+functions.http('updateSubmission', async (req, res) => {
+  setCors(res);
+  if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
+  if(req.method !== 'POST'){ res.status(405).json({error: 'Method not allowed'}); return; }
+  if(!checkEvaluatorAuth(req, res)) return;
+
+  const {id, status, certLevel} = req.body || {};
+  if(!id || !['approved', 'revision'].includes(status)){
+    res.status(400).json({error: 'Invalid id or status'});
+    return;
+  }
+  if(status === 'approved' && !certLevel){
+    res.status(400).json({error: 'certLevel is required when approving'});
+    return;
+  }
+  try{
+    const ref = firestore.collection(SUBMISSIONS_COL).doc(id);
+    const snap = await ref.get();
+    if(!snap.exists){ res.status(404).json({error: 'Submission not found'}); return; }
+    await ref.update({status, certLevel: status === 'approved' ? certLevel : null});
+    res.status(200).json({ok: true});
+  }catch(e){
+    console.error('updateSubmission error:', e);
+    res.status(500).json({error: 'Failed to update submission'});
   }
 });

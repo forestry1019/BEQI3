@@ -41,8 +41,16 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   },
   'evaluator.dashboard.pendingReviews': {en: 'Pending Reviews', th: 'รายการรอตรวจ'},
   'evaluator.dashboard.reviewEmpty': {
-    en: 'No requests from entrepreneurs yet — once someone registers on the Entrepreneur Portal (S2) in this browser, it will appear here.',
-    th: 'ยังไม่มีคำขอจากผู้ประกอบการ — เมื่อมีการสมัคร Entrepreneur Portal (S2) ในเบราว์เซอร์นี้ รายการจะปรากฏที่นี่'
+    en: 'No requests from entrepreneurs yet — once someone submits from the Entrepreneur Dashboard, it will appear here automatically (from any device).',
+    th: 'ยังไม่มีคำขอจากผู้ประกอบการ — เมื่อมีการส่งจากแดชบอร์ดผู้ประกอบการ รายการจะปรากฏที่นี่โดยอัตโนมัติ (จากอุปกรณ์ใดก็ได้)'
+  },
+  'evaluator.dashboard.loadErr': {
+    en: 'Could not load submissions from the server. Please check your connection and reload the page.',
+    th: 'โหลดรายการจากเซิร์ฟเวอร์ไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อแล้วโหลดหน้าใหม่'
+  },
+  'evaluator.dashboard.updateErr': {
+    en: 'Could not save your decision. Please check your connection and try again.',
+    th: 'บันทึกผลการตัดสินใจไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อแล้วลองใหม่อีกครั้ง'
   },
   'evaluator.dashboard.comingSoonAlert': {en: 'This feature is still under development', th: 'ฟีเจอร์นี้ยังอยู่ระหว่างพัฒนา'},
   'evaluator.dashboard.statusNew': {en: 'NEW', th: 'ใหม่'},

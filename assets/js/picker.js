@@ -26,7 +26,9 @@
    (meta.accuracy.producers) — คนละวิธีกับ Monte Carlo 5,000 รอบที่คำนวณไว้ล่วงหน้าแบบออฟไลน์สำหรับ
    3 โซนอ้างอิงใน data/beqi.json ซึ่งใช้ในหน้าอื่น ไม่ใช่พื้นที่ที่ผู้ใช้วาดเอง */
 (function(){
-const MAX_SITES=3;
+// entrepreneur-dashboard.html ตั้ง window.BEQI_MAX_SITES=1 ไว้ก่อนโหลดไฟล์นี้ (ผู้ประกอบการมีสถานประกอบการ
+// เดียว ไม่ต้องเปรียบเทียบหลายแปลงเหมือนหน้านักท่องเที่ยว) — ถ้าไม่ตั้งไว้ ใช้ค่าเริ่มต้น 3 เหมือนเดิม
+const MAX_SITES=(typeof window.BEQI_MAX_SITES==='number'?window.BEQI_MAX_SITES:3);
 const AOI_COL=['#2A9D8F','#E9C46A','#0B3D45']; // สีอ้างอิง 3 โซนหลัก — แสดงเป็นบริบทบนแผนที่เท่านั้น ไม่ใช่ข้อจำกัดของรูปที่วาด
 const SITE_COL=['#095353','#C9962C','#6A4C93']; // สีของพื้นที่ที่ 1/2/3 ที่ผู้ใช้วาด — เลี่ยงโทนแดง/ส้มแดงเพราะสื่อถึง error/danger ตามธรรมเนียม UI
 const IND_LABEL_KEYS=['explore.compare.ind1','explore.compare.ind2','explore.compare.ind3','explore.compare.ind4'];
@@ -471,36 +473,36 @@ function renderSiteCards(){
       '<b class="font-data-viz text-on-surface-variant">'+fx(s.ci.lo,1)+' – '+fx(s.ci.hi,1)+'</b></div>'
     ):'';
 
-    // ตามลำดับงานในหัวข้อ 5.3.9 การส่งขอรับรองเกิด "ก่อน" การให้คะแนนตัวชี้วัดที่ 4 เสมอ (ผู้ประกอบการส่ง
-    // หลักฐาน/รูปถ่ายก่อน แบบจำลอง/ผู้ประเมินให้คะแนนทีหลัง) ปุ่มนี้จึงใช้งานได้ทันทีที่มีตัวชี้วัด 1-3 แล้ว
-    // ไม่ต้องรอ ind4Source==='assessed' — คลิกแล้วเปิดหน้าจอตรวจทาน+แนบรูปแทนการส่งทันที
-    const submitHtml=canSubmit?(
-      s.submitted
-        ? '<p class="font-body-md text-xs text-center text-tertiary mt-2">'+t('entrepreneur.dashboard.submitted')+'</p>'
-        : '<button class="tool-btn primary w-full mt-2" data-submit="'+s.id+'">'+t('entrepreneur.dashboard.submitBtn')+'</button>'
-    ):'';
-
     return '<div class="organic-border bg-white p-6 sketch-shadow flex flex-col gap-4" style="border-left:4px solid '+s.color+'">'+
       '<div class="flex items-center justify-between">'+
       '<span class="font-label-caps text-label-caps text-outline">'+t('explore.result.areaLabel').replace('{n}',i+1)+'</span>'+
       '<button class="text-outline hover:text-coral-warmth material-symbols-outlined text-[18px]" data-remove="'+s.id+'" title="'+t('explore.result.removeBtn')+'">close</button>'+
       '</div>'+
-      scoreBlock+noteHtml+levelBlock+ciBlock+indicatorRows+submitHtml+
+      scoreBlock+noteHtml+levelBlock+ciBlock+indicatorRows+
       '</div>';
   }).join('');
+
+  // ปุ่ม "ส่งขอรับรอง" มีเพียงปุ่มเดียวอยู่ล่างสุดของรายการการ์ดทั้งหมด (ไม่ใช่ปุ่มแยกต่อการ์ดเหมือนเดิม
+  // ซึ่งสับสนเมื่อมีหลายพื้นที่) ทำงานกับพื้นที่ล่าสุดที่ยังไม่ได้ส่ง — ตามลำดับงานหัวข้อ 5.3.9 การส่งขอรับรอง
+  // เกิด "ก่อน" การให้คะแนนตัวชี้วัดที่ 4 เสมอ ปุ่มนี้จึงใช้งานได้ทันทีที่มีตัวชี้วัด 1-3 แล้ว ไม่ต้องรอ
+  // ind4Source==='assessed' — คลิกแล้วเปิดหน้าจอตรวจทาน+แนบรูปแทนการส่งทันที
+  const pendingSite=sites.slice().reverse().find(function(s){ return !s.submitted; });
+  if(canSubmit && sites.length){
+    list.innerHTML+= pendingSite
+      ? '<button class="tool-btn primary w-full" id="siteSubmitBtn">'+t('entrepreneur.dashboard.submitBtn')+'</button>'
+      : '<p class="font-body-md text-xs text-center text-tertiary">'+t('entrepreneur.dashboard.submitted')+'</p>';
+  }
+
   list.querySelectorAll('[data-remove]').forEach(function(b){
     b.addEventListener('click',function(){ removeSite(+b.dataset.remove); });
   });
-  if(canSubmit){
+  const submitBtn=el('siteSubmitBtn');
+  if(submitBtn){
     // ปุ่มนี้แค่ "เปิด" หน้าจอตรวจทานก่อนส่งของ entrepreneur-dashboard.js เท่านั้น — ยังไม่ถือว่าส่งจริง
     // จนกว่าผู้ใช้จะยืนยันที่นั่น (แนบรูป + ติ๊กยืนยัน) ตัวนั้นเป็นคนตั้ง site.submitted=true แล้วเรียก
     // window.BEQI_RERENDER_SITES() กลับมาที่นี่เพื่ออัปเดตการ์ดให้ตรงสถานะ
-    list.querySelectorAll('[data-submit]').forEach(function(b){
-      b.addEventListener('click',function(){
-        const site=sites.find(s=>s.id===+b.dataset.submit);
-        if(!site) return;
-        window.BEQI_SUBMIT_TO_EVALUATOR(site,b);
-      });
+    submitBtn.addEventListener('click',function(){
+      window.BEQI_SUBMIT_TO_EVALUATOR(pendingSite);
     });
   }
 }

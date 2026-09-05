@@ -1,7 +1,9 @@
 /* S3 — Evaluator Dashboard
-   คิวรอตรวจอ่านจาก localStorage key "beqi_submissions" ที่ผู้ประกอบการเติมตอนกด "ส่งขอรับรอง"
-   ในแดชบอร์ดของตนเอง (entrepreneur-dashboard.html) หลังวาดขอบเขตแปลงจริงแล้วคำนวณผ่าน picker.js
-   (ต้นแบบยังไม่มี backend กลาง จึงสาธิต flow ผู้ประกอบการ → ผู้ประเมินภายในเบราว์เซอร์เดียวกัน)
+   คิวรอตรวจอ่านจาก Firestore ผ่าน Cloud Function listSubmissions (server/index.js) แทน localStorage
+   เดิม — เพราะผู้ประกอบการกับผู้ประเมินอยู่คนละเครื่อง/เบราว์เซอร์กัน localStorage ทำให้ผู้ประเมินไม่เห็น
+   ข้อมูลจริงเลยนอกจากทดสอบในเบราว์เซอร์เดียวกัน คำขอไปยัง listSubmissions/updateSubmission ต้องแนบ
+   header X-Evaluator-Code ที่ตรงกับรหัสที่ใช้ล็อกอิน (เก็บไว้ใน session.accessCode ตอน evaluator-portal.html
+   ตัวกันการเรียกพร่ำเพรื่อเท่านั้น ไม่ใช่กลไกความปลอดภัยจริงจัง เช่นเดียวกับ BEQI_API_SECRET)
    คะแนน/ตัวชี้วัดเป็นผลคำนวณจริงของแปลงที่ส่งมา (sub.overall/sub.norm/sub.ci) ไม่ใช่ค่าเฉลี่ยของโซนอีกต่อไป */
 (function(){
   const session = BeqiCore.getSession();
@@ -22,14 +24,28 @@
   const IND_LABEL = ['พื้นที่สีเขียว (NDVI≥0.4)','การเชื่อมโยงระบบนิเวศ (PC)','การเข้าถึงแหล่งน้ำ (800ม.)','องค์ประกอบไบโอฟิลิก'];
   const IND_ICON = ['park','hub','water_drop','auto_awesome'];
 
-  function loadSubs(){ return JSON.parse(localStorage.getItem('beqi_submissions') || '[]'); }
-  function saveSubs(subs){ localStorage.setItem('beqi_submissions', JSON.stringify(subs)); }
+  const API = (typeof BEQI_API_CONFIG !== 'undefined') ? BEQI_API_CONFIG : null;
+  let subsCache = [];
+  let D = null, selectedId = null, loadFailed = false;
 
-  let D = null, selectedId = null;
+  function fetchSubs(){
+    if(!API || !API.listSubmissionsUrl) return Promise.resolve(null);
+    return fetch(API.listSubmissionsUrl, {headers: {'X-Evaluator-Code': session.accessCode || ''}})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .catch(function(e){ console.error('BEQI listSubmissions error', e); return null; });
+  }
+
+  function refreshList(){
+    return fetchSubs().then(function(subs){
+      loadFailed = subs === null;
+      if(subs !== null) subsCache = subs;
+      renderList();
+    });
+  }
 
   BeqiCore.loadData().then(function(data){
     D = data;
-    renderList();
+    refreshList();
   });
 
   function fmtLatLng(polygon){
@@ -41,8 +57,10 @@
   }
 
   function renderList(){
-    const subs = loadSubs();
-    document.getElementById('reviewEmpty').classList.toggle('hidden', subs.length > 0);
+    const subs = subsCache;
+    const emptyEl = document.getElementById('reviewEmpty');
+    emptyEl.classList.toggle('hidden', subs.length > 0);
+    emptyEl.textContent = loadFailed ? I18N.t('evaluator.dashboard.loadErr') : I18N.t('evaluator.dashboard.reviewEmpty');
     if(!selectedId && subs.length) selectedId = subs[subs.length - 1].id;
     document.getElementById('reviewList').innerHTML = subs.slice().reverse().map(function(s){
       const active = s.id === selectedId;
@@ -66,7 +84,7 @@
   }
 
   function renderDetail(){
-    const subs = loadSubs();
+    const subs = subsCache;
     const sub = subs.find(function(s){ return s.id === selectedId; });
     const pane = document.getElementById('detailPane');
     if(!sub || !D){
@@ -199,9 +217,20 @@
   }
 
   function updateSub(id, patch){
-    const subs = loadSubs();
-    const idx = subs.findIndex(function(s){ return s.id === id; });
-    if(idx >= 0){ Object.assign(subs[idx], patch); saveSubs(subs); }
-    renderList();
+    if(!API || !API.updateSubmissionUrl) return;
+    fetch(API.updateSubmissionUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'X-Evaluator-Code': session.accessCode || ''},
+      body: JSON.stringify(Object.assign({id: id}, patch))
+    })
+      .then(function(r){ return r.json().then(function(data){ return {ok: r.ok, data: data}; }); })
+      .then(function(res){
+        if(!res.ok) throw new Error((res.data && res.data.error) || 'update failed');
+        return refreshList();
+      })
+      .catch(function(e){
+        console.error('BEQI updateSubmission error', e);
+        alert(I18N.t('evaluator.dashboard.updateErr'));
+      });
   }
 })();

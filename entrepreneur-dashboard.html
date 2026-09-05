@@ -174,12 +174,30 @@
 </div>
 </section>
 
+<section class="mt-16 organic-border bg-white p-8 text-center" id="submitResult" hidden>
+<span class="material-symbols-outlined text-tertiary text-[48px] mb-3 block">task_alt</span>
+<h2 class="font-headline-md text-headline-md text-andaman-deep mb-2" data-i18n="entrepreneur.dashboard.result.heading">Submission Received</h2>
+<p class="font-body-md text-sm text-on-surface-variant max-w-xl mx-auto mb-6" data-i18n="entrepreneur.dashboard.result.body">Save your Submission ID and PIN below — you'll need both to check your evaluation result later, from any device, without logging in.</p>
+<div class="flex flex-wrap justify-center gap-8 mb-6">
+<div><div class="font-label-caps text-label-caps text-outline mb-1" data-i18n="entrepreneur.dashboard.result.idLabel">Submission ID</div><div class="font-data-viz text-3xl text-primary" id="resultId">--</div></div>
+<div><div class="font-label-caps text-label-caps text-outline mb-1" data-i18n="entrepreneur.dashboard.result.pinLabel">PIN</div><div class="font-data-viz text-3xl text-primary" id="resultPin">--</div></div>
+</div>
+<div class="flex flex-wrap justify-center gap-3">
+<a class="tool-btn ghost" href="check-status.html" data-i18n="entrepreneur.dashboard.result.checkLink">Check status</a>
+<button class="tool-btn primary" id="resultCloseBtn" data-i18n="entrepreneur.dashboard.result.closeBtn">Done</button>
+</div>
+</section>
+
 <section class="mt-16">
-<h2 class="font-headline-md text-headline-md text-andaman-deep mb-6" data-i18n="entrepreneur.dashboard.submissionsHeading">My Submissions</h2>
+<div class="flex items-center justify-between flex-wrap gap-3 mb-6">
+<h2 class="font-headline-md text-headline-md text-andaman-deep" data-i18n="entrepreneur.dashboard.submissionsHeading">My Submissions</h2>
+<a class="tool-btn ghost" href="check-status.html" data-i18n="entrepreneur.dashboard.result.checkLink">Check status</a>
+</div>
 <div id="submissionsEmpty" class="organic-border bg-surface-container-low p-10 text-center text-on-surface-variant text-sm">
 <span data-i18n="entrepreneur.dashboard.submissionsEmpty">No submissions yet — calculate a BEQI score above, then submit it for review.</span>
 </div>
 <div id="submissionsList" class="flex flex-col gap-3"></div>
+<p class="font-body-md text-xs text-outline mt-3" id="submissionsHint" data-i18n="entrepreneur.dashboard.submissionsHint" hidden>This list is a local convenience on this device only — your Submission ID and PIN are the real record. Save them somewhere safe.</p>
 </section>
 </main>
 <footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
@@ -191,6 +209,7 @@
 <script src="assets/js/i18n-dict-explore.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/beqi-core.js"></script>
+<script>window.BEQI_MAX_SITES=1;</script>
 <script src="assets/js/entrepreneur-dashboard.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/earthengine/1.7.31/earthengine-api.min.js"></script>

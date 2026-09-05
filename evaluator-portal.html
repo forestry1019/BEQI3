@@ -137,7 +137,7 @@
       return;
     }
     errEl.classList.add('hidden');
-    BeqiCore.setSession({role: 'evaluator', name, email, org, createdAt: new Date().toISOString()});
+    BeqiCore.setSession({role: 'evaluator', name, email, org, accessCode: code, createdAt: new Date().toISOString()});
     window.location.href = 'evaluator-dashboard.html';
   });
 })();

@@ -1,6 +1,7 @@
-/* S2.1 — แดชบอร์ดผู้ประกอบการ: หน้าตา/การใช้งานเหมือนเครื่องมือ "วาดขอบเขต & คำนวณ BEQI" ของนักท่องเที่ยว
-   (explore.html) ทุกประการ รวมถึงวาดได้สูงสุด 3 พื้นที่พร้อมกัน — ใช้ assets/js/picker.js ตัวเดียวกัน
-   ต่างกันแค่หน้านี้มีปุ่ม "ส่งขอรับรอง" โผล่ในการ์ดผลลัพธ์แต่ละใบ (picker.js เช็คว่ามี
+/* S2.1 — แดชบอร์ดผู้ประกอบการ: ใช้เครื่องมือ "วาดขอบเขต & คำนวณ BEQI" ร่วมกับหน้านักท่องเที่ยว
+   (explore.html) ผ่าน assets/js/picker.js ตัวเดียวกัน แต่จำกัดให้วาดได้เพียง 1 แปลง (window.BEQI_MAX_SITES=1
+   ตั้งไว้ใน entrepreneur-dashboard.html) เพราะผู้ประกอบการมีสถานประกอบการเดียว ไม่ต้องเปรียบเทียบหลายแปลง
+   เหมือนนักท่องเที่ยว — และมีปุ่ม "ส่งขอรับรอง" เดียวโผล่ท้ายรายการการ์ด (picker.js เช็คว่ามี
    window.BEQI_SUBMIT_TO_EVALUATOR หรือไม่ก่อนแสดงปุ่ม)
 
    ตามลำดับงาน 4 ขั้นในหัวข้อ 5.3.9 ของดุษฎีนิพนธ์ การส่งขอรับรองเกิดขึ้น "ก่อน" การให้คะแนนตัวชี้วัดที่ 4
@@ -11,8 +12,12 @@
    รายละเอียดคะแนน+เหตุผลทุกข้อ และเป็นผู้ตัดสินขั้นสุดท้ายว่าจะอนุมัติหรือขอแก้ไข ตามหลัก ISO/IEC 17065
    ที่อ้างถึงในหัวข้อ 5.3.8 (ผู้ขอรับรองเป็นผู้จัดหาหลักฐาน ผู้ประเมินเป็นผู้ตัดสิน)
 
-   คิวส่งงานไปยังผู้ประเมินเก็บใน localStorage key "beqi_submissions" (ต้นแบบยังไม่มี backend กลาง
-   จึงสาธิต flow ผู้ประกอบการ → ผู้ประเมินภายในเบราว์เซอร์เดียวกันเท่านั้น — ดู evaluator-dashboard.js) */
+   ใบสมัครถูกส่งไปเก็บที่ Firestore ผ่าน Cloud Function submitApplication (server/index.js) แทน
+   localStorage — เพราะผู้ประกอบการกับผู้ประเมินอยู่คนละเครื่อง/เบราว์เซอร์กัน localStorage เดิมทำให้
+   ผู้ประเมินไม่เห็นข้อมูลจริงเลยถ้าไม่ได้ทดสอบในเบราว์เซอร์เดียวกัน ตอนส่งสำเร็จจะได้ "เลขที่ใบสมัคร + PIN"
+   กลับมา ใช้ตรวจสอบผลภายหลังได้เองที่ check-status.html โดยไม่ต้องล็อกอิน — คีย์ localStorage
+   "beqi_my_submissions" ที่ยังใช้อยู่ในไฟล์นี้เป็นเพียง cache สะดวก ๆ ในเครื่องนี้เพื่อแสดงรายการ
+   "My Submissions" เท่านั้น ไม่ใช่ต้นทางข้อมูลจริง (ต้นทางจริงคือ Firestore) */
 (function(){
   const session = BeqiCore.requireRole('entrepreneur', 'entrepreneur-portal.html');
   if(!session) return;
@@ -23,8 +28,10 @@
     window.location.href = 'index.html';
   });
 
-  function loadSubs(){ return JSON.parse(localStorage.getItem('beqi_submissions') || '[]'); }
-  function saveSubs(subs){ localStorage.setItem('beqi_submissions', JSON.stringify(subs)); }
+  const API = (typeof BEQI_API_CONFIG !== 'undefined') ? BEQI_API_CONFIG : null;
+  const MY_SUBS_KEY = 'beqi_my_submissions';
+  function loadMySubs(){ try{ return JSON.parse(localStorage.getItem(MY_SUBS_KEY) || '[]'); }catch(e){ return []; } }
+  function saveMySubs(list){ localStorage.setItem(MY_SUBS_KEY, JSON.stringify(list)); }
 
   const ZONE_LABEL = {North:'North Zone', Central:'Central Zone', South:'South Zone'};
   const lang = () => (typeof I18N !== 'undefined' ? I18N.getLang() : 'en');
@@ -37,24 +44,45 @@
     return '<span class="status-pill ' + cls + '">' + label + '</span>';
   }
 
+  function fetchStatus(id, pin){
+    if(!API || !API.statusUrl) return Promise.resolve(null);
+    return fetch(API.statusUrl + '?id=' + encodeURIComponent(id) + '&pin=' + encodeURIComponent(pin))
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .catch(function(){ return null; });
+  }
+
   function renderSubmissions(){
-    const mine = loadSubs().filter(function(s){ return s.email === session.email; }).reverse();
+    const mine = loadMySubs().slice().reverse();
     document.getElementById('submissionsEmpty').hidden = mine.length > 0;
-    document.getElementById('submissionsList').innerHTML = mine.map(function(s){
-      const certLine = s.status === 'approved'
-        ? '<p class="font-body-md text-sm text-tertiary mt-1">' + I18N.t('entrepreneur.dashboard.certifiedAs') + ' <b>' + (s.certLevel || s.level) + '</b></p>'
-        : '';
-      const scoreLabel = s.overall == null ? '--' : BeqiCore.fx(s.overall, 1);
-      return '<div class="organic-border bg-white p-5 flex flex-wrap items-center gap-4">' +
+    document.getElementById('submissionsHint').hidden = mine.length === 0;
+    const list = document.getElementById('submissionsList');
+    list.innerHTML = mine.map(function(s){
+      return '<div class="organic-border bg-white p-5 flex flex-wrap items-center gap-4" data-row="' + s.id + '">' +
         '<div class="flex-1 min-w-[200px]">' +
-        '<div class="flex items-center gap-3">' +
-        '<span class="font-display-lg text-[24px] text-primary">' + scoreLabel + '</span>' +
-        statusPill(s.status) +
-        '</div>' +
+        '<p class="font-body-md text-sm text-on-surface-variant">' + s.businessName + ' · <span class="font-data-viz">' + s.id + '</span></p>' +
         '<p class="font-body-md text-xs text-on-surface-variant mt-1">' + I18N.t('entrepreneur.dashboard.submittedOn') + ' ' + new Date(s.createdAt).toLocaleDateString('th-TH') + '</p>' +
-        certLine +
         '</div></div>';
     }).join('');
+    mine.forEach(function(s){
+      fetchStatus(s.id, s.pin).then(function(sub){
+        const row = list.querySelector('[data-row="' + s.id + '"]');
+        if(!row) return;
+        if(!sub) return; // เครือข่ายมีปัญหา/ยังโหลดไม่เสร็จ — คงข้อความพื้นฐานไว้เฉย ๆ
+        const certLine = sub.status === 'approved'
+          ? '<p class="font-body-md text-sm text-tertiary mt-1">' + I18N.t('entrepreneur.dashboard.certifiedAs') + ' <b>' + sub.certLevel + '</b></p>'
+          : '';
+        const scoreLabel = sub.overall == null ? '--' : BeqiCore.fx(sub.overall, 1);
+        row.innerHTML =
+          '<div class="flex-1 min-w-[200px]">' +
+          '<div class="flex items-center gap-3">' +
+          '<span class="font-display-lg text-[24px] text-primary">' + scoreLabel + '</span>' +
+          statusPill(sub.status) +
+          '</div>' +
+          '<p class="font-body-md text-xs text-on-surface-variant mt-1">' + s.businessName + ' · <span class="font-data-viz">' + s.id + '</span> · ' + I18N.t('entrepreneur.dashboard.submittedOn') + ' ' + new Date(sub.createdAt).toLocaleDateString('th-TH') + '</p>' +
+          certLine +
+          '</div>';
+      });
+    });
   }
 
   /* ---------------- Rubric: 14 Patterns of Biophilic Design (Browning et al., 2014; Kellert & Calabrese, 2015) ----------------
@@ -180,10 +208,29 @@
   /* ---------------- ตรวจทานก่อนส่ง (แนบรูป → ให้คะแนน rubric → ยืนยัน) ---------------- */
   let reviewSite=null, reviewPhotos=[];
 
-  function readFileAsDataUrl(file){
-    return new Promise(function(resolve){
+  // ลดขนาดรูปก่อนแปลงเป็น base64 (canvas, ด้านยาวสุด 1600px, JPEG คุณภาพ 0.75) เพื่อไม่ให้ payload
+  // ที่ส่งไป Cloud Function ใหญ่เกินไป (รูปจากมือถือมักหลาย MB ต่อรูป) และประหยัดพื้นที่ Cloud Storage
+  function resizeImage(file){
+    return new Promise(function(resolve, reject){
       const reader=new FileReader();
-      reader.onload=function(){ resolve(reader.result); };
+      reader.onload=function(){
+        const img=new Image();
+        img.onload=function(){
+          const maxDim=1600;
+          let w=img.width, h=img.height;
+          if(w>maxDim||h>maxDim){
+            const scale=maxDim/Math.max(w,h);
+            w=Math.round(w*scale); h=Math.round(h*scale);
+          }
+          const canvas=document.createElement('canvas');
+          canvas.width=w; canvas.height=h;
+          canvas.getContext('2d').drawImage(img,0,0,w,h);
+          resolve(canvas.toDataURL('image/jpeg',0.75));
+        };
+        img.onerror=reject;
+        img.src=reader.result;
+      };
+      reader.onerror=reject;
       reader.readAsDataURL(file);
     });
   }
@@ -210,6 +257,7 @@
     document.getElementById('reviewRubric').hidden=true;
     document.getElementById('reviewConfirmChk').checked=false;
     document.getElementById('reviewError').classList.add('hidden');
+    document.getElementById('submitResult').hidden=true;
     document.getElementById('reviewBusiness').textContent=session.businessName;
     document.getElementById('reviewContact').textContent=session.repName+' · '+session.email+(session.phone?' · '+session.phone:'');
     document.getElementById('reviewZone').textContent=ZONE_LABEL[session.zoneId]||session.zoneId||'--';
@@ -221,7 +269,7 @@
   }
 
   document.getElementById('reviewPhotoInput').addEventListener('change', function(e){
-    Promise.all(Array.from(e.target.files).map(readFileAsDataUrl)).then(function(dataUrls){
+    Promise.all(Array.from(e.target.files).map(resizeImage)).then(function(dataUrls){
       reviewPhotos=reviewPhotos.concat(dataUrls);
       renderPhotoPreview();
     });
@@ -231,8 +279,18 @@
     document.getElementById('submitReview').hidden=true;
     reviewSite=null; reviewPhotos=[]; rubricAnswers={};
   });
+  document.getElementById('resultCloseBtn').addEventListener('click', function(){
+    document.getElementById('submitResult').hidden=true;
+  });
   document.getElementById('reviewConfirmBtn').addEventListener('click', function(){
-    if(!reviewSite || !reviewPhotos.length || !rubricComplete()) return;
+    if(!reviewSite || !reviewPhotos.length || !rubricComplete() || !API || !API.submitUrl) return;
+    const btn=this;
+    const errEl=document.getElementById('reviewError');
+    errEl.classList.add('hidden');
+    const originalText=btn.textContent;
+    btn.disabled=true;
+    btn.textContent=I18N.t('entrepreneur.dashboard.submitting');
+
     const ind4Raw=rubricRawScore();
     const ind4Norm=ind4Raw/28;
     const norm4=reviewSite.norm.slice(0,3).concat([ind4Norm]);
@@ -240,23 +298,39 @@
     const patternScores=PATTERNS.map(function(p){
       return {n:p.n, name_en:p.en, name_th:p.th, onsite:p.onsite, score:rubricAnswers[p.n].score, note:rubricAnswers[p.n].note};
     });
-    const subs=loadSubs();
-    subs.push({
-      id: 'sub_' + Date.now(),
+    const payload={
+      secret: API.secret,
       businessName: session.businessName, repName: session.repName, email: session.email,
       taxId: session.taxId, phone: session.phone, zoneId: session.zoneId,
-      polygon: reviewSite.polygon, overall: overall, level: null, ci: null, norm: norm4,
-      ind4Source: 'assessed', ind4Level: 'A', ind4Raw: ind4Raw, ind4AssessedPatterns: 14,
-      ind4AssessedDate: new Date().toISOString(), patternScores: patternScores,
-      photos: reviewPhotos,
-      createdAt: new Date().toISOString(), status: 'pending'
-    });
-    saveSubs(subs);
-    reviewSite.submitted=true;
-    if(window.BEQI_RERENDER_SITES) window.BEQI_RERENDER_SITES();
-    document.getElementById('submitReview').hidden=true;
-    reviewSite=null; reviewPhotos=[]; rubricAnswers={};
-    renderSubmissions();
+      polygon: reviewSite.polygon, norm: norm4, overall: overall,
+      ind4Raw: ind4Raw, patternScores: patternScores, photos: reviewPhotos
+    };
+
+    fetch(API.submitUrl, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)})
+      .then(function(r){ return r.json().then(function(data){ return {ok:r.ok, data}; }); })
+      .then(function(res){
+        if(!res.ok) throw new Error((res.data && res.data.error) || 'submit failed');
+        const mine=loadMySubs();
+        mine.push({id: res.data.id, pin: res.data.pin, businessName: session.businessName, createdAt: new Date().toISOString()});
+        saveMySubs(mine);
+        reviewSite.submitted=true;
+        if(window.BEQI_RERENDER_SITES) window.BEQI_RERENDER_SITES();
+        document.getElementById('submitReview').hidden=true;
+        document.getElementById('resultId').textContent=res.data.id;
+        document.getElementById('resultPin').textContent=res.data.pin;
+        const resultSection=document.getElementById('submitResult');
+        resultSection.hidden=false;
+        resultSection.scrollIntoView({behavior:'smooth', block:'start'});
+        reviewSite=null; reviewPhotos=[]; rubricAnswers={};
+        renderSubmissions();
+      })
+      .catch(function(e){
+        console.error('BEQI submitApplication error', e);
+        errEl.textContent=I18N.t('entrepreneur.dashboard.submitErr');
+        errEl.classList.remove('hidden');
+        btn.disabled=false;
+        btn.textContent=originalText;
+      });
   });
 
   window.BEQI_SUBMIT_TO_EVALUATOR = function(site){

@@ -6,5 +6,9 @@
                    เท่านั้น — ไม่ใช่กลไกความปลอดภัยจริงจัง เพราะค่านี้มองเห็นได้เสมอผ่าน view-source) */
 const BEQI_API_CONFIG = {
   computeUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/computeBeqi',
+  submitUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/submitApplication',
+  statusUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/checkStatus',
+  listSubmissionsUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/listSubmissions',
+  updateSubmissionUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/updateSubmission',
   secret: 'ouN5_fkgzniQyQ9gjcaTWc54lUp8gv0k'
 };

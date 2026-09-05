@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>BEQI Portfolio - Check Application Status</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&amp;family=Inter:wght@400&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#eae8e3","on-primary": "#ffffff","outline-variant": "#bfc8c8","error": "#ba1a1a",
+                      "primary-container": "#2c6b6b","tertiary-fixed": "#b5eedc","on-tertiary-fixed-variant": "#155043","primary": "#095353",
+                      "jungle-leaf": "#2C2C2C","on-secondary-fixed": "#410003","on-secondary-container": "#600006","surface-variant": "#e4e2de",
+                      "tertiary": "#195346","surface-container-low": "#f5f3ee","tertiary-fixed-dim": "#99d2c1","on-primary-container": "#abe9e8",
+                      "surface-container": "#f0eee9","on-error-container": "#93000a","on-tertiary-fixed": "#002019","on-primary-fixed-variant": "#034f50",
+                      "primary-fixed": "#afeeed","error-container": "#ffdad6","limestone-gray": "#D9C8B2","on-secondary-fixed-variant": "#92030f",
+                      "secondary-container": "#ff5a52","on-secondary": "#ffffff","tertiary-container": "#346b5d","on-tertiary": "#ffffff",
+                      "background": "#fbf9f4","secondary": "#b52424","outline": "#6f7978","on-tertiary-container": "#b0e9d7",
+                      "secondary-fixed": "#ffdad6","surface-tint": "#286868","coral-warmth": "#F9564E","surface-container-lowest": "#ffffff",
+                      "surface-bright": "#fbf9f4","surface": "#fbf9f4","surface-container-highest": "#e4e2de","on-surface": "#1b1c19",
+                      "inverse-on-surface": "#f2f1ec","inverse-primary": "#94d1d1","on-background": "#1b1c19","secondary-fixed-dim": "#ffb4ac",
+                      "on-error": "#ffffff","surface-dim": "#dbdad5","inverse-surface": "#30312e","primary-fixed-dim": "#94d1d1",
+                      "andaman-deep": "#1A3D3D","sand-base": "#FCFAF5","on-surface-variant": "#3f4848","on-primary-fixed": "#002020"
+              },
+              "borderRadius": {"DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem"},
+              "spacing": {"container-max": "1280px","margin-desktop": "64px","unit": "8px","gutter": "24px","margin-mobile": "20px"},
+              "fontFamily": {
+                      "body-lg": ["Inter"],"data-viz": ["Space Grotesk"],"display-lg": ["Epilogue"],"label-caps": ["Space Grotesk"],
+                      "body-md": ["Inter"],"headline-md": ["Epilogue"],"display-lg-mobile": ["Epilogue"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px",{"lineHeight": "1.6","fontWeight": "400"}],"data-viz": ["14px",{"lineHeight": "1","fontWeight": "400"}],
+                      "display-lg": ["48px",{"lineHeight": "1.1","letterSpacing": "-0.02em","fontWeight": "700"}],
+                      "label-caps": ["12px",{"lineHeight": "1","letterSpacing": "0.1em","fontWeight": "500"}],
+                      "body-md": ["16px",{"lineHeight": "1.6","fontWeight": "400"}],"headline-md": ["24px",{"lineHeight": "1.3","fontWeight": "600"}],
+                      "display-lg-mobile": ["32px",{"lineHeight": "1.2","fontWeight": "700"}]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        [hidden] { display: none !important; }
+        body { background-color: #fbf9f4; color: #1b1c19; }
+        .sketch-border { border: 1px solid #D9C8B2; border-radius: 4px; }
+        .status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;letter-spacing:.03em}
+        .status-pending{background:#FDF8E9;color:#8a6d1f}
+        .status-approved{background:#E8F4EE;color:#155043}
+        .status-revision{background:#FCEBEA;color:#a3352c}
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<header class="bg-background/80 backdrop-blur-md font-label-caps text-label-caps top-0 sticky z-50 border-b border-limestone-gray">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="index.html"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span></a>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="evaluator-portal.html" data-i18n="common.nav.evaluators">Evaluators</a>
+</nav>
+<div class="flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors" data-lang-btn="en">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors" data-lang-btn="th">TH</button></div>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center px-margin-mobile py-16">
+<div class="w-full max-w-lg bg-surface-container-lowest sketch-border p-10">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-3xl">fact_check</span>
+<h1 class="font-headline-md text-headline-md text-andaman-deep" data-i18n="checkstatus.title">Check Application Status</h1>
+</div>
+<p class="font-body-md text-on-surface-variant mb-8" data-i18n="checkstatus.intro">Enter the Submission ID and PIN you received when you submitted your property for certification review — no login required.</p>
+
+<form class="space-y-6" id="statusForm">
+<div>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="checkstatus.idLabel">Submission ID</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-data-viz uppercase" id="inId" placeholder="BQ-XXXXXX" data-i18n-placeholder="checkstatus.idPh" type="text">
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="checkstatus.pinLabel">PIN</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-data-viz" id="inPin" inputmode="numeric" maxlength="6" placeholder="6-digit PIN" data-i18n-placeholder="checkstatus.pinPh" type="text">
+</div>
+<p class="text-sm text-coral-warmth hidden" id="statusError"></p>
+<button class="bg-primary text-on-primary font-body-md font-medium py-3 px-8 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center gap-2 w-full" id="statusSubmitBtn" type="submit">
+<span data-i18n="checkstatus.submitBtn">Check Status</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</form>
+
+<div id="statusResult" class="mt-8 pt-8 border-t border-limestone-gray" hidden>
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-md text-lg text-andaman-deep" id="resBusiness">--</h2>
+<span class="status-pill" id="resStatusPill"></span>
+</div>
+<p class="font-body-md text-sm text-on-surface-variant mb-1"><span data-i18n="checkstatus.resultZone">Zone</span>: <b id="resZone">--</b></p>
+<p class="font-body-md text-sm text-on-surface-variant mb-4"><span data-i18n="checkstatus.resultSubmitted">Submitted</span>: <b id="resDate">--</b></p>
+<div class="bg-surface-container-low sketch-border p-6 text-center mb-2">
+<div class="font-display-lg text-[40px] text-primary leading-none" id="resScore">--</div>
+<p class="font-label-caps text-label-caps text-outline mt-2" id="resScoreCaption"></p>
+</div>
+<p class="font-body-md text-sm text-tertiary hidden" id="resCertLine"></p>
+<button class="tool-btn ghost mt-6 w-full border border-limestone-gray text-on-surface-variant py-2 rounded font-label-caps text-label-caps hover:bg-surface-container-high transition-all" id="newSearchBtn" data-i18n="checkstatus.newSearchBtn">Check another submission</button>
+</div>
+</div>
+</main>
+<footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
+<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
+            Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
+</footer>
+<script src="assets/js/i18n-dict.js"></script>
+<script src="assets/js/i18n-dict-entrepreneur.js"></script>
+<script src="assets/js/i18n-dict-checkstatus.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/beqi-core.js"></script>
+<script src="assets/js/api-config.js"></script>
+<script src="assets/js/check-status.js"></script>
+</body>
+</html>
