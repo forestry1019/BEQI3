@@ -87,6 +87,31 @@
 
     const contactLine = [sub.repName, sub.email, sub.phone].filter(Boolean).join(' · ');
 
+    // คะแนนตั้งต้นที่ผู้ขอรับรองประเมินตนเองผ่าน rubric 14 รูปแบบ พร้อมเหตุผลประกอบทุกข้อ (หัวข้อ 3.3.2.1) —
+    // แสดงให้ผู้ประเมินเห็นครบเพื่อสอบทาน ไม่ใช่คะแนนที่นับเป็นทางการจนกว่าจะอนุมัติ รูปแบบที่ #2/7/13/14
+    // ถูกทำเครื่องหมายว่าต้องยืนยัน ณ สถานที่เสมอ ไม่ว่าผู้ขอรับรองจะให้คะแนนอะไรมา
+    const rubricTable = (sub.patternScores && sub.patternScores.length)
+      ? '<div class="bg-surface-container-lowest organic-border rounded p-8">' +
+        '<h3 class="font-label-caps text-label-caps text-primary border-b border-limestone-gray pb-4 mb-6 uppercase tracking-widest">' + I18N.t('evaluator.dashboard.rubricHeading') + '</h3>' +
+        '<div class="overflow-x-auto"><table class="w-full text-left border-collapse text-sm">' +
+        '<thead><tr class="font-label-caps text-xs text-on-surface-variant border-b border-limestone-gray">' +
+        '<th class="py-2 px-3 font-normal">#</th><th class="py-2 px-3 font-normal">' + I18N.t('evaluator.dashboard.rubricPattern') + '</th>' +
+        '<th class="py-2 px-3 font-normal text-center">' + I18N.t('evaluator.dashboard.rubricScore') + '</th>' +
+        '<th class="py-2 px-3 font-normal">' + I18N.t('evaluator.dashboard.rubricNote') + '</th></tr></thead><tbody>' +
+        sub.patternScores.map(function(p){
+          const name = (I18N.getLang() === 'th') ? p.name_th : p.name_en;
+          const onsiteTag = p.onsite ? ' <span class="text-coral-warmth">(' + I18N.t('evaluator.dashboard.rubricOnsite') + ')</span>' : '';
+          return '<tr class="border-b border-limestone-gray/50">' +
+            '<td class="py-2 px-3">' + p.n + '</td>' +
+            '<td class="py-2 px-3">' + name + onsiteTag + '</td>' +
+            '<td class="py-2 px-3 text-center font-data-viz font-semibold">' + p.score + '</td>' +
+            '<td class="py-2 px-3 text-on-surface-variant">' + (p.note || '') + '</td></tr>';
+        }).join('') +
+        '<tr class="font-semibold border-t border-limestone-gray"><td colspan="2" class="py-2 px-3">' + I18N.t('evaluator.dashboard.rubricTotal') + '</td>' +
+        '<td class="py-2 px-3 text-center font-data-viz">' + sub.ind4Raw + ' / 28</td><td></td></tr>' +
+        '</tbody></table></div></div>'
+      : '';
+
     if(!hasScore){
       pane.innerHTML =
         '<div class="bg-surface-container-lowest organic-border rounded p-8 text-center">' +
@@ -122,6 +147,7 @@
       '<div class="h-full bg-primary" style="width:' + Math.min(sub.overall, 100) + '%"></div></div></div></div>' +
 
       photoGallery +
+      rubricTable +
 
       '<div class="bg-surface-container-lowest organic-border rounded p-8">' +
       '<h3 class="font-label-caps text-label-caps text-primary border-b border-limestone-gray pb-4 mb-6 uppercase tracking-widest">' + I18N.t('evaluator.dashboard.metricsHeading') + '</h3>' +

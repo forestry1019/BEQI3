@@ -56,6 +56,25 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
 
   /* ---------- entrepreneur-dashboard.html (เหมือนหน้านักท่องเที่ยว + ส่งให้ผู้ประเมิน + ติดตามสถานะ) ---------- */
   'entrepreneur.dashboard.portalAccessBtn': {en: 'Log Out', th: 'ออกจากระบบ'},
+  'entrepreneur.dashboard.howto.heading': {en: 'How to Use This Page', th: 'วิธีใช้งานหน้านี้'},
+  'entrepreneur.dashboard.howto.step1': {
+    en: 'Draw your property boundary on the map, then click "Calculate BEQI" (indicators 1-3 are computed automatically from satellite imagery).',
+    th: 'วาดขอบเขตพื้นที่ของคุณบนแผนที่ แล้วกด "คำนวณ BEQI" (ตัวชี้วัดที่ 1-3 คำนวณอัตโนมัติจากภาพถ่ายดาวเทียม)'
+  },
+  'entrepreneur.dashboard.howto.step2': {en: 'Click "Submit for Certification Review" on the result card.', th: 'กด "ส่งขอรับรองผลการประเมิน" ที่การ์ดผลลัพธ์'},
+  'entrepreneur.dashboard.howto.step3': {en: 'Attach at least one photo of your property.', th: 'แนบรูปพื้นที่ของคุณอย่างน้อย 1 รูป'},
+  'entrepreneur.dashboard.howto.step4': {
+    en: 'Score indicator 4 using the 14 Patterns of Biophilic Design checklist that appears — a rubric score is calculated live as you go.',
+    th: 'ให้คะแนนตัวชี้วัดที่ 4 ตามแบบตรวจสอบ 14 รูปแบบของการออกแบบเชิงไบโอฟิลิกที่ปรากฏขึ้น — ระบบคำนวณคะแนนให้ทันทีระหว่างทำ'
+  },
+  'entrepreneur.dashboard.howto.step5': {en: 'Review everything, tick the confirmation box, then send it to the evaluator.', th: 'ตรวจทานข้อมูลทั้งหมด ติ๊กยืนยัน แล้วส่งให้ผู้ประเมิน'},
+  'entrepreneur.dashboard.rubric.heading': {en: 'Indicator 4 — 14 Patterns of Biophilic Design', th: 'ตัวชี้วัดที่ 4 — 14 รูปแบบของการออกแบบเชิงไบโอฟิลิก'},
+  'entrepreneur.dashboard.rubric.hint': {
+    en: 'Score only what is objectively visible as physical structure or material in your photos — not opinion or feeling. A short evidence note is required for every pattern.',
+    th: 'ให้คะแนนเฉพาะโครงสร้าง/วัสดุทางกายภาพที่ปรากฏจริงในรูปเท่านั้น ไม่ใช่ความรู้สึกส่วนตัว ต้องระบุเหตุผล/หลักฐานสั้น ๆ ทุกข้อ'
+  },
+  'entrepreneur.dashboard.rubric.onsiteTag': {en: 'confirmed by evaluator on-site', th: 'ผู้ประเมินต้องยืนยัน ณ สถานที่'},
+  'entrepreneur.dashboard.rubric.notePlaceholder': {en: 'What evidence did you see? (required)', th: 'พบหลักฐานอะไรในรูป (จำเป็นต้องกรอก)'},
   'entrepreneur.dashboard.hero.title': {en: 'Assess Your Property', th: 'ประเมินพื้นที่ของคุณ'},
   'entrepreneur.dashboard.hero.subtitle': {
     en: 'Draw your property boundary, calculate its BEQI score, then submit it for official certification review.',

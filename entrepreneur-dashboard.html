@@ -85,6 +85,16 @@
 </div>
 </header>
 <main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+<div class="organic-border bg-surface-container-low p-6 mb-10">
+<h2 class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-4" data-i18n="entrepreneur.dashboard.howto.heading">How to Use This Page</h2>
+<ol class="flex flex-col gap-2 font-body-md text-sm text-on-surface-variant list-decimal list-inside">
+<li data-i18n="entrepreneur.dashboard.howto.step1">Draw your property boundary on the map, then click "Calculate BEQI" (indicators 1-3 are computed automatically from satellite imagery).</li>
+<li data-i18n="entrepreneur.dashboard.howto.step2">Click "Submit for Certification Review" on the result card.</li>
+<li data-i18n="entrepreneur.dashboard.howto.step3">Attach at least one photo of your property.</li>
+<li data-i18n="entrepreneur.dashboard.howto.step4">Score indicator 4 using the 14 Patterns of Biophilic Design checklist that appears — a rubric score is calculated live as you go.</li>
+<li data-i18n="entrepreneur.dashboard.howto.step5">Review everything, tick the confirmation box, then send it to the evaluator.</li>
+</ol>
+</div>
 <div class="mb-10">
 <h1 class="font-display-lg text-display-lg text-andaman-deep mb-2" data-i18n="entrepreneur.dashboard.hero.title">Assess Your Property</h1>
 <p class="font-body-md text-body-lg text-on-surface-variant max-w-2xl" data-i18n="entrepreneur.dashboard.hero.subtitle">Draw your property boundary, calculate its BEQI score, then submit it for official certification review.</p>
@@ -144,6 +154,14 @@
 <input type="file" id="reviewPhotoInput" accept="image/*" multiple class="block w-full text-sm">
 <p class="font-body-md text-xs text-outline mt-2" data-i18n="entrepreneur.dashboard.review.photosHint">Attach at least one photo of your property showing natural/biophilic features — these will be reviewed by an evaluator.</p>
 <div id="reviewPhotoPreview" class="flex flex-wrap gap-2 mt-3"></div>
+</div>
+<div id="reviewRubric" class="mb-6" hidden>
+<div class="flex items-center justify-between flex-wrap gap-3 mb-2">
+<label class="block font-label-caps text-label-caps text-andaman-deep" data-i18n="entrepreneur.dashboard.rubric.heading">Indicator 4 — 14 Patterns of Biophilic Design</label>
+<div class="font-data-viz text-data-viz text-primary" id="rubricScoreLine">0 / 28 (0.00)</div>
+</div>
+<p class="font-body-md text-xs text-outline mb-4" data-i18n="entrepreneur.dashboard.rubric.hint">Score only what is objectively visible as physical structure or material in your photos — not opinion or feeling. A short evidence note is required for every pattern.</p>
+<div id="rubricList" class="flex flex-col gap-4"></div>
 </div>
 <label class="flex items-start gap-2 font-body-md text-sm text-on-surface-variant mb-6 cursor-pointer">
 <input type="checkbox" id="reviewConfirmChk" class="mt-1">

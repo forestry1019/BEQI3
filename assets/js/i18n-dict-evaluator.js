@@ -62,6 +62,12 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     th: 'รอการประเมินตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) — ตรวจสอบรูปที่ส่งมาด้านล่างแล้วให้คะแนนตามแบบตรวจสอบ 14 รูปแบบ ก่อนจึงจะแสดงคะแนนรวมได้'
   },
   'evaluator.dashboard.awaitingInd4Short': {en: 'Awaiting indicator 4', th: 'รอตัวชี้วัดที่ 4'},
+  'evaluator.dashboard.rubricHeading': {en: 'Applicant Self-Assessment (14 Patterns) — Starting Score Only', th: 'คะแนนตั้งต้นที่ผู้ขอรับรองประเมินตนเอง (14 รูปแบบ) — ยังไม่ใช่ผลตัดสิน'},
+  'evaluator.dashboard.rubricPattern': {en: 'Pattern', th: 'รูปแบบ'},
+  'evaluator.dashboard.rubricScore': {en: 'Score', th: 'คะแนน'},
+  'evaluator.dashboard.rubricNote': {en: 'Evidence Note', th: 'เหตุผล/หลักฐาน'},
+  'evaluator.dashboard.rubricOnsite': {en: 'confirm on-site', th: 'ต้องยืนยัน ณ สถานที่'},
+  'evaluator.dashboard.rubricTotal': {en: 'Raw total', th: 'คะแนนดิบรวม'},
   'evaluator.dashboard.colMetric': {en: 'Metric', th: 'ตัวชี้วัด'},
   'evaluator.dashboard.colSubmission': {en: 'Submission Data', th: 'ข้อมูลที่ส่ง'},
   'evaluator.dashboard.colStandardPrefix': {en: 'BEQI Standard (', th: 'มาตรฐาน BEQI ('},
