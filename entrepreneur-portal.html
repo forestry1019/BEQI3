@@ -74,10 +74,29 @@
 </div>
 </header>
 <main class="flex-grow flex flex-col md:flex-row w-full max-w-container-max mx-auto md:px-margin-desktop py-8 md:py-16 gap-gutter">
-<div class="w-full md:w-1/2 relative bg-surface rounded-lg sketch-border overflow-hidden min-h-[400px] flex items-center justify-center p-8 transition-all duration-300">
-<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 via-transparent to-coral-warmth/10"></div>
-<div class="absolute inset-0 tech-grid pointer-events-none"></div>
-<div class="relative z-10 max-w-sm">
+<div class="w-full md:w-1/2 relative bg-surface rounded-lg sketch-border overflow-hidden min-h-[480px] flex items-end p-8 transition-all duration-300">
+<svg viewBox="0 0 900 700" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 w-full h-full" style="z-index:0;">
+<defs>
+<radialGradient id="epSky" cx="30%" cy="10%" r="90%"><stop offset="0%" stop-color="#F3E9C7"/><stop offset="100%" stop-color="#FCFAF5"/></radialGradient>
+<filter id="epGrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1 0 0 0 0 0.97 0 0 0 0 0.88 0 0 0 0.035 0"/></filter>
+</defs>
+<rect width="900" height="700" fill="url(#epSky)"/>
+<path d="M0,440 Q220,410 450,435 T900,420 V700 H0 Z" fill="#9FB9AE" opacity="0.42"/>
+<path d="M0,470 Q240,445 470,465 T900,455 V700 H0 Z" fill="#6E9A87" opacity="0.38"/>
+<path d="M0,370 Q90,260 200,285 Q290,305 330,370 Q300,430 220,445 Q100,450 0,410 Z" fill="#5C7A62" opacity="0.5"/>
+<path d="M0,390 Q70,300 170,320 Q250,338 280,390 Q250,440 160,450 Q70,450 0,420 Z" fill="#3E5C46" opacity="0.55"/>
+<circle cx="90" cy="330" r="30" fill="#4C7255" opacity="0.5"/><circle cx="140" cy="310" r="26" fill="#5C8560" opacity="0.5"/><circle cx="190" cy="335" r="24" fill="#4C7255" opacity="0.45"/><circle cx="60" cy="365" r="22" fill="#3E5C46" opacity="0.5"/>
+<path d="M650,390 Q740,310 830,335 Q890,355 900,380 L900,700 H650 Z" fill="#8FA890" opacity="0.28"/>
+<path d="M0,540 Q260,505 520,530 Q720,548 900,520 V700 H0 Z" fill="#E9D3AC" opacity="0.55"/>
+<g transform="translate(160,530)" stroke="#5C4436" stroke-width="5" fill="none" stroke-linecap="round">
+<path d="M0,140 Q10,60 0,0"/><path d="M0,14 Q-46,-22 -84,-12" stroke="#6F9A6C" stroke-width="8"/><path d="M0,7 Q52,-28 92,-6" stroke="#6F9A6C" stroke-width="8"/><path d="M0,0 Q-12,-52 -42,-82" stroke="#7FAE7A" stroke-width="8"/><path d="M0,0 Q16,-52 47,-76" stroke="#7FAE7A" stroke-width="8"/><path d="M0,-6 Q0,-64 0,-95" stroke="#8FBE84" stroke-width="8"/>
+</g>
+<g transform="translate(740,565) scale(0.7)" stroke="#5C4436" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9">
+<path d="M0,140 Q10,60 0,0"/><path d="M0,14 Q-46,-22 -84,-12" stroke="#6F9A6C" stroke-width="8"/><path d="M0,7 Q52,-28 92,-6" stroke="#6F9A6C" stroke-width="8"/><path d="M0,0 Q-12,-52 -42,-82" stroke="#7FAE7A" stroke-width="8"/><path d="M0,0 Q16,-52 47,-76" stroke="#7FAE7A" stroke-width="8"/>
+</g>
+<rect width="900" height="700" filter="url(#epGrain)"/>
+</svg>
+<div class="relative z-10 max-w-sm bg-white/90 backdrop-blur-sm rounded-lg p-6 shadow-lg">
 <h3 class="font-headline-md text-headline-md text-andaman-deep mb-3" data-i18n="entrepreneur.portal.sideTitle">Verified Entrepreneurs Only</h3>
 <p class="font-body-md text-sm text-on-surface-variant mb-8" data-i18n="entrepreneur.portal.sideDesc">BEQI certification review is limited to registered business representatives. Your Google account confirms who you are; the details below confirm which business you represent.</p>
 <ol class="flex flex-col gap-4">
