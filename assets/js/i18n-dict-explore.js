@@ -7,9 +7,28 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
 
   /* ---------- hero ---------- */
   'explore.hero.title': {en: 'Explore the Coast', th: 'สำรวจชายฝั่ง'},
-  'explore.hero.subtitle': {
-    en: 'Discover sustainable destinations certified by the Biophilic Environmental Quality Index.',
-    th: 'ค้นพบจุดหมายปลายทางเพื่อความยั่งยืน ที่ผ่านการรับรองด้วยดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก'
+
+  /* ---------- how-to box ---------- */
+  'explore.howto.heading': {en: 'How to Use This Page', th: 'วิธีใช้งานหน้านี้'},
+  'explore.howto.intro': {
+    en: 'Researchers and the public can explore the BEQI index across the Khao Lak area themselves — just select an area on the map and calculate.',
+    th: 'นักวิจัยและบุคคลทั่วไปสามารถสำรวจดัชนี BEQI ในพื้นที่เขาหลักได้ด้วยตนเอง เพียงเลือกพื้นที่บนแผนที่แล้วกดปุ่มคำนวณ'
+  },
+  'explore.howto.step1': {
+    en: 'Click along the map, point by point, to trace the boundary of the area you\'re interested in (at least 3 points), then click "Close shape" or click the first point again to close it.',
+    th: 'คลิกบนแผนที่ไล่ตามขอบเขตพื้นที่ที่สนใจทีละจุด (อย่างน้อย 3 จุด) แล้วกด "ปิดรูปหลายเหลี่ยม" หรือคลิกจุดแรกซ้ำเพื่อปิดรูป'
+  },
+  'explore.howto.step2': {
+    en: 'Click "Calculate BEQI" to see indicators 1-3, computed live from satellite imagery for the area you drew.',
+    th: 'กดปุ่ม "คำนวณ BEQI" เพื่อดูตัวชี้วัดที่ 1-3 ซึ่งคำนวณสดจากภาพถ่ายดาวเทียมของพื้นที่ที่วาด'
+  },
+  'explore.howto.step3': {
+    en: 'Draw up to 3 areas to compare with each other, or check the box to compare against the Portfolio\'s 3 reference zones in the "Compare Areas" section.',
+    th: 'วาดเพิ่มได้สูงสุด 3 พื้นที่เพื่อเปรียบเทียบกันเอง หรือติ๊กเลือกเทียบกับ 3 โซนอ้างอิงของ Portfolio ได้ในส่วน "เปรียบเทียบพื้นที่"'
+  },
+  'explore.howto.step4': {
+    en: 'Scroll down to see businesses that have already received official BEQI certification in the "Certified Properties" section below.',
+    th: 'เลื่อนลงไปดูรายชื่อสถานประกอบการที่ผ่านการรับรอง BEQI แล้วในส่วน "สถานประกอบการที่ผ่านการรับรอง" ด้านล่าง'
   },
 
   /* ---------- draw tool controls ---------- */
