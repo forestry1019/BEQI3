@@ -67,7 +67,20 @@
 </div>
 </header>
 <main class="flex-grow flex items-center justify-center px-margin-mobile py-16">
-<div class="w-full max-w-md bg-surface-container-lowest sketch-border p-10">
+<div class="w-full max-w-md bg-surface-container-lowest sketch-border overflow-hidden">
+<div class="h-24 overflow-hidden">
+<svg viewBox="0 0 900 520" preserveAspectRatio="xMidYMid slice" class="w-full h-full block">
+<defs><radialGradient id="evpSky" cx="30%" cy="10%" r="90%"><stop offset="0%" stop-color="#F3E9C7"/><stop offset="100%" stop-color="#FCFAF5"/></radialGradient></defs>
+<rect width="900" height="520" fill="url(#evpSky)"/>
+<path d="M0,330 Q220,300 450,325 T900,310 V520 H0 Z" fill="#9FB9AE" opacity="0.42"/>
+<path d="M0,360 Q240,335 470,355 T900,345 V520 H0 Z" fill="#6E9A87" opacity="0.38"/>
+<path d="M0,260 Q90,150 200,175 Q290,195 330,260 Q300,320 220,335 Q100,340 0,300 Z" fill="#5C7A62" opacity="0.5"/>
+<path d="M0,280 Q70,190 170,210 Q250,228 280,280 Q250,330 160,340 Q70,340 0,310 Z" fill="#3E5C46" opacity="0.55"/>
+<path d="M650,280 Q740,200 830,225 Q890,245 900,270 L900,520 H650 Z" fill="#8FA890" opacity="0.28"/>
+<path d="M0,430 Q260,395 520,420 Q720,438 900,410 V520 H0 Z" fill="#E9D3AC" opacity="0.55"/>
+</svg>
+</div>
+<div class="p-10">
 <div class="flex items-center gap-3 mb-2">
 <span class="material-symbols-outlined text-primary text-3xl">verified</span>
 <h1 class="font-headline-md text-headline-md text-andaman-deep" data-i18n="evaluator.portal.title">Evaluator Access</h1>
@@ -102,6 +115,7 @@
 <span class="material-symbols-outlined text-sm">arrow_forward</span>
 </button>
 </form>
+</div>
 </div>
 </main>
 <footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
