@@ -39,6 +39,11 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'explore.compare.indicatorHeader': {en: 'Indicator', th: 'ตัวชี้วัด'},
   'explore.compare.totalScoreRow': {en: 'Total score', th: 'คะแนนรวม'},
   'explore.compare.beqiScoreLabel': {en: 'BEQI score', th: 'คะแนน BEQI'},
+  'explore.compare.includeZonesLabel': {
+    en: 'Compare against the Portfolio\'s 3 main zones as a reference benchmark',
+    th: 'เทียบกับ 3 โซนหลักของ Portfolio เป็นมาตรฐานอ้างอิง'
+  },
+  'explore.compare.referenceSuffix': {en: 'reference', th: 'อ้างอิง'},
   'explore.compare.ind1': {en: 'Green area density', th: 'ความหนาแน่นพื้นที่สีเขียว'},
   'explore.compare.ind2': {en: 'Ecosystem connectivity', th: 'การเชื่อมโยงระบบนิเวศ'},
   'explore.compare.ind3': {en: 'Water access', th: 'การเข้าถึงแหล่งน้ำ'},

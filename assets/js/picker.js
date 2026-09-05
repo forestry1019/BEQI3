@@ -31,7 +31,7 @@ const t=key=>(typeof I18N!=='undefined'?I18N.t(key):key);
 
 let meta=null, zones=null, map=null, ready=false;
 let verts=[], vmarkers=[], polyline=null, polygon=null, closed=false, computing=false;
-let sites=[], siteSeq=0, compareChart=null; // พื้นที่ที่คำนวณแล้วทั้งหมด (สูงสุด MAX_SITES พื้นที่พร้อมกัน)
+let sites=[], siteSeq=0, compareChart=null, compareRadar=null; // พื้นที่ที่คำนวณแล้วทั้งหมด (สูงสุด MAX_SITES พื้นที่พร้อมกัน)
 
 // ใช้ backend proxy ถ้าตั้งค่า assets/js/api-config.js ไว้แล้ว (ดู server/README.md) — ไม่งั้น fallback ไป
 // ล็อกอิน Google Earth Engine เองในเบราว์เซอร์ (ใช้งานได้ทันทีเพราะ gee-config.js ตั้งค่าไว้แล้ว)
@@ -125,6 +125,8 @@ function wireButtons(){
   el('closeBtn').onclick=closePolygon;
   el('clearBtn').onclick=clearAll;
   el('runBtn').onclick=runAnalysis;
+  const zonesChk=el('includeZonesChk');
+  if(zonesChk) zonesChk.addEventListener('change',renderCompare);
   refreshButtons();
 }
 function refreshButtons(){
@@ -429,14 +431,24 @@ function renderSiteCards(){
   }
 }
 
-// ตาราง + กราฟแท่งเปรียบเทียบพื้นที่ทั้งหมดที่คำนวณไว้ (สูงสุด 3 พื้นที่พร้อมกัน)
+// ตาราง + กราฟเรดาร์ + กราฟแท่งเปรียบเทียบพื้นที่ทั้งหมดที่คำนวณไว้ (สูงสุด 3 พื้นที่พร้อมกัน)
+// เลือกได้ว่าจะรวม 3 โซนหลักของ Portfolio เข้ามาเป็นมาตรฐานอ้างอิงด้วยหรือไม่ (เส้นประในกราฟ)
 function renderCompare(){
   const section=el('compareSection');
   if(!section) return;
   section.hidden=sites.length<1;
   if(!sites.length) return;
 
-  const labels=sites.map((s,i)=>t('explore.result.areaLabel').replace('{n}',i+1));
+  const zonesChk=el('includeZonesChk');
+  const includeZones=zonesChk?zonesChk.checked:false;
+  const refZones=includeZones?zones:[];
+
+  const siteLabels=sites.map((s,i)=>t('explore.result.areaLabel').replace('{n}',i+1));
+  const zoneLabels=refZones.map(z=>z.name_th+' ('+t('explore.compare.referenceSuffix')+')');
+  const labels=siteLabels.concat(zoneLabels);
+  const allNorm=sites.map(s=>s.norm).concat(refZones.map(z=>z.norm));
+  const allOverall=sites.map(s=>s.overall).concat(refZones.map(z=>z.beqi));
+  const allColors=sites.map(s=>s.color).concat(refZones.map((z,i)=>AOI_COL[i]));
   const indLabels=IND_LABEL_KEYS.map(t);
 
   el('compareTable').innerHTML='<thead><tr><th class="text-left py-2 pr-4 font-label-caps text-label-caps text-outline">'+
@@ -445,17 +457,25 @@ function renderCompare(){
     '</tr></thead><tbody>'+
     indLabels.map(function(nm,i){
       return '<tr class="border-t border-limestone-gray"><td class="py-2 pr-4">'+nm+'</td>'+
-        sites.map(function(s){ return '<td class="text-right py-2 pl-4 font-data-viz">'+fx(s.norm[i],3)+'</td>'; }).join('')+
+        allNorm.map(function(n){ return '<td class="text-right py-2 pl-4 font-data-viz">'+fx(n[i],3)+'</td>'; }).join('')+
         '</tr>';
     }).join('')+
     '<tr class="border-t border-limestone-gray font-semibold"><td class="py-2 pr-4">'+t('explore.compare.totalScoreRow')+'</td>'+
-    sites.map(function(s){ return '<td class="text-right py-2 pl-4 font-data-viz">'+fx(s.overall,1)+'</td>'; }).join('')+
+    allOverall.map(function(v){ return '<td class="text-right py-2 pl-4 font-data-viz">'+fx(v,1)+'</td>'; }).join('')+
     '</tr></tbody>';
 
   if(typeof Chart==='undefined') return;
+  if(compareRadar) compareRadar.destroy();
+  compareRadar=new Chart(el('compareRadar'),{type:'radar',
+    data:{labels:indLabels, datasets:labels.map(function(lb,i){
+      return {label:lb, data:allNorm[i], borderColor:allColors[i], backgroundColor:'transparent',
+        borderWidth:2, pointRadius:3, borderDash:i>=sites.length?[4,3]:[]};
+    })},
+    options:{scales:{r:{min:0,max:1,ticks:{stepSize:.2}}},plugins:{legend:{position:'bottom'}}}});
+
   if(compareChart) compareChart.destroy();
   compareChart=new Chart(el('compareBar'),{type:'bar',
-    data:{labels, datasets:[{label:t('explore.compare.beqiScoreLabel'), data:sites.map(function(s){ return s.overall; }), backgroundColor:sites.map(function(s){ return s.color; })}]},
+    data:{labels, datasets:[{label:t('explore.compare.beqiScoreLabel'), data:allOverall, backgroundColor:allColors}]},
     options:{scales:{y:{beginAtZero:true,max:100}},plugins:{legend:{display:false}}}});
 }
 })();

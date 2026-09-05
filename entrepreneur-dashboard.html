@@ -116,11 +116,18 @@
 </div>
 
 <section id="compareSection" class="mt-16" hidden>
-<h2 class="font-headline-md text-headline-md text-andaman-deep mb-6" data-i18n="explore.compare.heading">Compare Areas</h2>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
-<div class="organic-border bg-white p-6"><canvas id="compareBar" height="220"></canvas></div>
-<div class="organic-border bg-white p-6 overflow-x-auto"><table id="compareTable" class="w-full text-sm"></table></div>
+<div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+<h2 class="font-headline-md text-headline-md text-andaman-deep" data-i18n="explore.compare.heading">Compare Areas</h2>
+<label class="flex items-center gap-2 font-body-md text-sm text-on-surface-variant cursor-pointer">
+<input type="checkbox" id="includeZonesChk">
+<span data-i18n="explore.compare.includeZonesLabel">Compare against the Portfolio's 3 main zones as a reference benchmark</span>
+</label>
 </div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<div class="organic-border bg-white p-6"><canvas id="compareRadar" height="260"></canvas></div>
+<div class="organic-border bg-white p-6"><canvas id="compareBar" height="260"></canvas></div>
+</div>
+<div class="organic-border bg-white p-6 overflow-x-auto mt-6"><table id="compareTable" class="w-full text-sm"></table></div>
 </section>
 
 <section class="mt-16">
