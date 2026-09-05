@@ -35,8 +35,11 @@ let sites=[], siteSeq=0, compareChart=null, compareRadar=null; // พื้น�
 
 // ใช้ backend proxy ถ้าตั้งค่า assets/js/api-config.js ไว้แล้ว (ดู server/README.md) — ไม่งั้น fallback ไป
 // ล็อกอิน Google Earth Engine เองในเบราว์เซอร์ (ใช้งานได้ทันทีเพราะ gee-config.js ตั้งค่าไว้แล้ว)
+function apiConfig(){
+  return typeof BEQI_API_CONFIG!=='undefined'?BEQI_API_CONFIG:null;
+}
 function backendConfigured(){
-  const cfg=window.BEQI_API_CONFIG;
+  const cfg=apiConfig();
   return !!(cfg && cfg.computeUrl && cfg.computeUrl.indexOf('YOUR_')!==0);
 }
 
@@ -303,7 +306,7 @@ function runAnalysis(){
   const ring=verts.map(v=>[v.lng,v.lat]);
 
   try{
-    if(backendConfigured()) runViaBackend(window.BEQI_API_CONFIG,ring);
+    if(backendConfigured()) runViaBackend(apiConfig(),ring);
     else runViaClientGEE(ring);
   }catch(e){
     computing=false; refreshButtons();

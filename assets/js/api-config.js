@@ -5,6 +5,6 @@
    2. secret     — ต้องตรงกับค่า BEQI_API_SECRET ที่ตั้งไว้ตอน deploy ฟังก์ชัน (แจกให้ผู้ใช้กลุ่มเล็กที่รู้จักกัน
                    เท่านั้น — ไม่ใช่กลไกความปลอดภัยจริงจัง เพราะค่านี้มองเห็นได้เสมอผ่าน view-source) */
 const BEQI_API_CONFIG = {
-  computeUrl: 'YOUR_CLOUD_FUNCTION_URL',
-  secret: 'YOUR_SHARED_ACCESS_CODE'
+  computeUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/computeBeqi',
+  secret: 'ouN5_fkgzniQyQ9gjcaTWc54lUp8gv0k'
 };
