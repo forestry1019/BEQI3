@@ -206,16 +206,19 @@
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
 <script src="assets/js/i18n-dict.js?v=2"></script>
-<script src="assets/js/i18n-dict-entrepreneur.js?v=3"></script>
+<script src="assets/js/i18n-dict-entrepreneur.js?v=4"></script>
 <script src="assets/js/i18n-dict-explore.js?v=3"></script>
 <script src="assets/js/i18n.js?v=2"></script>
 <script src="assets/js/beqi-core.js?v=2"></script>
 <script>window.BEQI_MAX_SITES=1;</script>
-<script src="assets/js/entrepreneur-dashboard.js?v=3"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/earthengine/1.7.31/earthengine-api.min.js"></script>
 <script src="assets/js/gee-config.js?v=2"></script>
 <script src="assets/js/api-config.js?v=2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="assets/js/picker.js?v=3"></script>
+<!-- ต้องโหลดหลัง api-config.js เสมอ — entrepreneur-dashboard.js อ่าน BEQI_API_CONFIG เข้า const API
+     ตั้งแต่ตอนโหลดสคริปต์ครั้งเดียว (ไม่ใช่ฟังก์ชันแบบ picker.js) ถ้าโหลดก่อน api-config.js จะได้ API=null
+     ค้างตลอดไป ทำให้ปุ่ม "ยืนยันและส่งให้ผู้ประเมิน" เช็คเงื่อนไข !API แล้ว return เงียบ ๆ ทุกครั้ง -->
+<script src="assets/js/entrepreneur-dashboard.js?v=4"></script>
 </body></html>
