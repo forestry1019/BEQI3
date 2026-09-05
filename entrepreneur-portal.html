@@ -113,6 +113,14 @@
 <input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors" id="repName" type="text">
 </div>
 <div>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.portal.field.contactPerson">Contact Person</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="contactPerson" placeholder="e.g., front-desk manager who can meet the evaluator on site" data-i18n-placeholder="entrepreneur.portal.field.contactPersonPh" type="text">
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.portal.field.email">Email</label>
+<input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors" id="email" type="email">
+</div>
+<div>
 <label class="block font-label-caps text-label-caps text-andaman-deep mb-2" data-i18n="entrepreneur.portal.field.businessName">Business / Establishment Name</label>
 <input required class="w-full bg-transparent border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary px-0 py-2 font-body-md text-on-surface transition-colors placeholder:text-outline-variant" id="businessName" placeholder="e.g., Phang Nga Eco Lodge" data-i18n-placeholder="entrepreneur.portal.field.businessNamePh" type="text">
 </div>
@@ -154,7 +162,7 @@
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
 <script src="assets/js/i18n-dict.js?v=2"></script>
-<script src="assets/js/i18n-dict-entrepreneur.js?v=2"></script>
+<script src="assets/js/i18n-dict-entrepreneur.js?v=4"></script>
 <script src="assets/js/i18n.js?v=2"></script>
 <script src="assets/js/beqi-core.js?v=2"></script>
 <script src="assets/js/gee-config.js?v=2"></script>
@@ -181,6 +189,8 @@
     profile.picture && (document.getElementById('googleAvatar').src = profile.picture);
     document.getElementById('googleIdentity').textContent = (profile.name || '') + ' · ' + (profile.email || '');
     document.getElementById('repName').value = profile.name || '';
+    document.getElementById('contactPerson').value = profile.name || '';
+    document.getElementById('email').value = profile.email || '';
     document.getElementById('signInStep').hidden = true;
     document.getElementById('signupForm').hidden = false;
   }
@@ -219,11 +229,13 @@
     const errEl = document.getElementById('formError');
     if(!profile){ errEl.textContent = I18N.t('entrepreneur.portal.formErrorSignIn'); errEl.classList.remove('hidden'); return; }
     const repName = document.getElementById('repName').value.trim();
+    const contactPerson = document.getElementById('contactPerson').value.trim();
+    const email = document.getElementById('email').value.trim();
     const businessName = document.getElementById('businessName').value.trim();
     const taxId = document.getElementById('taxId').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const zoneId = document.getElementById('zoneId').value;
-    if(!repName || !businessName || !taxId || !phone || !zoneId){
+    if(!repName || !contactPerson || !email || !businessName || !taxId || !phone || !zoneId){
       errEl.textContent = I18N.t('entrepreneur.portal.formErrorRequired');
       errEl.classList.remove('hidden');
       return;
@@ -235,8 +247,8 @@
     }
     errEl.classList.add('hidden');
     BeqiCore.setSession({
-      role: 'entrepreneur', repName, businessName, taxId, phone, zoneId,
-      email: profile.email, googleSub: profile.sub, picture: profile.picture,
+      role: 'entrepreneur', repName, contactPerson, businessName, taxId, phone, zoneId,
+      email, googleSub: profile.sub, picture: profile.picture,
       createdAt: new Date().toISOString()
     });
     window.location.href = 'entrepreneur-dashboard.html';

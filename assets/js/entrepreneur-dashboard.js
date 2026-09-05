@@ -263,7 +263,7 @@
     document.getElementById('submitResult').hidden=true;
     document.getElementById('fillTestDataBtn').hidden=!DEV_MODE;
     document.getElementById('reviewBusiness').textContent=session.businessName;
-    document.getElementById('reviewContact').textContent=session.repName+' · '+session.email+(session.phone?' · '+session.phone:'');
+    document.getElementById('reviewContact').textContent=[session.repName, session.contactPerson!==session.repName?session.contactPerson:null, session.email, session.phone].filter(Boolean).join(' · ');
     document.getElementById('reviewZone').textContent=ZONE_LABEL[session.zoneId]||session.zoneId||'--';
     document.getElementById('reviewArea').textContent=BeqiCore.fx(site.norm[0],2)+' green · '+BeqiCore.fx(site.norm[2],2)+' water access (indicators 1 & 3, normalised)';
     refreshConfirmState();
@@ -327,7 +327,7 @@
     });
     const payload={
       secret: API.secret,
-      businessName: session.businessName, repName: session.repName, email: session.email,
+      businessName: session.businessName, repName: session.repName, contactPerson: session.contactPerson, email: session.email,
       taxId: session.taxId, phone: session.phone, zoneId: session.zoneId,
       polygon: reviewSite.polygon, norm: norm4, overall: overall,
       ind4Raw: ind4Raw, patternScores: patternScores, photos: reviewPhotos

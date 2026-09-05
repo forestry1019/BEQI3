@@ -180,7 +180,7 @@ function ringFromFirestore(ring){ return (ring || []).map(p => [p.lng, p.lat]); 
 
 function validateSubmissionPayload(b){
   if(!b || typeof b !== 'object') return 'Missing body';
-  if(!b.businessName || !b.repName || !b.email || !b.taxId || !b.phone || !b.zoneId) return 'Missing required applicant fields';
+  if(!b.businessName || !b.repName || !b.contactPerson || !b.email || !b.taxId || !b.phone || !b.zoneId) return 'Missing required applicant fields';
   if(!isValidPolygon(b.polygon)) return 'Invalid polygon';
   if(!Array.isArray(b.norm) || b.norm.length !== 4 || !b.norm.every(v => isFiniteNum(v) && v >= 0 && v <= 1)) return 'Invalid norm array';
   if(!isFiniteNum(b.overall) || b.overall < 0 || b.overall > 100) return 'Invalid overall score';
@@ -226,7 +226,7 @@ functions.http('submitApplication', async (req, res) => {
     const photoUrls = await uploadPhotos(id, body.photos);
     const doc = {
       id, pin,
-      businessName: body.businessName, repName: body.repName, email: body.email,
+      businessName: body.businessName, repName: body.repName, contactPerson: body.contactPerson, email: body.email,
       taxId: body.taxId, phone: body.phone, zoneId: body.zoneId,
       polygon: ringToFirestore(body.polygon), overall: body.overall, norm: body.norm,
       ind4Source: 'assessed', ind4Raw: body.ind4Raw, ind4AssessedPatterns: 14,

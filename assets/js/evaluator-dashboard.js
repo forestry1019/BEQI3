@@ -103,7 +103,7 @@
         '</div></div>'
       : '';
 
-    const contactLine = [sub.repName, sub.email, sub.phone].filter(Boolean).join(' · ');
+    const contactLine = [sub.repName, sub.contactPerson !== sub.repName ? sub.contactPerson : null, sub.email, sub.phone].filter(Boolean).join(' · ');
 
     // คะแนนตั้งต้นที่ผู้ขอรับรองประเมินตนเองผ่าน rubric 14 รูปแบบ พร้อมเหตุผลประกอบทุกข้อ (หัวข้อ 3.3.2.1) —
     // แสดงให้ผู้ประเมินเห็นครบเพื่อสอบทาน ไม่ใช่คะแนนที่นับเป็นทางการจนกว่าจะอนุมัติ รูปแบบที่ #2/7/13/14

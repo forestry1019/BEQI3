@@ -29,6 +29,9 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'entrepreneur.portal.signedInAs': {en: 'Signed in as', th: 'ลงชื่อเข้าใช้ในชื่อ'},
   'entrepreneur.portal.switchAccount': {en: 'Not you? Switch account', th: 'ไม่ใช่คุณ? เปลี่ยนบัญชี'},
   'entrepreneur.portal.field.repName': {en: 'Representative Name', th: 'ชื่อผู้แทน'},
+  'entrepreneur.portal.field.contactPerson': {en: 'Contact Person', th: 'ผู้ติดต่อ'},
+  'entrepreneur.portal.field.contactPersonPh': {en: 'e.g., front-desk manager who can meet the evaluator on site', th: 'เช่น ผู้จัดการหน้างานที่จะนัดพบผู้ประเมิน'},
+  'entrepreneur.portal.field.email': {en: 'Email', th: 'อีเมล'},
   'entrepreneur.portal.field.businessName': {en: 'Business / Establishment Name', th: 'ชื่อสถานประกอบการ'},
   'entrepreneur.portal.field.businessNamePh': {en: 'e.g., Phang Nga Eco Lodge', th: 'เช่น พังงา อีโค ลอดจ์'},
   'entrepreneur.portal.field.taxId': {en: 'Tax ID Number', th: 'เลขประจำตัวผู้เสียภาษี'},
@@ -89,7 +92,10 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     th: 'วาดขอบเขตพื้นที่ของคุณ คำนวณคะแนน BEQI แล้วส่งให้ผู้ประเมินตรวจสอบเพื่อขอการรับรองอย่างเป็นทางการ'
   },
   'entrepreneur.dashboard.submitBtn': {en: 'Submit for Certification Review', th: 'ส่งขอรับรองผลการประเมิน'},
-  'entrepreneur.dashboard.review.heading': {en: 'Review Before Sending', th: 'ตรวจทานก่อนส่ง'},
+  'entrepreneur.dashboard.review.heading': {
+    en: 'Upload photos of your property, its surrounding environment, and the coastal area, and fill in the information under each heading below',
+    th: 'อัปโหลดรูปสถานประกอบการ สภาพแวดล้อมโดยรอบ และบริเวณริมชายฝั่ง และกรอกข้อมูลตามหัวข้อด้านล่าง'
+  },
   'entrepreneur.dashboard.review.intro': {en: 'Please check the details below carefully — this is what the evaluator will receive.', th: 'กรุณาตรวจสอบข้อมูลด้านล่างให้ครบถ้วน — นี่คือข้อมูลที่ผู้ประเมินจะได้รับ'},
   'entrepreneur.dashboard.review.business': {en: 'Business', th: 'สถานประกอบการ'},
   'entrepreneur.dashboard.review.contact': {en: 'Contact', th: 'ข้อมูลติดต่อ'},
