@@ -78,6 +78,10 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     th: 'ให้คะแนนเฉพาะโครงสร้าง/วัสดุทางกายภาพที่ปรากฏจริงในรูปเท่านั้น ไม่ใช่ความรู้สึกส่วนตัว ต้องระบุเหตุผล/หลักฐานสั้น ๆ ทุกข้อ'
   },
   'entrepreneur.dashboard.rubric.onsiteTag': {en: 'confirmed by evaluator on-site', th: 'ผู้ประเมินต้องยืนยัน ณ สถานที่'},
+  'entrepreneur.dashboard.result.mapEmpty': {
+    en: 'Draw your property boundary on the map and click "Calculate BEQI" to see indicators 1–3 here.',
+    th: 'วาดขอบเขตพื้นที่ของคุณบนแผนที่ แล้วกด "คำนวณ BEQI" เพื่อดูตัวชี้วัดที่ 1-3 ที่นี่'
+  },
   'entrepreneur.dashboard.rubric.notePlaceholder': {en: 'What evidence did you see? (required)', th: 'พบหลักฐานอะไรในรูป (จำเป็นต้องกรอก)'},
   'entrepreneur.dashboard.hero.title': {en: 'Assess Your Property', th: 'ประเมินพื้นที่ของคุณ'},
   'entrepreneur.dashboard.hero.subtitle': {

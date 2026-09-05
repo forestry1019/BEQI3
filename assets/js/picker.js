@@ -150,7 +150,7 @@ function refreshButtons(){
 }
 function statusNote(){
   if(sites.length>=MAX_SITES&&!closed){
-    el('pickerMapNote').textContent=t('explore.compare.maxReached');
+    el('pickerMapNote').textContent=t('explore.compare.maxReached').replace('{n}',MAX_SITES);
   }else if(closed){
     el('pickerMapNote').innerHTML=t('explore.picker.status.closed').replace('{n}',verts.length)+
       (ready?'':' <span class="text-coral-warmth">'+t('explore.picker.status.needsAuth')+'</span>');

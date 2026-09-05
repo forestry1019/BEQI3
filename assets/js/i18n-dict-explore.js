@@ -59,7 +59,7 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
 
   /* ---------- compare section ---------- */
   'explore.compare.heading': {en: 'Compare Areas', th: 'เปรียบเทียบพื้นที่'},
-  'explore.compare.maxReached': {en: 'Maximum 3 areas — remove one above to draw another', th: 'ครบ 3 พื้นที่แล้ว — ลบพื้นที่หนึ่งด้านบนก่อนวาดเพิ่ม'},
+  'explore.compare.maxReached': {en: 'Maximum {n} area(s) reached — remove one above to draw another', th: 'ครบ {n} พื้นที่แล้ว — ลบพื้นที่หนึ่งด้านบนก่อนวาดเพิ่ม'},
   'explore.compare.indicatorHeader': {en: 'Indicator', th: 'ตัวชี้วัด'},
   'explore.compare.totalScoreRow': {en: 'Total score', th: 'คะแนนรวม'},
   'explore.compare.beqiScoreLabel': {en: 'BEQI score', th: 'คะแนน BEQI'},
