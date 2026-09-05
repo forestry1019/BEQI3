@@ -100,6 +100,27 @@
 <p class="font-body-md text-body-lg text-on-surface-variant max-w-2xl" data-i18n="entrepreneur.dashboard.hero.subtitle">Draw your property boundary, calculate its BEQI score, then submit it for official certification review.</p>
 </div>
 
+<div class="mb-10">
+<h2 class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-4" data-i18n="entrepreneur.dashboard.tips.heading">Sustainability Recommendations</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="organic-border bg-white p-5">
+<img src="assets/img/icon-leaf.jpg" alt="" class="w-10 h-10 rounded object-cover mb-3">
+<div class="font-body-md text-sm font-semibold text-andaman-deep mb-1" data-i18n="entrepreneur.dashboard.tips.tip1.title">Add coastal planting</div>
+<p class="font-body-md text-xs text-on-surface-variant" data-i18n="entrepreneur.dashboard.tips.tip1.body">Native plants strengthen the visual connection with nature at your entrance and walkways.</p>
+</div>
+<div class="organic-border bg-white p-5">
+<img src="assets/img/icon-sun.jpg" alt="" class="w-10 h-10 rounded object-cover mb-3">
+<div class="font-body-md text-sm font-semibold text-andaman-deep mb-1" data-i18n="entrepreneur.dashboard.tips.tip2.title">Favor natural light</div>
+<p class="font-body-md text-xs text-on-surface-variant" data-i18n="entrepreneur.dashboard.tips.tip2.body">Reduce artificial lighting during daylight hours and let diffused sunlight reach main areas.</p>
+</div>
+<div class="organic-border bg-white p-5">
+<img src="assets/img/icon-droplet.jpg" alt="" class="w-10 h-10 rounded object-cover mb-3">
+<div class="font-body-md text-sm font-semibold text-andaman-deep mb-1" data-i18n="entrepreneur.dashboard.tips.tip3.title">Capture rainwater visibly</div>
+<p class="font-body-md text-xs text-on-surface-variant" data-i18n="entrepreneur.dashboard.tips.tip3.body">A visible catchment system helps demonstrate water stewardship to evaluators and guests.</p>
+</div>
+</div>
+</div>
+
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
 <section class="lg:col-span-7 flex flex-col gap-4">
 <div id="geeAuthBox" class="organic-border bg-white p-4 font-body-md text-sm"></div>
@@ -206,7 +227,7 @@
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
 <script src="assets/js/i18n-dict.js?v=2"></script>
-<script src="assets/js/i18n-dict-entrepreneur.js?v=4"></script>
+<script src="assets/js/i18n-dict-entrepreneur.js?v=5"></script>
 <script src="assets/js/i18n-dict-explore.js?v=3"></script>
 <script src="assets/js/i18n.js?v=2"></script>
 <script src="assets/js/beqi-core.js?v=2"></script>
@@ -216,7 +237,7 @@
 <script src="assets/js/gee-config.js?v=2"></script>
 <script src="assets/js/api-config.js?v=2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script src="assets/js/picker.js?v=3"></script>
+<script src="assets/js/picker.js?v=4"></script>
 <!-- ต้องโหลดหลัง api-config.js เสมอ — entrepreneur-dashboard.js อ่าน BEQI_API_CONFIG เข้า const API
      ตั้งแต่ตอนโหลดสคริปต์ครั้งเดียว (ไม่ใช่ฟังก์ชันแบบ picker.js) ถ้าโหลดก่อน api-config.js จะได้ API=null
      ค้างตลอดไป ทำให้ปุ่ม "ยืนยันและส่งให้ผู้ประเมิน" เช็คเงื่อนไข !API แล้ว return เงียบ ๆ ทุกครั้ง -->

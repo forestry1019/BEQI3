@@ -438,9 +438,11 @@ function renderSiteCards(){
     const ind4Cell=s.ind4Source==='none'
       ? '<span class="text-outline">'+t('explore.result.ind4NoneShort')+'</span>'
       : '<b>'+fx(s.norm[3],3)+'</b>'+(s.ind4Source==='zone_context'?' <span class="text-outline">('+t('explore.compare.referenceSuffix')+')</span>':'');
+    const indIcons={0:'assets/img/icon-leaf.jpg',2:'assets/img/icon-droplet.jpg'};
     const indicatorRows='<div class="flex flex-col gap-1 text-xs border-t border-limestone-gray pt-3">'+
       [0,1,2].map(function(idx){
-        return '<div class="flex justify-between"><span class="text-on-surface-variant">'+indLabels[idx]+'</span><b>'+fx(s.norm[idx],3)+'</b></div>';
+        const icon=indIcons[idx]?'<img src="'+indIcons[idx]+'" alt="" style="width:14px;height:14px;border-radius:50%;object-fit:cover;margin-right:5px;vertical-align:-2px;">':'';
+        return '<div class="flex justify-between"><span class="text-on-surface-variant">'+icon+indLabels[idx]+'</span><b>'+fx(s.norm[idx],3)+'</b></div>';
       }).join('')+
       '<div class="flex justify-between"><span class="text-on-surface-variant">'+indLabels[3]+'</span>'+ind4Cell+'</div>'+
       '</div>';

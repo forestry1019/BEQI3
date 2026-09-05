@@ -60,6 +60,22 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
 
   /* ---------- entrepreneur-dashboard.html (เหมือนหน้านักท่องเที่ยว + ส่งให้ผู้ประเมิน + ติดตามสถานะ) ---------- */
   'entrepreneur.dashboard.portalAccessBtn': {en: 'Log Out', th: 'ออกจากระบบ'},
+  'entrepreneur.dashboard.tips.heading': {en: 'Sustainability Recommendations', th: 'คำแนะนำเพื่อความยั่งยืน'},
+  'entrepreneur.dashboard.tips.tip1.title': {en: 'Add coastal planting', th: 'เพิ่มพืชพรรณชายฝั่ง'},
+  'entrepreneur.dashboard.tips.tip1.body': {
+    en: 'Native plants strengthen the visual connection with nature at your entrance and walkways.',
+    th: 'ปลูกพืชพื้นถิ่นเพื่อยกระดับการเชื่อมโยงทางสายตากับธรรมชาติบริเวณทางเข้าและทางเดิน'
+  },
+  'entrepreneur.dashboard.tips.tip2.title': {en: 'Favor natural light', th: 'เพิ่มแสงธรรมชาติ'},
+  'entrepreneur.dashboard.tips.tip2.body': {
+    en: 'Reduce artificial lighting during daylight hours and let diffused sunlight reach main areas.',
+    th: 'ลดแสงประดิษฐ์ในช่วงกลางวัน เปิดรับแสงกระจายจากธรรมชาติเข้าสู่พื้นที่ใช้งานหลัก'
+  },
+  'entrepreneur.dashboard.tips.tip3.title': {en: 'Capture rainwater visibly', th: 'เก็บกักน้ำฝนให้มองเห็นได้'},
+  'entrepreneur.dashboard.tips.tip3.body': {
+    en: 'A visible catchment system helps demonstrate water stewardship to evaluators and guests.',
+    th: 'ระบบกักเก็บน้ำที่มองเห็นได้ช่วยแสดงความใส่ใจด้านน้ำต่อผู้ประเมินและผู้เข้าพัก'
+  },
   'entrepreneur.dashboard.howto.heading': {en: 'How to Use This Page', th: 'วิธีใช้งานหน้านี้'},
   'entrepreneur.dashboard.howto.step1': {
     en: 'Draw your property boundary on the map, then click "Calculate BEQI" (indicators 1-3 are computed automatically from satellite imagery).',
