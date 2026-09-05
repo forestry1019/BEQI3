@@ -29,6 +29,9 @@
   });
 
   const API = (typeof BEQI_API_CONFIG !== 'undefined') ? BEQI_API_CONFIG : null;
+  // ปุ่ม "Fill test data" สำหรับทดสอบเท่านั้น — ซ่อนไว้เสมอ ยกเว้นเปิดด้วย ?dev=1 ในลิงก์ หรือ
+  // localStorage.setItem('beqi_dev','1') ผ่าน console เพื่อไม่ให้ผู้เข้าร่วมงานวิจัยจริงเห็นหรือกดโดยไม่ตั้งใจ
+  const DEV_MODE = new URLSearchParams(location.search).get('dev') === '1' || localStorage.getItem('beqi_dev') === '1';
   const MY_SUBS_KEY = 'beqi_my_submissions';
   function loadMySubs(){ try{ return JSON.parse(localStorage.getItem(MY_SUBS_KEY) || '[]'); }catch(e){ return []; } }
   function saveMySubs(list){ localStorage.setItem(MY_SUBS_KEY, JSON.stringify(list)); }
@@ -258,6 +261,7 @@
     document.getElementById('reviewConfirmChk').checked=false;
     document.getElementById('reviewError').classList.add('hidden');
     document.getElementById('submitResult').hidden=true;
+    document.getElementById('fillTestDataBtn').hidden=!DEV_MODE;
     document.getElementById('reviewBusiness').textContent=session.businessName;
     document.getElementById('reviewContact').textContent=session.repName+' · '+session.email+(session.phone?' · '+session.phone:'');
     document.getElementById('reviewZone').textContent=ZONE_LABEL[session.zoneId]||session.zoneId||'--';
@@ -267,6 +271,29 @@
     section.hidden=false;
     section.scrollIntoView({behavior:'smooth', block:'start'});
   }
+
+  // เติมรูปตัวอย่าง + คะแนน rubric ทั้ง 14 ข้อ + ติ๊กยืนยัน ให้อัตโนมัติ — ใช้ทดสอบ flow เท่านั้น
+  // (ปุ่มนี้ซ่อนอยู่เสมอนอกโหมด DEV_MODE ด้านบน ห้ามให้ผู้เข้าร่วมงานวิจัยจริงเห็น)
+  function fillTestData(){
+    if(reviewPhotos.length===0){
+      const canvas=document.createElement('canvas');
+      canvas.width=480; canvas.height=360;
+      const ctx=canvas.getContext('2d');
+      ctx.fillStyle='#2A9D8F'; ctx.fillRect(0,0,480,360);
+      ctx.fillStyle='#ffffff'; ctx.font='24px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('TEST PHOTO', 240, 170);
+      ctx.fillText(new Date().toLocaleString('th-TH'), 240, 200);
+      reviewPhotos=[canvas.toDataURL('image/jpeg',0.8)];
+      renderPhotoPreview();
+    }
+    PATTERNS.forEach(function(p){
+      rubricAnswers[p.n]={score:2, note:'ข้อมูลทดสอบ (dev fill) — ' + p.en};
+    });
+    renderRubric();
+    document.getElementById('reviewConfirmChk').checked=true;
+    refreshConfirmState();
+  }
+  document.getElementById('fillTestDataBtn').addEventListener('click', fillTestData);
 
   document.getElementById('reviewPhotoInput').addEventListener('change', function(e){
     Promise.all(Array.from(e.target.files).map(resizeImage)).then(function(dataUrls){
