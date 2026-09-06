@@ -51,17 +51,20 @@
     </style>
 </head>
 <body class="text-on-background font-body-md min-h-screen flex flex-col grid-bg">
-<header class="bg-background/80 backdrop-blur-md border-b border-limestone-gray top-0 sticky z-50">
-<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
-<a href="index.html" class="font-display-lg text-headline-md tracking-tighter text-andaman-deep">BEQI Portfolio for Sustainable Coastal Tourism</a>
-<nav class="hidden md:flex gap-8 items-center font-label-caps text-label-caps">
-<a class="text-on-surface-variant hover:text-primary transition-colors" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
-<a class="text-primary border-b border-primary pb-1" href="evaluator-dashboard.html" data-i18n="common.nav.evaluators">Evaluators</a>
+<header class="bg-background/80 backdrop-blur-md font-label-caps text-label-caps top-0 sticky z-50 border-b border-limestone-gray">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="index.html"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span></a>
+<div class="flex items-center gap-8">
+<nav class="hidden md:flex gap-8 items-center">
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="explore.html" data-i18n="common.nav.tourists">Tourists</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-all duration-300 hover:opacity-80" href="entrepreneur-portal.html" data-i18n="common.nav.entrepreneurs">Entrepreneurs</a>
+<a class="nav-link active text-primary transition-all duration-300 hover:opacity-80" href="evaluator-dashboard.html" data-i18n="common.nav.evaluators">Evaluators</a>
 </nav>
+<div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">language</span><button class="hover:text-primary transition-colors" data-lang-btn="en">EN</button><span class="opacity-30">|</span><button class="hover:text-primary transition-colors" data-lang-btn="th">TH</button></div>
 <button id="logoutBtn" class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-6 py-2 rounded transition-all duration-300 hover:opacity-80 active:scale-95" data-i18n="evaluator.dashboard.logout">
                 Log Out
             </button>
+</div>
 </div>
 </header>
 <div class="flex flex-1 max-w-container-max mx-auto w-full relative">
