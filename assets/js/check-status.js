@@ -32,7 +32,10 @@
       : I18N.t('checkstatus.resultScoreCaption');
     const certLine = document.getElementById('resCertLine');
     if(sub.status === 'approved' && sub.certLevel){
-      certLine.textContent = I18N.t('entrepreneur.dashboard.certifiedAs') + ' ' + sub.certLevel;
+      const id = document.getElementById('inId').value.trim().toUpperCase();
+      const pin = document.getElementById('inPin').value.trim();
+      certLine.innerHTML = I18N.t('entrepreneur.dashboard.certifiedAs') + ' ' + sub.certLevel +
+        ' &nbsp;<a href="certificate.html?id=' + encodeURIComponent(id) + '&pin=' + encodeURIComponent(pin) + '" target="_blank" class="underline hover:opacity-80">' + I18N.t('entrepreneur.dashboard.viewCertBtn') + '</a>';
       certLine.classList.remove('hidden');
     }else{
       certLine.classList.add('hidden');

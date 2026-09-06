@@ -157,6 +157,7 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'entrepreneur.dashboard.statusRevision': {en: 'Needs Revision', th: 'ต้องแก้ไข'},
   'entrepreneur.dashboard.submittedOn': {en: 'Submitted', th: 'ส่งเมื่อ'},
   'entrepreneur.dashboard.certifiedAs': {en: 'Certified level:', th: 'ระดับที่ได้รับการรับรอง:'},
+  'entrepreneur.dashboard.viewCertBtn': {en: 'View / Print Certificate', th: 'ดู / พิมพ์ใบรับรอง'},
   'entrepreneur.dashboard.comingSoonAlert': {
     en: 'This feature is still under development — it will be available in a future version.',
     th: 'ฟีเจอร์นี้ยังอยู่ระหว่างพัฒนา — จะเปิดใช้งานในเวอร์ชันถัดไป'

@@ -72,7 +72,8 @@
         if(!row) return;
         if(!sub) return; // เครือข่ายมีปัญหา/ยังโหลดไม่เสร็จ — คงข้อความพื้นฐานไว้เฉย ๆ
         const certLine = sub.status === 'approved'
-          ? '<p class="font-body-md text-sm text-tertiary mt-1">' + I18N.t('entrepreneur.dashboard.certifiedAs') + ' <b>' + sub.certLevel + '</b></p>'
+          ? '<p class="font-body-md text-sm text-tertiary mt-1">' + I18N.t('entrepreneur.dashboard.certifiedAs') + ' <b>' + sub.certLevel + '</b></p>' +
+            '<a href="certificate.html?id=' + encodeURIComponent(s.id) + '&pin=' + encodeURIComponent(s.pin) + '" target="_blank" class="inline-flex items-center gap-1 font-label-caps text-label-caps text-primary underline hover:opacity-80 mt-2"><span class="material-symbols-outlined text-[16px]">workspace_premium</span>' + I18N.t('entrepreneur.dashboard.viewCertBtn') + '</a>'
           : '';
         const scoreLabel = sub.overall == null ? '--' : BeqiCore.fx(sub.overall, 1);
         row.innerHTML =

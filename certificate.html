@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>BEQI Certificate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "andaman-deep": "#1A3D3D",
+              "limestone-gray": "#D9C8B2",
+              "cert-gold": "#B08D3E",
+              "cert-gold-dark": "#8A6C2C",
+              "cert-paper": "#FFFDF6"
+            },
+            fontFamily: {
+              "display-lg": ["Epilogue"],
+              "cert-serif": ["Playfair Display", "serif"],
+              "label-caps": ["Space Grotesk"],
+              "body-md": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+  [hidden] { display: none !important; }
+  body { background-color: #EFEAE0; color: #1b1c19; background-image: radial-gradient(#D9C8B2 1px, transparent 1px); background-size: 20px 20px; }
+  .cert-frame {
+    background: #FFFDF6;
+    border: 2px solid #B08D3E;
+    box-shadow: 0 20px 60px rgba(26,61,61,0.18), inset 0 0 0 6px #FFFDF6, inset 0 0 0 8px #B08D3E;
+    position: relative;
+  }
+  .cert-corner { position: absolute; width: 34px; height: 34px; border: 2px solid #B08D3E; }
+  .cert-corner.tl { top: 14px; left: 14px; border-right: none; border-bottom: none; }
+  .cert-corner.tr { top: 14px; right: 14px; border-left: none; border-bottom: none; }
+  .cert-corner.bl { bottom: 14px; left: 14px; border-right: none; border-top: none; }
+  .cert-corner.br { bottom: 14px; right: 14px; border-left: none; border-top: none; }
+  .cert-rule { height: 1px; background: linear-gradient(to right, transparent, #B08D3E, transparent); }
+  .cert-name-underline { height: 2px; background: linear-gradient(to right, transparent, #B08D3E, transparent); }
+  .sig-line { border-top: 1px solid #6f7978; }
+  @media print {
+    body { background: #fff !important; }
+    .no-print { display: none !important; }
+    .cert-frame { box-shadow: none !important; margin: 0 !important; }
+    @page { size: A4 landscape; margin: 10mm; }
+  }
+</style>
+</head>
+<body class="font-body-md antialiased min-h-screen flex flex-col items-center py-10 px-4">
+
+<div class="no-print w-full max-w-[1150px] flex items-center justify-between mb-6">
+<a href="entrepreneur-dashboard.html" class="inline-flex items-center gap-2 font-label-caps text-sm text-andaman-deep hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span> Back to Dashboard
+</a>
+<button id="printBtn" hidden class="inline-flex items-center gap-2 bg-andaman-deep text-white font-label-caps text-sm px-6 py-3 rounded hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">print</span> Print Certificate
+</button>
+</div>
+
+<div id="certLoading" class="no-print text-on-surface-variant font-body-md py-24">Loading certificate…</div>
+
+<div id="certError" hidden class="w-full max-w-[600px] bg-white border border-limestone-gray rounded p-10 text-center">
+<span class="material-symbols-outlined text-coral-warmth text-[40px] mb-3 block" style="color:#B5322C">error</span>
+<h1 class="font-display-lg text-xl text-andaman-deep mb-2">Certificate not available</h1>
+<p id="certErrorMsg" class="text-on-surface-variant text-sm">--</p>
+</div>
+
+<div id="certCard" hidden class="cert-frame w-full max-w-[1150px] px-8 py-10 md:px-20 md:py-14">
+<div class="cert-corner tl"></div>
+<div class="cert-corner tr"></div>
+<div class="cert-corner bl"></div>
+<div class="cert-corner br"></div>
+
+<div class="flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-cert-gold text-[34px]">water</span>
+<h2 class="font-display-lg font-bold text-2xl text-andaman-deep tracking-tight mt-1">BEQI</h2>
+<p class="font-label-caps text-[11px] tracking-[0.35em] uppercase text-cert-gold-dark mt-1">Biophilic Environmental Quality Index</p>
+
+<div class="w-40 cert-rule my-6"></div>
+
+<h1 class="font-cert-serif font-bold text-[32px] md:text-[42px] tracking-wide uppercase text-andaman-deep">Certificate of Certification</h1>
+<p class="font-cert-serif italic text-lg text-on-surface-variant mt-4">This is to certify that</p>
+
+<h2 id="certBusinessName" class="font-cert-serif font-bold text-[34px] md:text-[46px] text-andaman-deep mt-3 leading-tight">--</h2>
+<div class="w-64 cert-name-underline mb-6 mt-2"></div>
+
+<p class="font-body-md text-sm md:text-base text-on-surface-variant max-w-2xl leading-relaxed">
+has been independently assessed against the <b>Biophilic Environmental Quality Index (BEQI)</b> standard
+for sustainable coastal tourism in Phang-Nga Province, Thailand, and is hereby awarded
+</p>
+
+<div class="flex items-center gap-3 mt-6">
+<span class="material-symbols-outlined text-cert-gold text-[22px]">military_tech</span>
+<h3 id="certLevel" class="font-cert-serif font-bold text-2xl md:text-3xl tracking-wide uppercase text-cert-gold-dark">-- Certification</h3>
+<span class="material-symbols-outlined text-cert-gold text-[22px]">military_tech</span>
+</div>
+<p id="certScoreLine" class="font-label-caps text-xs tracking-widest text-on-surface-variant mt-2 uppercase">Overall BEQI Score: -- / 100</p>
+
+<div class="w-full cert-rule my-10"></div>
+
+<div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+<div>
+<p class="font-label-caps text-[10px] tracking-[0.2em] uppercase text-cert-gold-dark mb-1">Certificate No.</p>
+<p id="certId" class="font-display-lg text-sm text-andaman-deep">--</p>
+</div>
+<div class="md:border-x md:border-limestone-gray">
+<p class="font-label-caps text-[10px] tracking-[0.2em] uppercase text-cert-gold-dark mb-1">Zone / Location</p>
+<p id="certZone" class="font-display-lg text-sm text-andaman-deep">--</p>
+</div>
+<div>
+<p class="font-label-caps text-[10px] tracking-[0.2em] uppercase text-cert-gold-dark mb-1">Valid Until</p>
+<p id="certValidUntil" class="font-display-lg text-sm text-andaman-deep">--</p>
+</div>
+</div>
+
+<div class="w-full flex flex-col md:flex-row items-end justify-between gap-10 mt-16">
+<div class="flex flex-col items-center w-52">
+<div class="sig-line w-full mb-2"></div>
+<p class="font-label-caps text-[10px] uppercase tracking-wide text-on-surface-variant">Lead Evaluator</p>
+<p class="font-label-caps text-[9px] uppercase tracking-wide text-on-surface-variant opacity-70">BEQI Certification Committee</p>
+</div>
+
+<svg viewBox="0 0 200 220" class="w-28 h-auto flex-shrink-0">
+<path d="M75,140 L75,210 L100,195 L125,210 L125,140 Z" fill="#B08D3E" opacity="0.85"/>
+<path d="M75,140 L75,210 L100,195 L100,140 Z" fill="#8A6C2C" opacity="0.85"/>
+<circle cx="100" cy="85" r="78" fill="#FFFDF6" stroke="#B08D3E" stroke-width="4"/>
+<circle cx="100" cy="85" r="65" fill="none" stroke="#B08D3E" stroke-width="1.5"/>
+<circle cx="100" cy="85" r="65" fill="none" stroke="#B08D3E" stroke-width="1" stroke-dasharray="2 4"/>
+<text x="100" y="52" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="10" letter-spacing="2" fill="#8A6C2C">BEQI</text>
+<text x="100" y="97" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="15" fill="#1A3D3D">CERTIFIED</text>
+<text x="100" y="115" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8" letter-spacing="1.5" fill="#8A6C2C">PHANG · NGA</text>
+</svg>
+
+<div class="flex flex-col items-center w-52">
+<div class="sig-line w-full mb-2"></div>
+<p class="font-label-caps text-[10px] uppercase tracking-wide text-on-surface-variant">Program Director</p>
+<p class="font-label-caps text-[9px] uppercase tracking-wide text-on-surface-variant opacity-70">BEQI Certification Programme, CUTIP</p>
+</div>
+</div>
+
+<div class="w-full cert-rule mt-10 mb-4"></div>
+<p class="font-body-md text-[11px] text-on-surface-variant text-center max-w-2xl">
+Verify this certificate at <b>forestry1019.github.io/BEQI3/check-status.html</b> using Certificate No.
+<b id="certIdInline">--</b> and the PIN issued at submission. Issued under the BEQI Certification Programme —
+Ph.D. Dissertation of Panichat Kitisittichai, CUTIP, 2026.
+</p>
+</div>
+</div>
+
+<script src="assets/js/i18n-dict.js?v=2"></script>
+<script src="assets/js/beqi-core.js?v=2"></script>
+<script src="assets/js/api-config.js?v=2"></script>
+<script src="assets/js/certificate.js?v=1"></script>
+</body>
+</html>
