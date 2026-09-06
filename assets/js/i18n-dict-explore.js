@@ -16,23 +16,23 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   },
   'explore.howto.step1Title': {en: 'Trace Your Boundary', th: 'วาดขอบเขตพื้นที่ของคุณ'},
   'explore.howto.step1': {
-    en: 'Click the map to drop points and outline your area of interest (minimum of three points). Click "Close shape" or click your starting point to seal the area.',
-    th: 'คลิกบนแผนที่เพื่อปักจุดและวาดขอบเขตพื้นที่ที่สนใจ (อย่างน้อย 3 จุด) แล้วกด "ปิดรูปหลายเหลี่ยม" หรือคลิกจุดเริ่มต้นซ้ำเพื่อปิดพื้นที่'
+    en: 'Click on the map to trace the boundary of the land you want to check the BEQI score for. The boundary must fall within one of the three zones:<br>North Zone — Laem Pakarang &amp; Khuek Khak Beach<br>Central Zone — Bang Niang &amp; Nang Thong Beach<br>South Zone — Khao Lak-Lam Ru National Park',
+    th: 'คลิกบนแผนที่ เพื่อวาดขอบเขตที่ดินที่ต้องการทราบ BEQI score โดยขอบเขตที่ดินต้องอยู่ภายใน 3 โซน ได้แก่<br>โซนเหนือ หาดปะการังและหาดคึกคัก<br>โซนกลาง หาดบางเนียงและหาดนางทอง<br>โซนใต้ อุทยานแห่งชาติเขาหลัก-ลำรู่'
   },
   'explore.howto.step2Title': {en: 'Calculate the Index', th: 'คำนวณดัชนี'},
   'explore.howto.step2': {
-    en: 'Click "Calculate BEQI" to instantly compute Indicators 1–3 using live satellite imagery for your selected zone.',
-    th: 'กดปุ่ม "คำนวณ BEQI" เพื่อคำนวณตัวชี้วัดที่ 1–3 ทันทีจากภาพถ่ายดาวเทียมสดของพื้นที่ที่เลือก'
+    en: 'Click the "Calculate BEQI" button to calculate the BEQI score.',
+    th: 'กดปุ่ม "คำนวณ BEQI" เพื่อคำนวณ BEQI score'
   },
   'explore.howto.step3Title': {en: 'Compare Areas', th: 'เปรียบเทียบพื้นที่'},
   'explore.howto.step3': {
-    en: 'Draw up to three distinct boundaries to evaluate them side-by-side, or check the box to compare your custom area against the Portfolio\'s three reference zones.',
-    th: 'วาดได้สูงสุด 3 ขอบเขตเพื่อเปรียบเทียบกันเอง หรือติ๊กเลือกเพื่อเปรียบเทียบพื้นที่ของคุณกับ 3 โซนอ้างอิงของ Portfolio'
+    en: 'Draw up to three additional areas to analyze and compare multiple BEQI scores side by side — useful for decision-making and/or policy planning.',
+    th: 'วาดพื้นที่เพิ่มเติมได้สูงสุด 3 พื้นที่ เพื่อวิเคราะห์และเปรียบเทียบค่า BEQI score หลายพื้นที่พร้อมกัน เพื่อนำไปประกอบการตัดสินใจ และ/หรือวางแผนนโยบาย'
   },
   'explore.howto.step4Title': {en: 'Discover Certified Properties', th: 'ค้นหาสถานประกอบการที่ผ่านการรับรอง'},
   'explore.howto.step4': {
-    en: 'Scroll down to the Certified Properties section to view local businesses that have achieved official BEQI certification.',
-    th: 'เลื่อนลงไปที่ส่วน "สถานประกอบการที่ผ่านการรับรอง" เพื่อดูรายชื่อธุรกิจในพื้นที่ที่ได้รับการรับรอง BEQI อย่างเป็นทางการ'
+    en: 'Scroll down to the "Certified Properties" section to see coastal businesses — from Laem Pakarang to Khao Lak-Lam Ru National Park — that have received official BEQI Certification.',
+    th: 'เลื่อนลงไปที่ส่วน "สถานประกอบการที่ผ่านการรับรอง" เพื่อดูรายชื่อสถานประกอบการริมชายฝั่งตั้งแต่แหลมปะการังจนถึงอุทยานแห่งชาติเขาหลัก-ลำรู่ ที่ได้รับการรับรอง BEQI Certification อย่างเป็นทางการ'
   },
 
   /* ---------- draw tool controls ---------- */
