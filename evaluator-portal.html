@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&amp;family=Inter:wght@400&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&amp;family=Inter:wght@400&amp;family=Playfair+Display:wght@700&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script id="tailwind-config">
         tailwind.config = {
@@ -83,9 +83,50 @@
 <path d="M0,430 Q260,395 520,420 Q720,438 900,410 V520 H0 Z" fill="#E9D3AC" opacity="0.55"/>
 </svg>
 </div>
-<div class="flex justify-center">
-<div class="relative z-10 -mt-8 w-16 h-16 rounded-full bg-primary border-4 border-surface-container-lowest shadow-md flex items-center justify-center" title="BEQI Certification">
-<span class="material-symbols-outlined text-on-primary text-3xl">workspace_premium</span>
+<!-- the three certification tiers evaluators can award — ribbon-seal design mirrors certSeal
+     in certificate.html so a business recognizes its own certificate's seal here -->
+<div class="flex items-end justify-center gap-5 -mt-9 relative z-10">
+<div class="flex flex-col items-center">
+<svg viewBox="0 0 200 220" class="w-16 h-auto drop-shadow-md">
+<path fill="#8D98A0" opacity="0.9" d="M72,138 L72,215 L100,198 L128,215 L128,138 Z"/>
+<path fill="#545E64" opacity="0.9" d="M72,138 L72,215 L100,198 L100,138 Z"/>
+<circle cx="100" cy="82" r="80" fill="#FFFDF6" stroke="#8D98A0" stroke-width="4"/>
+<circle cx="100" cy="82" r="68" fill="none" stroke="#8D98A0" stroke-width="1.5"/>
+<circle cx="100" cy="82" r="68" fill="none" stroke="#8D98A0" stroke-width="1" stroke-dasharray="2 4"/>
+<text x="100" y="48" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="11" letter-spacing="2.5" fill="#545E64">BEQI</text>
+<text x="100" y="95" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="17" fill="#1A3D3D">CERTIFIED</text>
+<text x="100" y="114" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9" letter-spacing="1.5" fill="#545E64">SILVER</text>
+<text x="100" y="132" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8" letter-spacing="1.5" fill="#545E64">PHANG · NGA</text>
+</svg>
+<span class="font-label-caps text-label-caps text-[10px] uppercase tracking-wide mt-1" style="color:#545E64">Silver</span>
+</div>
+<div class="flex flex-col items-center -mt-3">
+<svg viewBox="0 0 200 220" class="w-20 h-auto drop-shadow-md">
+<path fill="#B08D3E" opacity="0.9" d="M72,138 L72,215 L100,198 L128,215 L128,138 Z"/>
+<path fill="#8A6C2C" opacity="0.9" d="M72,138 L72,215 L100,198 L100,138 Z"/>
+<circle cx="100" cy="82" r="80" fill="#FFFDF6" stroke="#B08D3E" stroke-width="4"/>
+<circle cx="100" cy="82" r="68" fill="none" stroke="#B08D3E" stroke-width="1.5"/>
+<circle cx="100" cy="82" r="68" fill="none" stroke="#B08D3E" stroke-width="1" stroke-dasharray="2 4"/>
+<text x="100" y="48" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="11" letter-spacing="2.5" fill="#8A6C2C">BEQI</text>
+<text x="100" y="95" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="17" fill="#1A3D3D">CERTIFIED</text>
+<text x="100" y="114" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9" letter-spacing="1.5" fill="#8A6C2C">GOLD</text>
+<text x="100" y="132" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8" letter-spacing="1.5" fill="#8A6C2C">PHANG · NGA</text>
+</svg>
+<span class="font-label-caps text-label-caps text-[10px] uppercase tracking-wide mt-1" style="color:#8A6C2C">Gold</span>
+</div>
+<div class="flex flex-col items-center">
+<svg viewBox="0 0 200 220" class="w-16 h-auto drop-shadow-md">
+<path fill="#3E3E44" opacity="0.9" d="M72,138 L72,215 L100,198 L128,215 L128,138 Z"/>
+<path fill="#1C1C1F" opacity="0.9" d="M72,138 L72,215 L100,198 L100,138 Z"/>
+<circle cx="100" cy="82" r="80" fill="#FFFDF6" stroke="#3E3E44" stroke-width="4"/>
+<circle cx="100" cy="82" r="68" fill="none" stroke="#3E3E44" stroke-width="1.5"/>
+<circle cx="100" cy="82" r="68" fill="none" stroke="#3E3E44" stroke-width="1" stroke-dasharray="2 4"/>
+<text x="100" y="48" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="11" letter-spacing="2.5" fill="#1C1C1F">BEQI</text>
+<text x="100" y="95" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="17" fill="#1A3D3D">CERTIFIED</text>
+<text x="100" y="114" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9" letter-spacing="1.5" fill="#1C1C1F">PLATINUM</text>
+<text x="100" y="132" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8" letter-spacing="1.5" fill="#1C1C1F">PHANG · NGA</text>
+</svg>
+<span class="font-label-caps text-label-caps text-[10px] uppercase tracking-wide mt-1" style="color:#1C1C1F">Platinum</span>
 </div>
 </div>
 <div class="px-10 pb-10 pt-4">
