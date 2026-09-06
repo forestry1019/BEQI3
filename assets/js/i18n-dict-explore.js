@@ -11,24 +11,28 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   /* ---------- how-to box ---------- */
   'explore.howto.heading': {en: 'How to Use This Page', th: 'วิธีใช้งานหน้านี้'},
   'explore.howto.intro': {
-    en: 'Researchers and the public can explore the BEQI index across the Khao Lak area themselves — just select an area on the map and calculate.',
-    th: 'นักวิจัยและบุคคลทั่วไปสามารถสำรวจดัชนี BEQI ในพื้นที่เขาหลักได้ด้วยตนเอง เพียงเลือกพื้นที่บนแผนที่แล้วกดปุ่มคำนวณ'
+    en: 'Explore the Biophilic Environmental Quality Index (BEQI) across Khao Lak by calculating live satellite data for any custom zone.',
+    th: 'สำรวจดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (BEQI) ในพื้นที่เขาหลัก ด้วยการคำนวณข้อมูลดาวเทียมแบบสดสำหรับพื้นที่ที่คุณกำหนดเอง'
   },
+  'explore.howto.step1Title': {en: 'Trace Your Boundary', th: 'วาดขอบเขตพื้นที่ของคุณ'},
   'explore.howto.step1': {
-    en: 'Click along the map, point by point, to trace the boundary of the area you\'re interested in (at least 3 points), then click "Close shape" or click the first point again to close it.',
-    th: 'คลิกบนแผนที่ไล่ตามขอบเขตพื้นที่ที่สนใจทีละจุด (อย่างน้อย 3 จุด) แล้วกด "ปิดรูปหลายเหลี่ยม" หรือคลิกจุดแรกซ้ำเพื่อปิดรูป'
+    en: 'Click the map to drop points and outline your area of interest (minimum of three points). Click "Close shape" or click your starting point to seal the area.',
+    th: 'คลิกบนแผนที่เพื่อปักจุดและวาดขอบเขตพื้นที่ที่สนใจ (อย่างน้อย 3 จุด) แล้วกด "ปิดรูปหลายเหลี่ยม" หรือคลิกจุดเริ่มต้นซ้ำเพื่อปิดพื้นที่'
   },
+  'explore.howto.step2Title': {en: 'Calculate the Index', th: 'คำนวณดัชนี'},
   'explore.howto.step2': {
-    en: 'Click "Calculate BEQI" to see indicators 1-3, computed live from satellite imagery for the area you drew.',
-    th: 'กดปุ่ม "คำนวณ BEQI" เพื่อดูตัวชี้วัดที่ 1-3 ซึ่งคำนวณสดจากภาพถ่ายดาวเทียมของพื้นที่ที่วาด'
+    en: 'Click "Calculate BEQI" to instantly compute Indicators 1–3 using live satellite imagery for your selected zone.',
+    th: 'กดปุ่ม "คำนวณ BEQI" เพื่อคำนวณตัวชี้วัดที่ 1–3 ทันทีจากภาพถ่ายดาวเทียมสดของพื้นที่ที่เลือก'
   },
+  'explore.howto.step3Title': {en: 'Compare Areas', th: 'เปรียบเทียบพื้นที่'},
   'explore.howto.step3': {
-    en: 'Draw up to 3 areas to compare with each other, or check the box to compare against the Portfolio\'s 3 reference zones in the "Compare Areas" section.',
-    th: 'วาดเพิ่มได้สูงสุด 3 พื้นที่เพื่อเปรียบเทียบกันเอง หรือติ๊กเลือกเทียบกับ 3 โซนอ้างอิงของ Portfolio ได้ในส่วน "เปรียบเทียบพื้นที่"'
+    en: 'Draw up to three distinct boundaries to evaluate them side-by-side, or check the box to compare your custom area against the Portfolio\'s three reference zones.',
+    th: 'วาดได้สูงสุด 3 ขอบเขตเพื่อเปรียบเทียบกันเอง หรือติ๊กเลือกเพื่อเปรียบเทียบพื้นที่ของคุณกับ 3 โซนอ้างอิงของ Portfolio'
   },
+  'explore.howto.step4Title': {en: 'Discover Certified Properties', th: 'ค้นหาสถานประกอบการที่ผ่านการรับรอง'},
   'explore.howto.step4': {
-    en: 'Scroll down to see businesses that have already received official BEQI certification in the "Certified Properties" section below.',
-    th: 'เลื่อนลงไปดูรายชื่อสถานประกอบการที่ผ่านการรับรอง BEQI แล้วในส่วน "สถานประกอบการที่ผ่านการรับรอง" ด้านล่าง'
+    en: 'Scroll down to the Certified Properties section to view local businesses that have achieved official BEQI certification.',
+    th: 'เลื่อนลงไปที่ส่วน "สถานประกอบการที่ผ่านการรับรอง" เพื่อดูรายชื่อธุรกิจในพื้นที่ที่ได้รับการรับรอง BEQI อย่างเป็นทางการ'
   },
 
   /* ---------- draw tool controls ---------- */
