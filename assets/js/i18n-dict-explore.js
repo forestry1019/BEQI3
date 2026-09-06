@@ -50,7 +50,7 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'explore.result.bandLabel': {en: 'Certification Level', th: 'ระดับการรับรอง'},
   'explore.result.ciLabel': {en: '95% CI', th: 'ช่วงความเชื่อมั่น 95%'},
   'explore.result.notCertified': {en: 'Not certified', th: 'ไม่ผ่านการรับรอง'},
-  'explore.result.empty': {en: 'Draw an area on the map and click "Calculate BEQI" to see indicators 1–3 here — draw up to 3 areas to compare them.', th: 'วาดพื้นที่บนแผนที่แล้วกด "คำนวณ BEQI" เพื่อดูตัวชี้วัดที่ 1-3 ที่นี่ — วาดได้สูงสุด 3 พื้นที่เพื่อเปรียบเทียบกัน'},
+  'explore.result.empty': {en: 'Draw an area on the map and click "Calculate BEQI" to see indicators 1–3 here — draw up to 3 areas to compare them.', th: 'วาดพื้นที่บนแผนที่แล้วกด "คำนวณ BEQI" เพื่อดูคะแนน BEQI ที่นี่ สามารถวาดได้สูงสุด 3 พื้นที่ เพื่อเปรียบเทียบกัน'},
   'explore.result.footnote': {
     en: 'Indicators 1-3 are computed live from satellite imagery. Indicator 4 (biophilic composition) requires photo/on-site assessment per the 14-pattern checklist and is never estimated from satellite data — see the note on each card. The 95% confidence interval shown is a real-time approximation for this drawn area, not the offline Monte Carlo used for the 3 reference zones.',
     th: 'ตัวชี้วัดที่ 1-3 คำนวณสดจากภาพถ่ายดาวเทียม ส่วนตัวชี้วัดที่ 4 (องค์ประกอบไบโอฟิลิก) ต้องประเมินจากภาพถ่าย/ลงพื้นที่จริงตามแบบตรวจสอบ 14 รูปแบบเท่านั้น ไม่มีการประมาณจากดาวเทียมเด็ดขาด — ดูข้อความกำกับในแต่ละการ์ด ช่วงความเชื่อมั่น 95% ที่แสดงเป็นค่าประมาณแบบเรียลไทม์เฉพาะพื้นที่ที่วาดนี้ ไม่ใช่วิธี Monte Carlo แบบออฟไลน์ที่ใช้กับ 3 โซนอ้างอิง'
