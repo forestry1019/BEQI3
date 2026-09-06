@@ -16,8 +16,10 @@
 ```bash
 gcloud config set project beqi-488814
 gcloud services enable earthengine.googleapis.com cloudfunctions.googleapis.com \
-  cloudbuild.googleapis.com run.googleapis.com --project=beqi-488814
+  cloudbuild.googleapis.com run.googleapis.com aiplatform.googleapis.com --project=beqi-488814
 ```
+
+(`aiplatform.googleapis.com` ใช้สำหรับ `aiDraftPatterns` — ตัวช่วยร่างคำตอบตัวชี้วัดที่ 4 ด้วย AI ดูหัวข้อ 6)
 
 ## 2) ติดตั้ง dependency แล้วทดสอบในเครื่องก่อน (ไม่บังคับ)
 
@@ -90,8 +92,52 @@ const BEQI_API_CONFIG = {
 `picker.js` จะอ่านค่าจากไฟล์นี้แทนการเรียก `ee.data.*` ตรง ๆ — ไม่ต้องมีปุ่ม "เชื่อมต่อ Google Earth Engine"
 ให้ผู้ใช้กดอีกต่อไป
 
+## 6) Deploy aiDraftPatterns (ตัวช่วยร่างคำตอบตัวชี้วัดที่ 4 ด้วย AI — ไม่บังคับ)
+
+ให้สิทธิ์ Vertex AI กับ service account เดียวกับข้อ 4 ก่อน:
+
+```bash
+PROJECT_NUMBER=$(gcloud projects describe beqi-488814 --format='value(projectNumber)')
+gcloud projects add-iam-policy-binding beqi-488814 \
+  --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+  --role="roles/aiplatform.user"
+```
+
+แล้ว deploy ฟังก์ชันแยกต่างหาก (โค้ดอยู่ในไฟล์เดียวกับ `computeBeqi`/`submitApplication` คือ `server/index.js`
+แค่คนละ entry-point):
+
+```bash
+cd server
+gcloud functions deploy aiDraftPatterns \
+  --gen2 \
+  --runtime=nodejs20 \
+  --region=asia-southeast1 \
+  --source=. \
+  --entry-point=aiDraftPatterns \
+  --trigger-http \
+  --allow-unauthenticated \
+  --project=beqi-488814 \
+  --memory=512Mi \
+  --timeout=60s \
+  --max-instances=5 \
+  --set-env-vars=BEQI_API_SECRET=CHANGE_ME_TO_A_REAL_SECRET,BEQI_ALLOWED_ORIGIN=https://forestry1019.github.io,VERTEX_PROJECT=beqi-488814,VERTEX_LOCATION=us-central1,VERTEX_MODEL=gemini-2.5-flash
+```
+
+เอา URL ที่ได้ไปใส่เป็น `aiDraftUrl` ใน `assets/js/api-config.js` (ทำไว้ให้แล้ว รอแค่แทน URL จริงหลัง deploy)
+
+**หมายเหตุด้านวิธีวิทยา (สำคัญสำหรับบทระเบียบวิธี):** ฟังก์ชันนี้ให้คำตอบเฉพาะ 10 ใน 14 รูปแบบที่ประเมินจาก
+ภาพถ่ายได้ (`AI_PATTERNS` ใน `server/index.js`) — 4 รูปแบบที่ต้องยืนยัน ณ สถานที่จริง (Non-Visual Connection,
+Connection to Natural Systems, Mystery, Risk/Peril) จะไม่ถูกส่งให้ AI ประเมินเด็ดขาด คำตอบที่ได้เป็นเพียง
+"ร่าง" (draft) ที่ผู้ขอรับรองต้องตรวจทาน/แก้ไขเองก่อนส่ง ระบบเก็บทั้งคะแนนร่างจาก AI (`aiScore`) และคะแนน
+สุดท้ายที่ยืนยันแล้ว (`score`) แยกกันไว้ใน Firestore ทุกใบสมัคร —ใช้คำนวณความสอดคล้อง (agreement) ระหว่าง
+AI กับคำตอบสุดท้ายได้ในภายหลัง เพื่อรายงานความน่าเชื่อถือของเครื่องมือเชิงปริมาณในบทวิเคราะห์ผล
+
 ## หมายเหตุเรื่องต้นทุน/โควตา
 
 Earth Engine ไม่คิดเงินสำหรับ non-commercial use ทั่วไป แต่ Cloud Functions/Cloud Build มี free tier
 จำกัด — สำหรับผู้ใช้กลุ่มเล็กไม่น่าเกิน free tier แต่ถ้ากังวลเรื่องมีคนเรียกรัว ๆ ให้ปรับ `--max-instances`
 ให้ต่ำ (ตั้งไว้ 5 ในคำสั่งตัวอย่าง) และเปลี่ยน `BEQI_API_SECRET` เป็นระยะได้
+
+**`aiDraftPatterns` มีค่าใช้จ่ายจริงต่อการเรียกแต่ละครั้ง** (ต่างจาก Earth Engine) เพราะเรียกโมเดล Gemini
+ผ่าน Vertex AI ซึ่งคิดเงินตามจำนวน token รวมรูปภาพที่ส่งเข้าไป — ดูราคาปัจจุบันที่
+https://cloud.google.com/vertex-ai/generative-ai/pricing ก่อน deploy ให้ผู้ใช้จำนวนมากเรียกใช้งานจริง

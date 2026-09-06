@@ -10,5 +10,6 @@ const BEQI_API_CONFIG = {
   statusUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/checkStatus',
   listSubmissionsUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/listSubmissions',
   updateSubmissionUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/updateSubmission',
+  aiDraftUrl: 'https://asia-southeast1-beqi-488814.cloudfunctions.net/aiDraftPatterns',
   secret: 'ouN5_fkgzniQyQ9gjcaTWc54lUp8gv0k'
 };

@@ -76,6 +76,8 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   'evaluator.dashboard.rubricNote': {en: 'Evidence Note', th: 'เหตุผล/หลักฐาน'},
   'evaluator.dashboard.rubricOnsite': {en: 'confirm on-site', th: 'ต้องยืนยัน ณ สถานที่'},
   'evaluator.dashboard.rubricTotal': {en: 'Raw total', th: 'คะแนนดิบรวม'},
+  'evaluator.dashboard.rubricAiScore': {en: 'AI Draft', th: 'AI ร่าง'},
+  'evaluator.dashboard.rubricAiLegend': {en: '"AI Draft" is the score AI suggested from the photos before the applicant reviewed it — shown in orange where the applicant’s final answer differs from it. "—" means AI did not score that pattern (on-site-only pattern, or the applicant answered without using AI assistance).', th: '"AI ร่าง" คือคะแนนที่ AI เสนอจากรูปถ่ายก่อนผู้ขอรับรองตรวจทาน — แสดงสีส้มเมื่อคำตอบสุดท้ายของผู้ขอรับรองต่างจากที่ AI เสนอ ส่วน "—" หมายถึง AI ไม่ได้ให้คะแนนข้อนั้น (เป็นข้อที่ต้องยืนยัน ณ สถานที่ หรือผู้ขอรับรองตอบเองโดยไม่ได้ใช้ AI ช่วย)'},
   'evaluator.dashboard.colMetric': {en: 'Metric', th: 'ตัวชี้วัด'},
   'evaluator.dashboard.colSubmission': {en: 'Submission Data', th: 'ข้อมูลที่ส่ง'},
   'evaluator.dashboard.colStandardPrefix': {en: 'BEQI Standard (', th: 'มาตรฐาน BEQI ('},

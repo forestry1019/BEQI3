@@ -114,20 +114,27 @@
         '<div class="overflow-x-auto"><table class="w-full text-left border-collapse text-sm">' +
         '<thead><tr class="font-label-caps text-xs text-on-surface-variant border-b border-limestone-gray">' +
         '<th class="py-2 px-3 font-normal">#</th><th class="py-2 px-3 font-normal">' + I18N.t('evaluator.dashboard.rubricPattern') + '</th>' +
+        '<th class="py-2 px-3 font-normal text-center">' + I18N.t('evaluator.dashboard.rubricAiScore') + '</th>' +
         '<th class="py-2 px-3 font-normal text-center">' + I18N.t('evaluator.dashboard.rubricScore') + '</th>' +
         '<th class="py-2 px-3 font-normal">' + I18N.t('evaluator.dashboard.rubricNote') + '</th></tr></thead><tbody>' +
         sub.patternScores.map(function(p){
           const name = (I18N.getLang() === 'th') ? p.name_th : p.name_en;
           const onsiteTag = p.onsite ? ' <span class="text-coral-warmth">(' + I18N.t('evaluator.dashboard.rubricOnsite') + ')</span>' : '';
+          // aiScore เป็น null เสมอสำหรับ 4 รูปแบบ onsite (AI ไม่เคยประเมิน) และเป็น null ถ้าผู้ขอรับรอง
+          // กรอกเองตั้งแต่ต้นโดยไม่ได้กดให้ AI ช่วย — ไม่ใช่ข้อผิดพลาด
+          const aiCell = p.aiScore==null ? '<span class="text-outline">—</span>'
+            : '<span class="' + (p.aiScore===p.score ? 'text-primary' : 'text-coral-warmth') + '">' + p.aiScore + '</span>';
           return '<tr class="border-b border-limestone-gray/50">' +
             '<td class="py-2 px-3">' + p.n + '</td>' +
             '<td class="py-2 px-3">' + name + onsiteTag + '</td>' +
+            '<td class="py-2 px-3 text-center font-data-viz">' + aiCell + '</td>' +
             '<td class="py-2 px-3 text-center font-data-viz font-semibold">' + p.score + '</td>' +
             '<td class="py-2 px-3 text-on-surface-variant">' + (p.note || '') + '</td></tr>';
         }).join('') +
-        '<tr class="font-semibold border-t border-limestone-gray"><td colspan="2" class="py-2 px-3">' + I18N.t('evaluator.dashboard.rubricTotal') + '</td>' +
+        '<tr class="font-semibold border-t border-limestone-gray"><td colspan="3" class="py-2 px-3">' + I18N.t('evaluator.dashboard.rubricTotal') + '</td>' +
         '<td class="py-2 px-3 text-center font-data-viz">' + sub.ind4Raw + ' / 28</td><td></td></tr>' +
-        '</tbody></table></div></div>'
+        '</tbody></table></div>' +
+        '<p class="font-body-md text-xs text-outline mt-3">' + I18N.t('evaluator.dashboard.rubricAiLegend') + '</p></div>'
       : '';
 
     if(!hasScore){

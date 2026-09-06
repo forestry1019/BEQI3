@@ -34,6 +34,9 @@ const SUBMISSIONS_BUCKET = process.env.SUBMISSIONS_BUCKET || 'beqi-488814-submis
 // จำกัดขนาดกรอบพื้นที่ที่ยอมรับ (องศา) กันการวาดพื้นที่ใหญ่เกินสมควร (~0.3° ราว ๆ 30 กม.) — ปรับได้ตามความเหมาะสม
 const MAX_BBOX_DEG = 0.3;
 const ALLOWED_ORIGIN = process.env.BEQI_ALLOWED_ORIGIN || '*';
+const VERTEX_PROJECT = process.env.VERTEX_PROJECT || EE_CLOUD_PROJECT;
+const VERTEX_LOCATION = process.env.VERTEX_LOCATION || 'us-central1';
+const VERTEX_MODEL = process.env.VERTEX_MODEL || 'gemini-2.5-flash';
 
 const firestore = new Firestore();
 const storage = new Storage();
@@ -42,6 +45,8 @@ const SUBMISSIONS_COL = 'submissions';
 const auth = new GoogleAuth({scopes: ['https://www.googleapis.com/auth/earthengine']});
 let eeInitPromise = null;
 let eeTokenExpiry = 0;
+
+const vertexAuth = new GoogleAuth({scopes: ['https://www.googleapis.com/auth/cloud-platform']});
 
 function initEE(){
   const now = Date.now();
@@ -288,6 +293,182 @@ functions.http('listSubmissions', async (req, res) => {
   }catch(e){
     console.error('listSubmissions error:', e);
     res.status(500).json({error: 'Failed to list submissions'});
+  }
+});
+
+/* -----------------------------------------------------------------------
+ * aiDraftPatterns — ตัวช่วยร่างคำตอบตัวชี้วัดที่ 4 (14 Patterns of Biophilic Design) จากรูปถ่าย
+ * -----------------------------------------------------------------------
+ * หลักการออกแบบ (ต้องอ่านคู่กับบทระเบียบวิธีของดุษฎีนิพนธ์):
+ *
+ *  1) AI ให้คำตอบได้เฉพาะรูปแบบที่ "onsite:false" เท่านั้น (10 จาก 14 ข้อ) — 4 ข้อที่เหลือ
+ *     (Non-Visual Connection, Connection to Natural Systems, Mystery, Risk/Peril) ต้องใช้ประสาทสัมผัส
+ *     หลายทางหรือประสบการณ์เชิงพื้นที่ที่ภาพนิ่งบอกไม่ได้ AI จะไม่ถูกขอให้ประเมิน 4 ข้อนี้เด็ดขาด
+ *     (ดูตาราง AI_PATTERNS ด้านล่าง — คัด n ออกจาก [2,7,13,14] โดยตั้งใจ)
+ *  2) คำตอบจาก AI เป็น "ร่าง" (draft) เท่านั้น ไม่ใช่คะแนนที่ยืนยันแล้ว — ฝั่ง frontend บังคับให้
+ *     ผู้ขอรับรองต้องตรวจทาน/แก้ไขเองก่อนส่ง (self-report ยังเป็นเจ้าของคำตอบสุดท้ายเสมอ)
+ *     และผู้ประเมินยังคงตรวจรูป+อนุมัติแยกต่างหากตามระบบเดิม — AI จึงเป็นแค่ชั้นช่วยร่างก่อนชั้น
+ *     ตรวจสอบของมนุษย์ 2 ชั้น (self-report → expert audit) ไม่ใช่การตัดสินแทน
+ *  3) เกณฑ์ที่ป้อนให้ AI เป็นข้อความเดียวกันตัวต่อตัวกับที่แสดงให้ผู้ขอรับรองและผู้ประเมินเห็น
+ *     (ตารางที่ 4/5 ของดุษฎีนิพนธ์ อ้างอิง Browning et al., 2014; Kellert & Calabrese, 2015)
+ *     ไม่ได้แต่งเกณฑ์ใหม่ให้ AI คนละชุดกับที่มนุษย์ใช้ — ทำให้เทียบคะแนน AI กับคะแนนสุดท้ายที่ยืนยันแล้ว
+ *     ในภายหลังได้อย่างสมเหตุสมผล (inter-rater agreement ระหว่าง AI กับมนุษย์)
+ *  4) temperature=0 และ responseSchema (structured output) — ลด run-to-run variance และบังคับรูปแบบ
+ *     คำตอบให้ตรวจสอบ/แปลงกลับเป็นข้อมูลได้เสมอ (ไม่ใช่ free-text ที่ parse ไม่ได้)
+ *  5) โมเดลถูกกำชับให้ให้คะแนนต่ำไว้ก่อนเมื่อหลักฐานไม่ชัดเจน (conservative scoring) และให้ระบุ
+ *     confidence ต่อข้อ — ข้อที่ AI ตอบ confidence "low" ควรถูกเน้นให้ผู้ขอรับรอง/ผู้ประเมินตรวจซ้ำ
+ *
+ * ก่อน deploy ต้องเพิ่มเติมจากขั้นตอนของ computeBeqi (ดู server/README.md หัวข้อ 6):
+ *   1) เปิดใช้ Vertex AI API บนโปรเจกต์นี้: gcloud services enable aiplatform.googleapis.com
+ *   2) ให้ IAM role "roles/aiplatform.user" กับ service account เดียวกับที่ใช้รัน Cloud Function
+ *   3) หมายเหตุต้นทุน: ต่างจาก Earth Engine (ฟรีสำหรับงานไม่แสวงกำไร) — การเรียก Gemini ผ่าน Vertex AI
+ *      "มีค่าใช้จ่ายต่อ request จริง" ตามราคาปัจจุบันของ Google Cloud ควรตั้ง --max-instances ต่ำไว้
+ */
+
+// 10 รูปแบบที่ประเมินจากภาพถ่ายได้ (ตัด onsite:true คือ n=2,7,13,14 ออกโดยตั้งใจ — ดูหมายเหตุข้อ 1 ด้านบน)
+const AI_PATTERNS = [
+  {n: 1, en: 'Visual Connection with Nature', c: [
+    'No vegetation or water body visible in the frame',
+    'Vegetation as a decorative border, covering less than 1/4 of the frame',
+    'Vegetation or water covers more than half the frame, visible from the main use area']},
+  {n: 3, en: 'Non-Rhythmic Sensory Stimuli', c: [
+    'No naturally moving elements found',
+    'Leaf shadows or plant movement visible in frame',
+    'Natural moving element at a position where users linger']},
+  {n: 4, en: 'Thermal & Airflow Variability', c: [
+    'Enclosed building, no openings',
+    'Openings or louvers allowing airflow',
+    'Deliberate shade/airflow design creating perceptible temperature contrast']},
+  {n: 5, en: 'Presence of Water', c: [
+    'No water body found',
+    'Small or temporary water feature',
+    'Permanent water body continuously visible from the main use area']},
+  {n: 6, en: 'Dynamic & Diffuse Light', c: [
+    'Uniform artificial lighting throughout',
+    'Natural light filtering in some areas',
+    'Light filtered through canopy or louvers in the main use area']},
+  {n: 8, en: 'Biomorphic Forms & Patterns', c: [
+    'All straight lines and right angles',
+    'Curves in secondary elements, e.g. a pavilion or walkway',
+    'Curves or spiral (Fibonacci) proportions in the main building structure']},
+  {n: 9, en: 'Material Connection with Nature', c: [
+    'Main structure entirely synthetic materials',
+    'Local materials used as surface decoration',
+    'Minimally-processed local materials in the main structure, e.g. logs, natural stone, thatch roof']},
+  {n: 10, en: 'Complexity & Order', c: [
+    'Smooth surface, no pattern',
+    'Repeating pattern in a single plane',
+    'Fractal-like geometric pattern with hierarchy across two or more planes']},
+  {n: 11, en: 'Prospect', c: [
+    'Visibility blocked in all directions',
+    'Visibility open up to 6 metres',
+    'Elevated deck/terrace opening visibility beyond 6 metres']},
+  {n: 12, en: 'Refuge', c: [
+    'No area protected from above and behind',
+    'Roofed but open on all sides',
+    'Pavilion/alcove protected above and behind, with seating']}
+];
+
+function buildAiPrompt(){
+  const rubricText = AI_PATTERNS.map(p =>
+    p.n + '. ' + p.en + '\n   0 = ' + p.c[0] + '\n   1 = ' + p.c[1] + '\n   2 = ' + p.c[2]
+  ).join('\n\n');
+  return 'You are assisting a trained evaluator in scoring a tourism property against the "14 Patterns of ' +
+    'Biophilic Design" instrument (Browning et al., 2014; Kellert & Calabrese, 2015), as adapted in this ' +
+    'research\'s indicator 4 (biophilic composition) rubric. You are given photographs submitted by the ' +
+    'property owner. For EACH of the following patterns, choose the score (0, 1, or 2) whose description ' +
+    'best matches ONLY what is physically visible in the photographs — never assume, infer, or guess ' +
+    'anything not directly observable. If the evidence is ambiguous or insufficient to distinguish between ' +
+    'two scores, choose the LOWER of the two and set confidence to "low". Write "evidence" as one short ' +
+    'factual sentence citing the specific visual detail you based the score on (or stating what is missing ' +
+    'if you scored 0). Do not evaluate any pattern not listed below.\n\n' + rubricText;
+}
+
+const AI_RESPONSE_SCHEMA = {
+  type: 'OBJECT',
+  properties: {
+    drafts: {
+      type: 'ARRAY',
+      items: {
+        type: 'OBJECT',
+        properties: {
+          n: {type: 'INTEGER'},
+          score: {type: 'INTEGER'},
+          evidence: {type: 'STRING'},
+          confidence: {type: 'STRING', enum: ['low', 'medium', 'high']}
+        },
+        required: ['n', 'score', 'evidence', 'confidence']
+      }
+    }
+  },
+  required: ['drafts']
+};
+
+async function callVertexGemini(photoDataUrls){
+  const client = await vertexAuth.getClient();
+  const tokenResponse = await client.getAccessToken();
+  const url = 'https://' + VERTEX_LOCATION + '-aiplatform.googleapis.com/v1/projects/' + VERTEX_PROJECT +
+    '/locations/' + VERTEX_LOCATION + '/publishers/google/models/' + VERTEX_MODEL + ':generateContent';
+
+  const imageParts = photoDataUrls.map(dataUrl => {
+    const match = /^data:image\/(jpeg|jpg|png|webp);base64,(.+)$/.exec(dataUrl);
+    if(!match) throw new Error('Invalid photo data URL');
+    const mime = match[1] === 'jpeg' || match[1] === 'jpg' ? 'image/jpeg' : 'image/' + match[1];
+    return {inlineData: {mimeType: mime, data: match[2]}};
+  });
+
+  const body = {
+    contents: [{role: 'user', parts: [{text: buildAiPrompt()}, ...imageParts]}],
+    generationConfig: {
+      temperature: 0,
+      responseMimeType: 'application/json',
+      responseSchema: AI_RESPONSE_SCHEMA
+    }
+  };
+
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenResponse.token},
+    body: JSON.stringify(body)
+  });
+  if(!resp.ok){
+    const text = await resp.text();
+    throw new Error('Vertex AI request failed (' + resp.status + '): ' + text.slice(0, 500));
+  }
+  const json = await resp.json();
+  const textOut = json.candidates && json.candidates[0] && json.candidates[0].content &&
+    json.candidates[0].content.parts && json.candidates[0].content.parts[0] &&
+    json.candidates[0].content.parts[0].text;
+  if(!textOut) throw new Error('Vertex AI returned no content');
+  return JSON.parse(textOut);
+}
+
+functions.http('aiDraftPatterns', async (req, res) => {
+  setCors(res);
+  if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
+  if(req.method !== 'POST'){ res.status(405).json({error: 'Method not allowed'}); return; }
+
+  const body = req.body || {};
+  if(!API_SECRET || body.secret !== API_SECRET){
+    res.status(401).json({error: 'Invalid or missing access code'});
+    return;
+  }
+  const photos = body.photos;
+  if(!Array.isArray(photos) || photos.length < 1 || photos.length > 6){
+    res.status(400).json({error: 'Attach between 1 and 6 photos'});
+    return;
+  }
+  for(const p of photos){ if(typeof p !== 'string' || !/^data:image\/(jpeg|jpg|png|webp);base64,/.test(p)){ res.status(400).json({error: 'Invalid photo data URL'}); return; } }
+
+  try{
+    const parsed = await callVertexGemini(photos);
+    const drafts = (parsed.drafts || [])
+      .filter(d => AI_PATTERNS.some(p => p.n === d.n))
+      .map(d => ({n: d.n, score: Math.max(0, Math.min(2, Math.round(d.score))), evidence: String(d.evidence || '').slice(0, 300), confidence: ['low','medium','high'].includes(d.confidence) ? d.confidence : 'low'}));
+    res.status(200).json({drafts, model: VERTEX_MODEL, generatedAt: new Date().toISOString()});
+  }catch(e){
+    console.error('aiDraftPatterns error:', e);
+    res.status(500).json({error: 'AI draft failed', detail: String(e && e.message ? e.message : e)});
   }
 });
 

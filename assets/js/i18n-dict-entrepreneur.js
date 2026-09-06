@@ -106,6 +106,13 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     th: 'วาดขอบเขตพื้นที่ของคุณบนแผนที่ แล้วกด "คำนวณ BEQI" เพื่อดูตัวชี้วัดที่ 1-3 ที่นี่'
   },
   'entrepreneur.dashboard.rubric.notePlaceholder': {en: 'What evidence did you see? (required)', th: 'พบหลักฐานอะไรในรูป (จำเป็นต้องกรอก)'},
+  'entrepreneur.dashboard.rubric.aiDraftBtn': {en: 'Let AI draft answers from my photos', th: 'ให้ AI ช่วยร่างคำตอบจากรูปที่อัปโหลด'},
+  'entrepreneur.dashboard.rubric.aiDraftWarning': {en: 'AI drafts are a starting suggestion only, for the 10 patterns visible in a photo — please review and correct every answer to match your actual property before submitting. The 4 patterns requiring on-site confirmation are never scored by AI.', th: 'คำตอบจาก AI เป็นเพียงข้อเสนอเบื้องต้นสำหรับ 10 ข้อที่ประเมินจากภาพได้เท่านั้น — กรุณาตรวจสอบและแก้ไขทุกข้อให้ตรงกับพื้นที่จริงก่อนส่ง ส่วน 4 ข้อที่ต้องยืนยัน ณ สถานที่จริง AI จะไม่ให้คำตอบเด็ดขาด'},
+  'entrepreneur.dashboard.rubric.aiDraftRunning': {en: 'AI is analysing your photos…', th: 'AI กำลังวิเคราะห์รูปของคุณ…'},
+  'entrepreneur.dashboard.rubric.aiDraftDone': {en: 'AI draft added — please review every answer below.', th: 'AI ร่างคำตอบให้แล้ว — กรุณาตรวจสอบทุกข้อด้านล่าง'},
+  'entrepreneur.dashboard.rubric.aiDraftError': {en: 'AI draft failed.', th: 'AI ร่างคำตอบไม่สำเร็จ'},
+  'entrepreneur.dashboard.rubric.aiTag': {en: 'AI suggested — please review', th: 'AI แนะนำ — กรุณาตรวจสอบ'},
+  'entrepreneur.dashboard.rubric.aiEditedTag': {en: 'AI suggested, edited by you', th: 'AI แนะนำ คุณแก้ไขแล้ว'},
   'entrepreneur.dashboard.hero.title': {en: 'Assess Your Property', th: 'ประเมินพื้นที่ของคุณ'},
   'entrepreneur.dashboard.hero.subtitle': {
     en: 'Draw your property boundary, calculate its BEQI score, then submit it for official certification review.',

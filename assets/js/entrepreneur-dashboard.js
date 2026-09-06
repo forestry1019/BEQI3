@@ -151,7 +151,11 @@
   ];
   const CAT_LABEL={A:{en:'A. Nature in the Space',th:'ก. ธรรมชาติในพื้นที่'},B:{en:'B. Natural Analogues',th:'ข. แบบจำลองธรรมชาติ'},C:{en:'C. Nature of the Space',th:'ค. ธรรมชาติของพื้นที่'}};
 
-  let rubricAnswers={}; // {n: {score, note}}
+  // {n: {score, note, source, aiScore, aiNote, aiConfidence}} — source: null (ยังไม่ตอบ) | 'manual' |
+  // 'ai' (ยังไม่แก้ไขคำตอบ AI เลย) | 'ai-edited' (เคยเป็นคำตอบ AI แต่ผู้ขอรับรองแก้ไขแล้ว)
+  // aiScore/aiNote เก็บคำตอบดิบที่ AI เสนอไว้เสมอ แม้ผู้ใช้จะแก้แล้ว — ใช้คำนวณ inter-rater agreement
+  // ระหว่าง AI กับคำตอบสุดท้ายที่ยืนยันได้ภายหลัง (ดูหมายเหตุใน server/index.js aiDraftPatterns)
+  let rubricAnswers={};
 
   function renderRubric(){
     const l=lang();
@@ -159,6 +163,9 @@
       const rows=PATTERNS.filter(function(p){ return p.cat===cat; }).map(function(p){
         const ans=rubricAnswers[p.n]||{score:null,note:''};
         const onsiteTag=p.onsite?' <span class="text-coral-warmth">('+I18N.t('entrepreneur.dashboard.rubric.onsiteTag')+')</span>':'';
+        const aiTag=(ans.source==='ai'||ans.source==='ai-edited')
+          ? ' <span class="text-xs font-normal '+(ans.source==='ai-edited'?'text-outline':'text-primary')+'">('+I18N.t(ans.source==='ai-edited'?'entrepreneur.dashboard.rubric.aiEditedTag':'entrepreneur.dashboard.rubric.aiTag')+')</span>'
+          : '';
         const options=[0,1,2].map(function(score){
           const checked=ans.score===score?' checked':'';
           return '<label class="flex items-start gap-2 text-xs cursor-pointer p-2 organic-border '+(ans.score===score?'bg-surface-container-low border-primary':'')+'">'+
@@ -166,7 +173,7 @@
             '<span><b>'+score+'</b> — '+p.c[score][l]+'</span></label>';
         }).join('');
         return '<div class="organic-border p-4">'+
-          '<p class="font-body-md text-sm font-semibold text-andaman-deep mb-2">'+p.n+'. '+p[l]+onsiteTag+'</p>'+
+          '<p class="font-body-md text-sm font-semibold text-andaman-deep mb-2">'+p.n+'. '+p[l]+onsiteTag+aiTag+'</p>'+
           '<div class="grid grid-cols-1 gap-2 mb-2">'+options+'</div>'+
           '<input type="text" data-note="'+p.n+'" placeholder="'+I18N.t('entrepreneur.dashboard.rubric.notePlaceholder')+'" value="'+(ans.note||'').replace(/"/g,'&quot;')+'" class="w-full text-xs border-0 border-b border-limestone-gray focus:ring-0 focus:border-primary bg-transparent py-1">'+
           '</div>';
@@ -180,6 +187,8 @@
         const n=+r.name.split('_')[1];
         rubricAnswers[n]=rubricAnswers[n]||{score:null,note:''};
         rubricAnswers[n].score=+r.value;
+        if(rubricAnswers[n].source==='ai') rubricAnswers[n].source='ai-edited';
+        else if(!rubricAnswers[n].source) rubricAnswers[n].source='manual';
         renderRubric();
       });
     });
@@ -188,12 +197,41 @@
         const n=+inp.dataset.note;
         rubricAnswers[n]=rubricAnswers[n]||{score:null,note:''};
         rubricAnswers[n].note=inp.value;
+        if(rubricAnswers[n].source==='ai') rubricAnswers[n].source='ai-edited';
+        else if(!rubricAnswers[n].source) rubricAnswers[n].source='manual';
         refreshConfirmState();
       });
     });
     updateRubricScoreLine();
     refreshConfirmState();
   }
+
+  function runAiDraft(){
+    const btn=document.getElementById('aiDraftBtn');
+    const status=document.getElementById('aiDraftStatus');
+    if(reviewPhotos.length===0) return;
+    btn.disabled=true;
+    status.textContent=I18N.t('entrepreneur.dashboard.rubric.aiDraftRunning');
+    fetch(API.aiDraftUrl, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({secret: API.secret, photos: reviewPhotos})
+    }).then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.error||'AI draft failed'); return j; }); })
+      .then(function(res){
+        (res.drafts||[]).forEach(function(d){
+          const existing=rubricAnswers[d.n];
+          if(existing && existing.source==='manual') return; // ไม่ทับคำตอบที่ผู้ใช้กรอกเองแล้ว
+          if(existing && existing.source==='ai-edited') return; // ไม่ทับคำตอบที่เคยแก้จาก AI แล้ว
+          rubricAnswers[d.n]={score:d.score, note:d.evidence, source:'ai', aiScore:d.score, aiNote:d.evidence, aiConfidence:d.confidence};
+        });
+        renderRubric();
+        status.textContent=I18N.t('entrepreneur.dashboard.rubric.aiDraftDone');
+      })
+      .catch(function(e){
+        status.textContent=I18N.t('entrepreneur.dashboard.rubric.aiDraftError')+' ('+e.message+')';
+      })
+      .finally(function(){ btn.disabled=false; });
+  }
+  document.getElementById('aiDraftBtn').addEventListener('click', runAiDraft);
 
   function rubricComplete(){
     return PATTERNS.every(function(p){
@@ -263,6 +301,8 @@
     document.getElementById('reviewError').classList.add('hidden');
     document.getElementById('submitResult').hidden=true;
     document.getElementById('fillTestDataBtn').hidden=!DEV_MODE;
+    document.getElementById('aiDraftStatus').textContent='';
+    document.getElementById('aiDraftBtn').disabled=false;
     document.getElementById('reviewBusiness').textContent=session.businessName;
     document.getElementById('reviewContact').textContent=[session.repName, session.contactPerson!==session.repName?session.contactPerson:null, session.email, session.phone].filter(Boolean).join(' · ');
     document.getElementById('reviewZone').textContent=ZONE_LABEL[session.zoneId]||session.zoneId||'--';
@@ -323,8 +363,13 @@
     const ind4Norm=ind4Raw/28;
     const norm4=reviewSite.norm.slice(0,3).concat([ind4Norm]);
     const overall=norm4.reduce(function(a,b){ return a+b; },0)/norm4.length*100;
+    // aiScore/aiNote/aiConfidence/source เก็บไว้เพื่อคำนวณ inter-rater agreement ระหว่าง AI กับคำตอบ
+    // สุดท้ายที่ยืนยันแล้วในภายหลัง (ดูหมายเหตุใน server/index.js aiDraftPatterns) — เป็น null ทั้งหมด
+    // ถ้าข้อนั้นผู้ขอรับรองกรอกเองตั้งแต่ต้นโดยไม่ได้ใช้ AI ช่วย
     const patternScores=PATTERNS.map(function(p){
-      return {n:p.n, name_en:p.en, name_th:p.th, onsite:p.onsite, score:rubricAnswers[p.n].score, note:rubricAnswers[p.n].note};
+      const a=rubricAnswers[p.n]||{};
+      return {n:p.n, name_en:p.en, name_th:p.th, onsite:p.onsite, score:a.score, note:a.note,
+        source:a.source||'manual', aiScore:(a.aiScore!=null?a.aiScore:null), aiNote:a.aiNote||null, aiConfidence:a.aiConfidence||null};
     });
     const payload={
       secret: API.secret,
