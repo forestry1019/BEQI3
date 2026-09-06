@@ -447,9 +447,12 @@ function renderSiteCards(){
       '<div class="flex justify-between"><span class="text-on-surface-variant">'+indLabels[3]+'</span>'+ind4Cell+'</div>'+
       '</div>';
 
+    // หน้าผู้ประกอบการ (canSubmit) ซ่อนคำเตือน "ยืมค่าจากโซน" นี้ เพราะจะให้กรอกตัวชี้วัดที่ 4 จริง
+    // ผ่านแบบประเมิน 14 รูปแบบในขั้นตอนถัดไปอยู่แล้ว (ดูหัวข้อ explore.result.ind4ZoneContext ด้านบน
+    // สำหรับหน้าสำรวจสาธารณะ explore.html ซึ่งยังต้องคงคำเตือนนี้ไว้ตามหลักการเปิดเผยบริบทบังคับ)
     const noteHtml=s.ind4Source==='none'
       ? '<p class="font-body-md text-xs text-coral-warmth">'+t('explore.result.ind4Pending')+'</p>'
-      : s.ind4Source==='zone_context'
+      : (s.ind4Source==='zone_context' && !canSubmit)
         ? '<p class="font-body-md text-xs text-coral-warmth">'+t('explore.result.ind4ZoneContext').replace('{zone}',s.ind4ZoneName)+'</p>'
         : '';
 
