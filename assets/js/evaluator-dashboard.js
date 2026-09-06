@@ -209,14 +209,28 @@
 
     document.getElementById('btnApprove').addEventListener('click', function(){
       const chosen = document.querySelector('input[name="certification"]:checked').value;
-      updateSub(sub.id, {status: 'approved', certLevel: chosen});
+      updateSub(sub.id, {status: 'approved', certLevel: chosen}, function(){ fireCertConfetti(chosen); });
     });
     document.getElementById('btnRevision').addEventListener('click', function(){
       updateSub(sub.id, {status: 'revision'});
     });
   }
 
-  function updateSub(id, patch){
+  // ริ้วกระดาษสีฉลองตอนกดอนุมัติใบรับรอง — สีต่างกันตามระดับ (เงิน/ทอง/แพลทินัม) ให้เข้าธีมกับ certificate.html
+  const CONFETTI_COLORS = {
+    Silver: ['#C7CED2', '#9AA5A5', '#FFFFFF', '#E6E9EA'],
+    Gold: ['#B08D3E', '#E7CE8E', '#FFD700', '#FFF4C2'],
+    Platinum: ['#E5E4E2', '#B9C4CA', '#FFFFFF', '#7C8A93']
+  };
+  function fireCertConfetti(level){
+    if(typeof confetti !== 'function') return;
+    const colors = CONFETTI_COLORS[level] || CONFETTI_COLORS.Gold;
+    confetti({particleCount: 140, spread: 100, startVelocity: 45, origin: {y: 0.6}, colors: colors});
+    confetti({particleCount: 60, angle: 60, spread: 70, origin: {x: 0, y: 0.7}, colors: colors});
+    confetti({particleCount: 60, angle: 120, spread: 70, origin: {x: 1, y: 0.7}, colors: colors});
+  }
+
+  function updateSub(id, patch, onSuccess){
     if(!API || !API.updateSubmissionUrl) return;
     fetch(API.updateSubmissionUrl, {
       method: 'POST',
@@ -227,6 +241,9 @@
       .then(function(res){
         if(!res.ok) throw new Error((res.data && res.data.error) || 'update failed');
         return refreshList();
+      })
+      .then(function(){
+        if(onSuccess) onSuccess();
       })
       .catch(function(e){
         console.error('BEQI updateSubmission error', e);
