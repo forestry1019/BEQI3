@@ -4,6 +4,10 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
 
   /* ---------- entrepreneur-portal.html (ยืนยันตัวตนผู้ประกอบการ) ---------- */
   'entrepreneur.portal.portalAccessBtn': {en: 'Portal Access', th: 'เข้าสู่พอร์ทัล'},
+  'entrepreneur.portal.projectIntro': {
+    en: 'Welcome to the self-assessment system, designed to help you elevate your property standards in alignment with sustainable eco-tourism principles. The platform analyzes your environmental management data to evaluate key performance indices and provides actionable guidelines for sustainable development. By inputting your current environmental practices, you will receive a comprehensive assessment that enhances your competitive edge and attracts eco-conscious travelers. Join us in setting a new standard for hospitality while preserving natural resources and advancing environmental quality.',
+    th: 'ระบบประเมินสถานประกอบการด้วยตนเอง ซึ่งออกแบบมาเพื่อช่วยให้ท่านยกระดับมาตรฐานพื้นที่ให้สอดคล้องกับหลักการท่องเที่ยวเชิงนิเวศอย่างยั่งยืน<br>ระบบจะช่วยวิเคราะห์ข้อมูลการจัดการสิ่งแวดล้อมของท่าน เพื่อประเมินค่าดัชนีชี้วัดและให้แนวทางในการพัฒนาพื้นที่อย่างมีประสิทธิภาพ<br>เพียงกรอกข้อมูลสภาพแวดล้อมตามความเป็นจริง ท่านจะได้รับผลประเมินที่ช่วยเพิ่มศักยภาพการแข่งขันและดึงดูดกลุ่มนักท่องเที่ยวที่ใส่ใจสิ่งแวดล้อม<br>มาร่วมกันสร้างมาตรฐานใหม่ในการให้บริการ พร้อมทั้งดูแลรักษาธรรมชาติและยกระดับคุณภาพสิ่งแวดล้อมไปพร้อมกัน'
+  },
   'entrepreneur.portal.heading': {en: 'Entrepreneur Verification', th: 'ยืนยันตัวตนผู้ประกอบการ'},
   'entrepreneur.portal.subheading': {
     en: 'Verify your business identity to submit properties for BEQI review and track certification status.',
@@ -11,10 +15,10 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   },
   'entrepreneur.portal.sideTitle': {en: 'Verified Entrepreneurs Only', th: 'สำหรับผู้ประกอบการที่ยืนยันตัวตนแล้วเท่านั้น'},
   'entrepreneur.portal.sideDesc': {
-    en: 'BEQI certification review is limited to registered business representatives. Your Google account confirms who you are; the details below confirm which business you represent.',
-    th: 'การตรวจรับรอง BEQI จำกัดเฉพาะผู้แทนสถานประกอบการที่ลงทะเบียนไว้ บัญชี Google ใช้ยืนยันตัวคุณ ส่วนข้อมูลด้านล่างใช้ยืนยันว่าคุณเป็นตัวแทนของสถานประกอบการใด'
+    en: 'BEQI certification review is limited to registered business representatives. Fill in the details below to verify which business you represent and get started.',
+    th: 'การตรวจรับรอง BEQI จำกัดเฉพาะผู้แทนสถานประกอบการที่ลงทะเบียนไว้ กรอกข้อมูลด้านล่างเพื่อยืนยันว่าคุณเป็นตัวแทนของสถานประกอบการใด แล้วเริ่มต้นใช้งานได้เลย'
   },
-  'entrepreneur.portal.step1': {en: 'Sign in with your Google account', th: 'ลงชื่อเข้าใช้ด้วยบัญชี Google ของคุณ'},
+  'entrepreneur.portal.step1': {en: 'Fill in your business details', th: 'กรอกข้อมูลสถานประกอบการของคุณ'},
   'entrepreneur.portal.step2': {en: 'Confirm your business details', th: 'ยืนยันข้อมูลสถานประกอบการของคุณ'},
   'entrepreneur.portal.step3': {en: 'Draw your property and submit for review', th: 'วาดขอบเขตพื้นที่และส่งให้ผู้ประเมินตรวจสอบ'},
   'entrepreneur.portal.googleBtn': {en: 'Sign in with Google', th: 'ลงชื่อเข้าใช้ด้วย Google'},

@@ -101,13 +101,13 @@
 <h3 class="font-headline-md text-headline-md text-andaman-deep mb-3" data-i18n="entrepreneur.portal.sideTitle">Verified Entrepreneurs Only</h3>
 <p class="font-body-md text-sm text-on-surface-variant mb-8" data-i18n="entrepreneur.portal.sideDesc">BEQI certification review is limited to registered business representatives. Your Google account confirms who you are; the details below confirm which business you represent.</p>
 <ol class="flex flex-col gap-4">
-<li class="flex items-center gap-3"><span class="step-num">1</span><span class="font-body-md text-sm text-andaman-deep font-medium" data-i18n="entrepreneur.portal.step1">Sign in with your Google account</span></li>
-<li class="flex items-center gap-3"><span class="step-num">2</span><span class="font-body-md text-sm text-andaman-deep font-medium" data-i18n="entrepreneur.portal.step2">Confirm your business details</span></li>
-<li class="flex items-center gap-3"><span class="step-num">3</span><span class="font-body-md text-sm text-andaman-deep font-medium" data-i18n="entrepreneur.portal.step3">Draw your property and submit for review</span></li>
+<li class="flex items-center gap-3"><span class="step-num">1</span><span class="font-body-md text-sm text-andaman-deep font-medium" data-i18n="entrepreneur.portal.step1">Fill in your business details</span></li>
+<li class="flex items-center gap-3"><span class="step-num">2</span><span class="font-body-md text-sm text-andaman-deep font-medium" data-i18n="entrepreneur.portal.step3">Draw your property and submit for review</span></li>
 </ol>
 </div>
 </div>
 <div class="w-full md:w-1/2 flex flex-col justify-center px-margin-mobile md:px-12 py-8">
+<p class="font-body-md text-sm text-on-surface-variant bg-surface-container-low sketch-border p-4 mb-8 leading-relaxed" data-i18n-html="entrepreneur.portal.projectIntro">Welcome to the self-assessment system, designed to help you elevate your property standards in alignment with sustainable eco-tourism principles. The platform analyzes your environmental management data to evaluate key performance indices and provides actionable guidelines for sustainable development. By inputting your current environmental practices, you will receive a comprehensive assessment that enhances your competitive edge and attracts eco-conscious travelers. Join us in setting a new standard for hospitality while preserving natural resources and advancing environmental quality.</p>
 <div class="mb-10">
 <h2 class="font-headline-md text-headline-md text-andaman-deep mb-2" data-i18n="entrepreneur.portal.heading">Entrepreneur Verification</h2>
 <p class="font-body-md text-on-surface-variant" data-i18n="entrepreneur.portal.subheading">Verify your business identity to submit properties for BEQI review and track certification status.</p>
@@ -120,7 +120,7 @@
 </div>
 
 <form class="space-y-6" id="signupForm" hidden>
-<div class="flex items-center gap-3 bg-surface-container-low sketch-border p-4">
+<div class="flex items-center gap-3 bg-surface-container-low sketch-border p-4" id="signInIdentityBox">
 <img alt="" class="w-10 h-10 rounded-full" id="googleAvatar" src="">
 <div class="flex-1 min-w-0">
 <p class="font-body-md text-sm text-outline" data-i18n="entrepreneur.portal.signedInAs">Signed in as</p>
@@ -190,6 +190,10 @@
   let profile = null; // {name, email, picture, sub} จาก Google ID token — decode ฝั่ง client เท่านั้น
                        // (ต้นแบบนี้ไม่มี backend ตรวจสอบลายเซ็นจริง ใช้สาธิต flow เท่านั้น)
 
+  // Phase ทดลอง: ข้ามการล็อกอิน Google ไปเลย ให้กรอกฟอร์มได้ทันที — สลับกลับเป็น false เมื่อ pilot
+  // ต้องการยืนยันตัวตนจริงอีกครั้ง (โค้ด Google Sign-In เดิมด้านล่างยังอยู่ครบ พร้อมใช้งานทันทีที่สลับกลับ)
+  const AUTO_LOGIN = true;
+
   function decodeJwt(token){
     try{
       const payload = token.split('.')[1];
@@ -200,8 +204,12 @@
   }
 
   function showForm(){
-    profile.picture && (document.getElementById('googleAvatar').src = profile.picture);
-    document.getElementById('googleIdentity').textContent = (profile.name || '') + ' · ' + (profile.email || '');
+    const hasIdentity = !!(profile && profile.email);
+    document.getElementById('signInIdentityBox').hidden = !hasIdentity;
+    if(hasIdentity){
+      profile.picture && (document.getElementById('googleAvatar').src = profile.picture);
+      document.getElementById('googleIdentity').textContent = (profile.name || '') + ' · ' + (profile.email || '');
+    }
     document.getElementById('repName').value = profile.name || '';
     document.getElementById('contactPerson').value = profile.name || '';
     document.getElementById('email').value = profile.email || '';
@@ -223,13 +231,18 @@
     google.accounts.id.renderButton(document.getElementById('googleSignInDiv'),
       {theme: 'outline', size: 'large', width: 320, text: 'signin_with'});
   }
-  // GSI โหลดแบบ async — ลองตั้งค่าเมื่อพร้อม (retry สั้น ๆ กันกรณีสคริปต์ยังโหลดไม่เสร็จตอน DOMContentLoaded)
-  let tries = 0;
-  (function waitForGoogle(){
-    if(typeof google !== 'undefined' && google.accounts){ initGoogleSignIn(); return; }
-    if(++tries > 40){ document.getElementById('googleNotConfigured').hidden = false; return; }
-    setTimeout(waitForGoogle, 100);
-  })();
+  if(AUTO_LOGIN){
+    profile = {name: '', email: '', picture: null, sub: 'guest-' + Date.now()};
+    showForm();
+  } else {
+    // GSI โหลดแบบ async — ลองตั้งค่าเมื่อพร้อม (retry สั้น ๆ กันกรณีสคริปต์ยังโหลดไม่เสร็จตอน DOMContentLoaded)
+    let tries = 0;
+    (function waitForGoogle(){
+      if(typeof google !== 'undefined' && google.accounts){ initGoogleSignIn(); return; }
+      if(++tries > 40){ document.getElementById('googleNotConfigured').hidden = false; return; }
+      setTimeout(waitForGoogle, 100);
+    })();
+  }
 
   document.getElementById('switchAccountBtn').addEventListener('click', function(){
     profile = null;
