@@ -4,7 +4,7 @@
 window.BEQI_I18N_DICT = {
 
   /* ---------- common: header / nav / footer ---------- */
-  'common.nav.tourists': {en: 'General Public (Government Officials/Researchers)', th: 'บุคคลทั่วไป (เจ้าหน้าที่รัฐ/นักวิจัย)'},
+  'common.nav.tourists': {en: 'General Public (Government Officials/ Researchers)', th: 'บุคคลทั่วไป (เจ้าหน้าที่รัฐ/ นักวิจัย)'},
   'common.nav.entrepreneurs': {en: 'Entrepreneurs', th: 'ผู้ประกอบการ'},
   'common.nav.evaluators': {en: 'Evaluators', th: 'ผู้ประเมิน'},
   'common.footer.copyright': {

@@ -82,17 +82,32 @@
 <filter id="epGrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1 0 0 0 0 0.97 0 0 0 0 0.88 0 0 0 0.035 0"/></filter>
 </defs>
 <rect width="900" height="700" fill="url(#epSky)"/>
-<path d="M0,440 Q220,410 450,435 T900,420 V700 H0 Z" fill="#9FB9AE" opacity="0.42"/>
-<path d="M0,470 Q240,445 470,465 T900,455 V700 H0 Z" fill="#6E9A87" opacity="0.38"/>
-<path d="M0,370 Q90,260 200,285 Q290,305 330,370 Q300,430 220,445 Q100,450 0,410 Z" fill="#5C7A62" opacity="0.5"/>
-<path d="M0,390 Q70,300 170,320 Q250,338 280,390 Q250,440 160,450 Q70,450 0,420 Z" fill="#3E5C46" opacity="0.55"/>
-<circle cx="90" cy="330" r="30" fill="#4C7255" opacity="0.5"/><circle cx="140" cy="310" r="26" fill="#5C8560" opacity="0.5"/><circle cx="190" cy="335" r="24" fill="#4C7255" opacity="0.45"/><circle cx="60" cy="365" r="22" fill="#3E5C46" opacity="0.5"/>
-<path d="M650,390 Q740,310 830,335 Q890,355 900,380 L900,700 H650 Z" fill="#8FA890" opacity="0.28"/>
+<!-- sea, calm turquoise washes -->
+<path d="M0,410 Q220,380 450,405 T900,390 V700 H0 Z" fill="#BFE3DE" opacity="0.55"/>
+<path d="M0,450 Q240,425 470,445 T900,430 V700 H0 Z" fill="#8FC7BE" opacity="0.5"/>
+<path d="M0,500 Q260,475 520,495 Q720,510 900,485 V700 H0 Z" fill="#5FA79C" opacity="0.42"/>
+<!-- Laem Pakarang headland jutting into the sea — kept close to center so it survives the
+     panel's tall aspect-ratio crop (this box stretches to match the long form column via
+     flex "stretch", so only a narrow center strip of this 900-wide scene stays on screen) -->
+<g transform="translate(-195,0)">
+<path d="M900,700 L900,290 Q795,275 735,335 Q698,372 710,425 Q722,465 672,495 Q622,522 642,565 Q662,605 730,598 Q825,588 900,608 Z" fill="#C9BBA0" opacity="0.6"/>
+<path d="M900,700 L900,335 Q818,325 765,368 Q730,398 740,438 Q752,470 710,495 Q676,516 695,550 Q718,585 792,580 Q852,576 900,596 Z" fill="#A99878" opacity="0.5"/>
+<circle cx="805" cy="325" r="26" fill="#4C7255" opacity="0.55"/><circle cx="846" cy="342" r="22" fill="#5C8560" opacity="0.5"/><circle cx="772" cy="356" r="20" fill="#3E5C46" opacity="0.5"/><circle cx="815" cy="365" r="18" fill="#4C7255" opacity="0.45"/>
+</g>
+<!-- beach foreground -->
 <path d="M0,540 Q260,505 520,530 Q720,548 900,520 V700 H0 Z" fill="#E9D3AC" opacity="0.55"/>
+<!-- resort bungalow overlooking the coast -->
+<g transform="translate(330,470)">
+<path d="M-70,95 L-70,15 L0,-55 L70,15 L70,95 Z" fill="#F7EFD9" opacity="0.9" stroke="#5C4436" stroke-width="5" stroke-linejoin="round"/>
+<path d="M-88,20 L0,-72 L88,20" fill="none" stroke="#8B5E3C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="-18" y="42" width="36" height="53" fill="#DCE9E6" opacity="0.9" stroke="#5C4436" stroke-width="4"/>
+<rect x="-56" y="40" width="24" height="24" fill="#BFE3DE" opacity="0.85" stroke="#5C4436" stroke-width="3"/>
+<rect x="32" y="40" width="24" height="24" fill="#BFE3DE" opacity="0.85" stroke="#5C4436" stroke-width="3"/>
+</g>
 <g transform="translate(160,530)" stroke="#5C4436" stroke-width="5" fill="none" stroke-linecap="round">
 <path d="M0,140 Q10,60 0,0"/><path d="M0,14 Q-46,-22 -84,-12" stroke="#6F9A6C" stroke-width="8"/><path d="M0,7 Q52,-28 92,-6" stroke="#6F9A6C" stroke-width="8"/><path d="M0,0 Q-12,-52 -42,-82" stroke="#7FAE7A" stroke-width="8"/><path d="M0,0 Q16,-52 47,-76" stroke="#7FAE7A" stroke-width="8"/><path d="M0,-6 Q0,-64 0,-95" stroke="#8FBE84" stroke-width="8"/>
 </g>
-<g transform="translate(740,565) scale(0.7)" stroke="#5C4436" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9">
+<g transform="translate(490,555) scale(0.7)" stroke="#5C4436" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9">
 <path d="M0,140 Q10,60 0,0"/><path d="M0,14 Q-46,-22 -84,-12" stroke="#6F9A6C" stroke-width="8"/><path d="M0,7 Q52,-28 92,-6" stroke="#6F9A6C" stroke-width="8"/><path d="M0,0 Q-12,-52 -42,-82" stroke="#7FAE7A" stroke-width="8"/><path d="M0,0 Q16,-52 47,-76" stroke="#7FAE7A" stroke-width="8"/>
 </g>
 <rect width="900" height="700" filter="url(#epGrain)"/>
