@@ -1,4 +1,4 @@
-/* เครื่องมือ "วาดขอบเขต & คำนวณ BEQI" ของหน้า explore.html (แท็บนักท่องเที่ยว) และ entrepreneur-dashboard.html
+/* เครื่องมือ "วาดขอบเขต & คำนวณ BEQI" ของหน้า explore.html (แท็บบุคคลทั่วไป) และ entrepreneur-dashboard.html
    ผู้ใช้คลิกไล่ตามขอบเขตพื้นที่จริงทีละจุด (waypoint) เพื่อสร้างรูปหลายเหลี่ยม แล้วคำนวณตัวชี้วัดทั้ง 4 สด
    จากภาพดาวเทียมเฉพาะภายในรูปทรงนั้นผ่าน Google Earth Engine โดยใช้พารามิเตอร์ชุดเดียวกับต้นแบบ
    (meta.params ใน data/beqi.json) — ตรงกับวิธีของ https://forestry1019.github.io/BEQI/ ทุกประการ
@@ -27,7 +27,7 @@
    3 โซนอ้างอิงใน data/beqi.json ซึ่งใช้ในหน้าอื่น ไม่ใช่พื้นที่ที่ผู้ใช้วาดเอง */
 (function(){
 // entrepreneur-dashboard.html ตั้ง window.BEQI_MAX_SITES=1 ไว้ก่อนโหลดไฟล์นี้ (ผู้ประกอบการมีสถานประกอบการ
-// เดียว ไม่ต้องเปรียบเทียบหลายแปลงเหมือนหน้านักท่องเที่ยว) — ถ้าไม่ตั้งไว้ ใช้ค่าเริ่มต้น 3 เหมือนเดิม
+// เดียว ไม่ต้องเปรียบเทียบหลายแปลงเหมือนหน้าบุคคลทั่วไป) — ถ้าไม่ตั้งไว้ ใช้ค่าเริ่มต้น 3 เหมือนเดิม
 const MAX_SITES=(typeof window.BEQI_MAX_SITES==='number'?window.BEQI_MAX_SITES:3);
 const AOI_COL=['#2A9D8F','#E9C46A','#0B3D45']; // สีอ้างอิง 3 โซนหลัก — แสดงเป็นบริบทบนแผนที่เท่านั้น ไม่ใช่ข้อจำกัดของรูปที่วาด
 const SITE_COL=['#095353','#C9962C','#6A4C93']; // สีของพื้นที่ที่ 1/2/3 ที่ผู้ใช้วาด — เลี่ยงโทนแดง/ส้มแดงเพราะสื่อถึง error/danger ตามธรรมเนียม UI
@@ -447,21 +447,16 @@ function renderSiteCards(){
       '<div class="flex justify-between"><span class="text-on-surface-variant">'+indLabels[3]+'</span>'+ind4Cell+'</div>'+
       '</div>';
 
-    // หน้าผู้ประกอบการ (canSubmit) ซ่อนคำเตือน "ยืมค่าจากโซน" นี้ เพราะจะให้กรอกตัวชี้วัดที่ 4 จริง
-    // ผ่านแบบประเมิน 14 รูปแบบในขั้นตอนถัดไปอยู่แล้ว (ดูหัวข้อ explore.result.ind4ZoneContext ด้านบน
-    // สำหรับหน้าสำรวจสาธารณะ explore.html ซึ่งยังต้องคงคำเตือนนี้ไว้ตามหลักการเปิดเผยบริบทบังคับ)
     const noteHtml=s.ind4Source==='none'
       ? '<p class="font-body-md text-xs text-coral-warmth">'+t('explore.result.ind4Pending')+'</p>'
-      : (s.ind4Source==='zone_context' && !canSubmit)
-        ? '<p class="font-body-md text-xs text-coral-warmth">'+t('explore.result.ind4ZoneContext').replace('{zone}',s.ind4ZoneName)+'</p>'
-        : '';
+      : '';
 
     const scoreBlock=s.overall==null
       ? '<div class="font-body-md text-sm text-on-surface-variant py-2">'+t('explore.result.awaitingScore')+'</div>'
       : '<div class="flex items-baseline gap-2">'+
           '<span class="font-display-lg text-[36px] text-primary leading-none">'+fx(s.overall,1)+'</span>'+
           '<span class="font-body-md text-sm text-outline">/ 100</span>'+
-          (s.ind4Source==='zone_context'?' <span class="font-label-caps text-label-caps text-coral-warmth">'+t('explore.result.previewTag')+'</span>':'')+
+          (s.ind4Source==='zone_context' && canSubmit?' <span class="font-label-caps text-label-caps text-coral-warmth">'+t('explore.result.previewTag')+'</span>':'')+
           '</div>';
 
     const levelBlock=s.overall==null?'':(

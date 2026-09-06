@@ -62,7 +62,7 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
   },
   'entrepreneur.footer.tagline2': {en: 'A CASE STUDY OF PHANG-NGA PROVINCE, THAILAND', th: 'กรณีศึกษาจังหวัดพังงา ประเทศไทย'},
 
-  /* ---------- entrepreneur-dashboard.html (เหมือนหน้านักท่องเที่ยว + ส่งให้ผู้ประเมิน + ติดตามสถานะ) ---------- */
+  /* ---------- entrepreneur-dashboard.html (เหมือนหน้าบุคคลทั่วไป + ส่งให้ผู้ประเมิน + ติดตามสถานะ) ---------- */
   'entrepreneur.dashboard.portalAccessBtn': {en: 'Log Out', th: 'ออกจากระบบ'},
   'entrepreneur.dashboard.tips.heading': {en: 'Sustainability Recommendations', th: 'คำแนะนำเพื่อความยั่งยืน'},
   'entrepreneur.dashboard.tips.tip1.title': {en: 'Add coastal planting', th: 'เพิ่มพืชพรรณชายฝั่ง'},

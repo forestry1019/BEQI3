@@ -60,10 +60,6 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
     en: 'Indicator 4 not yet assessed — this area has no total score or certification yet.',
     th: 'ยังไม่มีการประเมินตัวชี้วัดที่ 4 — พื้นที่นี้ยังไม่มีคะแนนรวมหรือการรับรอง'
   },
-  'explore.result.ind4ZoneContext': {
-    en: 'Indicator 4 shown is borrowed from the {zone} zone\'s surrounding context — not measured from this exact plot. Certification cannot be issued from this preview.',
-    th: 'ตัวชี้วัดที่ 4 ที่แสดงยืมมาจากค่าบริบทของโซน{zone} — ไม่ใช่ค่าที่วัดจากแปลงนี้จริง ไม่สามารถออกใบรับรองจากตัวอย่างนี้ได้'
-  },
   'explore.result.awaitingScore': {en: 'Awaiting indicator 4 assessment', th: 'รอการประเมินตัวชี้วัดที่ 4'},
   'explore.result.previewTag': {en: '(preview)', th: '(ตัวอย่าง)'},
   'explore.result.pendingCert': {en: 'Pending assessment', th: 'รอการประเมิน'},
