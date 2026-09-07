@@ -23,45 +23,100 @@ window.BEQI_I18N_DICT = {
   /* ---------- index.html: About BEQI Portfolio section ---------- */
   'index.about.title': {en: 'BEQI Portfolio', th: 'BEQI Portfolio'},
   'index.about.intro': {
-    en: 'BEQI Portfolio is an innovation that presents a portfolio of Biophilic Environmental Quality Index scores, delivered as a web-based digital platform. It converts physical data from satellite imagery and on-site surveys — following the 14 Patterns of Biophilic Design — into a BEQI score for each site, then presents multiple sites side by side as a portfolio to support strategic investment and risk-management decisions, extending into a commercial certification service under the "BEQI Certified" mark (Silver / Gold / Platinum tiers) to promote sustainable coastal tourism — a case study of Phang Nga Province, Thailand.',
-    th: 'คือนวัตกรรมพอร์ตโฟลิโอดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (Biophilic Environmental Quality Index Portfolio) ในรูปแบบแพลตฟอร์มดิจิทัลบนเว็บแอปพลิเคชัน ที่แปลงข้อมูลเชิงกายภาพจากภาพถ่ายดาวเทียมและการสำรวจภาคสนามตามกรอบ 14 Patterns of Biophilic Design ให้เป็นคะแนนดัชนี BEQI ของแต่ละพื้นที่ แล้วนำเสนอเปรียบเทียบหลายพื้นที่ในรูปแบบพอร์ตโฟลิโอ เพื่อสนับสนุนการตัดสินใจเชิงกลยุทธ์ด้านการลงทุนและการบริหารความเสี่ยง และต่อยอดสู่บริการรับรองคุณภาพเชิงพาณิชย์ภายใต้ตรา "BEQI Certified" (ระดับ Silver/Gold/Platinum) เพื่อส่งเสริมการท่องเที่ยวยั่งยืนชายฝั่งทะเล กรณีศึกษาจังหวัดพังงา ประเทศไทย'
+    en: 'BEQI Portfolio is an innovative web-based platform that calculates and compares Biophilic Environmental Quality Index (BEQI) scores across multiple locations to drive sustainable coastal tourism.',
+    th: 'BEQI Portfolio คือนวัตกรรมแพลตฟอร์มดิจิทัลบนเว็บแอปพลิเคชัน ที่ช่วยคำนวณและเปรียบเทียบคะแนนดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (Biophilic Environmental Quality Index) ของหลายพื้นที่ เพื่อขับเคลื่อนการท่องเที่ยวชายฝั่งทะเลอย่างยั่งยืน'
   },
-  'index.about.biophilia.title': {en: 'What Is Biophilia?', th: 'ไบโอฟิลิก (Biophilia) คืออะไร'},
-  'index.about.biophilia.body': {
-    en: 'A concept first defined by Erich Fromm (1973) as "a passionate love of life and of all that is alive," reflecting a basic drive to nurture growth. E.O. Wilson (1984) later developed it into the "Biophilia Hypothesis," proposing that humans have an innate, biologically rooted urge to connect with nature. Kellert &amp; Calabrese (2015) extended this into "Biophilic Design" — the science of designing environments and buildings that restore the relationship between humans and nature, through the 14 Patterns framework (e.g. visual connection with nature, presence of water, biomorphic forms, etc. — the same patterns used in BEQI\'s Indicator 4).',
-    th: 'แนวคิดที่ Erich Fromm (1973) นิยามไว้เป็นคนแรกว่าคือ "ความรักที่แรงกล้าต่อสิ่งมีชีวิตทั้งหมด" สะท้อนแรงปรารถนาพื้นฐานในการส่งเสริมการเติบโตของชีวิต ต่อมา E.O. Wilson (1984) พัฒนาเป็น "สมมติฐานไบโอฟิเลีย" (Biophilia Hypothesis) ที่เสนอว่ามนุษย์มีรากฐานทางชีววิทยาที่โหยหาการเชื่อมโยงกับธรรมชาติโดยสัญชาตญาณ และ Kellert &amp; Calabrese (2015) นำมาต่อยอดเป็น "การออกแบบเชิงไบโอฟิลิก" (Biophilic Design) — ศาสตร์การออกแบบสภาพแวดล้อม/สิ่งก่อสร้างให้ฟื้นฟูความสัมพันธ์ระหว่างมนุษย์กับธรรมชาติ ผ่านกรอบ 14 Patterns (เช่น การเชื่อมโยงด้วยสายตากับธรรมชาติ, การมีอยู่ของน้ำ, รูปทรงชีวภาพ ฯลฯ ที่ใช้อยู่ในตัวชี้วัดที่ 4 ของ BEQI นั่นเอง)'
+  'index.about.bullet1.title': {en: 'Data-Driven Scoring', th: 'ให้คะแนนจากข้อมูลจริง'},
+  'index.about.bullet1.body': {
+    en: 'Translates physical data from satellite imagery and on-site surveys, measured against the 14 Patterns of Biophilic Design, into a precise BEQI score for individual sites.',
+    th: 'แปลงข้อมูลเชิงกายภาพจากภาพถ่ายดาวเทียมและการสำรวจภาคสนามตามกรอบ 14 Patterns of Biophilic Design ให้เป็นคะแนนดัชนี BEQI ที่แม่นยำของแต่ละพื้นที่'
+  },
+  'index.about.bullet2.title': {en: 'Portfolio Comparison', th: 'เปรียบเทียบแบบพอร์ตโฟลิโอ'},
+  'index.about.bullet2.body': {
+    en: 'Displays multiple locations side-by-side, equipping stakeholders with clear data to support strategic investment and risk-management decisions.',
+    th: 'แสดงผลหลายพื้นที่เทียบเคียงกัน ให้ผู้มีส่วนเกี่ยวข้องมีข้อมูลชัดเจนประกอบการตัดสินใจเชิงกลยุทธ์ด้านการลงทุนและการบริหารความเสี่ยง'
+  },
+  'index.about.bullet3.title': {en: 'Commercial Certification', th: 'การรับรองเชิงพาณิชย์'},
+  'index.about.bullet3.body': {
+    en: 'Operates a tiered "BEQI Certified" system (Silver, Gold, and Platinum) to incentivize and recognize eco-friendly development.',
+    th: 'ดำเนินระบบ "BEQI Certified" แบบมีระดับ (Silver, Gold, Platinum) เพื่อจูงใจและยกย่องการพัฒนาที่เป็นมิตรต่อสิ่งแวดล้อม'
+  },
+  'index.about.bullet4.title': {en: 'Real-World Application', th: 'การประยุกต์ใช้จริง'},
+  'index.about.bullet4.body': {
+    en: 'Currently demonstrated through a comprehensive case study focused on coastal tourism in Phang Nga Province, Thailand.',
+    th: 'สาธิตผ่านกรณีศึกษาการท่องเที่ยวชายฝั่งทะเลในจังหวัดพังงา ประเทศไทย'
+  },
+  'index.about.biophilia.title': {en: 'What Is Biophilia?', th: 'ไบโอฟิเลีย (Biophilia) คืออะไร'},
+  'index.about.biophilia.intro': {
+    en: 'Biophilia describes the innate human drive to connect with the natural world. Over the past 50 years, the concept has evolved from a psychological theory into a measurable architectural framework:',
+    th: 'ไบโอฟิเลียหมายถึงแรงปรารถนาโดยกำเนิดของมนุษย์ที่จะเชื่อมโยงกับโลกธรรมชาติ ตลอด 50 ปีที่ผ่านมา แนวคิดนี้พัฒนาจากทฤษฎีทางจิตวิทยาสู่กรอบสถาปัตยกรรมที่วัดผลได้:'
+  },
+  'index.about.biophilia.item1.year': {en: '1973', th: '1973'},
+  'index.about.biophilia.item1.title': {en: 'The Concept', th: 'จุดกำเนิดแนวคิด'},
+  'index.about.biophilia.item1.body': {
+    en: 'Erich Fromm first defined biophilia as "a passionate love of life and of all that is alive," reflecting a fundamental human drive to nurture growth.',
+    th: 'Erich Fromm นิยามไบโอฟิเลียไว้เป็นคนแรกว่าคือ "ความรักที่แรงกล้าต่อสิ่งมีชีวิตทั้งหมด" สะท้อนแรงปรารถนาพื้นฐานของมนุษย์ในการส่งเสริมการเติบโตของชีวิต'
+  },
+  'index.about.biophilia.item2.year': {en: '1984', th: '1984'},
+  'index.about.biophilia.item2.title': {en: 'The Hypothesis', th: 'สมมติฐาน'},
+  'index.about.biophilia.item2.body': {
+    en: 'E.O. Wilson expanded the idea, proposing that our urge to affiliate with nature is an innate, biologically rooted evolutionary trait.',
+    th: 'E.O. Wilson ต่อยอดแนวคิดนี้ โดยเสนอว่าแรงโหยหาธรรมชาติของมนุษย์เป็นลักษณะทางวิวัฒนาการที่มีรากฐานทางชีววิทยาโดยกำเนิด'
+  },
+  'index.about.biophilia.item3.year': {en: '2015', th: '2015'},
+  'index.about.biophilia.item3.title': {en: 'The Application', th: 'การประยุกต์ใช้'},
+  'index.about.biophilia.item3.body': {
+    en: 'Kellert &amp; Calabrese translated this biology into Biophilic Design — the science of creating built environments that restore our connection to nature.',
+    th: 'Kellert &amp; Calabrese แปลงหลักชีววิทยานี้เป็น "การออกแบบเชิงไบโอฟิลิก" (Biophilic Design) — ศาสตร์แห่งการออกแบบสภาพแวดล้อมก่อสร้างให้ฟื้นฟูความสัมพันธ์ระหว่างมนุษย์กับธรรมชาติ'
+  },
+  'index.about.biophilia.closing': {
+    en: 'This practical application relies on the 14 Patterns of Biophilic Design (such as visual connections to nature, the presence of water, and biomorphic forms), which serve as the foundational metric for BEQI\'s Indicator 4.',
+    th: 'การประยุกต์ใช้เชิงปฏิบัตินี้อาศัยกรอบ 14 Patterns of Biophilic Design (เช่น การเชื่อมโยงด้วยสายตากับธรรมชาติ การมีอยู่ของน้ำ และรูปทรงชีวภาพ) ซึ่งเป็นตัวชี้วัดพื้นฐานของตัวชี้วัดที่ 4 ของ BEQI'
   },
   'index.about.beqi.title': {en: 'What Is BEQI?', th: 'BEQI คืออะไร'},
-  'index.about.beqi.body': {
-    en: 'The Biophilic Environmental Quality Index is a tool that converts the biophilia principles above into a measurable score, based 100% on physical data (satellite imagery via Google Earth Engine plus on-site field surveys) rather than human opinion or feeling. It covers 4 indicators: structural green-space density, ecological network connectivity, access to water, and the density of biophilic design elements.',
-    th: 'ดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (Biophilic Environmental Quality Index) คือ เครื่องมือแปลงหลักการไบโอฟิลิกข้างต้นให้เป็น "ตัวเลขวัดผลได้" โดยอิงข้อมูลเชิงกายภาพ 100% (ภาพถ่ายดาวเทียมผ่าน Google Earth Engine + การลงสำรวจภาคสนาม) ไม่ใช้ความเห็น/ความรู้สึกของคนเป็นตัวตั้ง ครอบคลุม 4 ตัวชี้วัด: ความหนาแน่นพื้นที่สีเขียว, ความต่อเนื่องของโครงข่ายนิเวศ, การเข้าถึงพื้นที่น้ำ, ความหนาแน่นขององค์ประกอบไบโอฟิลิก'
+  'index.about.beqi.intro': {
+    en: 'The Biophilic Environmental Quality Index (BEQI) converts these design principles into an objective, measurable score. It relies entirely on physical data gathered via Google Earth Engine satellite imagery and on-site field surveys, tracking four specific indicators:',
+    th: 'ดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (BEQI) แปลงหลักการออกแบบข้างต้นให้เป็นคะแนนที่วัดผลได้อย่างเป็นภววิสัย โดยอิงข้อมูลเชิงกายภาพทั้งหมดจากภาพถ่ายดาวเทียม Google Earth Engine และการสำรวจภาคสนาม ครอบคลุม 4 ตัวชี้วัด ได้แก่:'
   },
+  'index.about.beqi.item1': {en: 'Structural green-space density', th: 'ความหนาแน่นของพื้นที่สีเขียวเชิงโครงสร้าง'},
+  'index.about.beqi.item2': {en: 'Ecological network connectivity', th: 'ความต่อเนื่องของโครงข่ายนิเวศ'},
+  'index.about.beqi.item3': {en: 'Access to water', th: 'การเข้าถึงพื้นที่น้ำ'},
+  'index.about.beqi.item4': {en: 'Density of biophilic design elements (utilizing the 14 Patterns)', th: 'ความหนาแน่นขององค์ประกอบการออกแบบเชิงไบโอฟิลิก (ตามกรอบ 14 Patterns)'},
   'index.about.whyIndex.title': {en: 'Why an Index?', th: 'ทำไมต้องทำเป็น "ดัชนี"'},
   'index.about.whyIndex.subtitle': {en: 'Not relying solely on human-opinion surveys', th: 'ไม่ใช้แบบสอบถามความเห็นคนอย่างเดียว'},
-  'index.about.whyIndex.body': {
-    en: 'Because existing assessment tools (Blue Flag, GSTC, etc.) and most past biophilia research rely on psychological measures (surveys/interviews), which carry personal bias, vary with the respondent\'s mood or context, require human-research ethics review (IRB), and are hard to replicate or update quickly.<br><br>A quantitative index built on physical data solves these problems — it is objective, replicable, continuously updatable, lower-cost, and can serve as empirical evidence for policy-making, while also guarding against "Greenwashing."',
-    th: 'เพราะเครื่องมือประเมินแบบเดิม (Blue Flag, GSTC ฯลฯ) และงานวิจัยไบโอฟิเลียส่วนใหญ่ในอดีตพึ่งพาการวัดผลเชิงจิตวิทยา (แบบสอบถาม/สัมภาษณ์) ซึ่งมี อคติส่วนบุคคล (bias), ผันแปรตามอารมณ์/บริบทผู้ตอบ, ต้องผ่านจริยธรรมวิจัยในมนุษย์ (IRB), วัดซ้ำยาก และช้า<br><br>ดังนั้น การใช้ดัชนีเชิงปริมาณจากข้อมูลกายภาพแก้ปัญหาเหล่านี้ได้ เนื่องด้วยเป็นภววิสัย (objective) ทำซ้ำได้ อัปเดตต่อเนื่อง ต้นทุนต่ำกว่า และใช้เป็นหลักฐานเชิงประจักษ์หนุนนโยบาย (evidence-based policy) พร้อมป้องกันการ "ฟอกเขียว" (Greenwashing) ได้ด้วย'
+  'index.about.whyIndex.intro': {
+    en: 'Existing assessment tools (like Blue Flag or GSTC) and previous biophilia research rely heavily on psychological surveys. Human-opinion metrics are vulnerable to personal bias, fluctuate with respondent mood, require complex ethics reviews (IRB), and are expensive to update. A quantitative, data-driven index solves this by providing metrics that are:',
+    th: 'เครื่องมือประเมินแบบเดิม (Blue Flag, GSTC ฯลฯ) และงานวิจัยไบโอฟิเลียส่วนใหญ่ในอดีตพึ่งพาการสำรวจเชิงจิตวิทยาเป็นหลัก ตัวชี้วัดจากความคิดเห็นมนุษย์เสี่ยงต่ออคติส่วนบุคคล ผันแปรตามอารมณ์ผู้ตอบ ต้องผ่านการพิจารณาจริยธรรมวิจัยที่ซับซ้อน (IRB) และมีต้นทุนสูงในการอัปเดต ดัชนีเชิงปริมาณจากข้อมูลจริงแก้ปัญหานี้ได้ด้วยคุณสมบัติดังนี้:'
+  },
+  'index.about.whyIndex.item1.title': {en: 'Objective & Empirical', th: 'ภววิสัยและเชิงประจักษ์'},
+  'index.about.whyIndex.item1.body': {
+    en: 'Grounded in hard physical data, offering concrete evidence for policy-making while actively preventing "greenwashing."',
+    th: 'อิงข้อมูลเชิงกายภาพที่จับต้องได้ ให้หลักฐานที่เป็นรูปธรรมสำหรับการกำหนดนโยบาย พร้อมป้องกันการ "ฟอกเขียว" (Greenwashing) อย่างจริงจัง'
+  },
+  'index.about.whyIndex.item2.title': {en: 'Agile & Replicable', th: 'คล่องตัวและทำซ้ำได้'},
+  'index.about.whyIndex.item2.body': {
+    en: 'Significantly lower-cost and easier to continuously update without relying on human surveying.',
+    th: 'ต้นทุนต่ำกว่าอย่างมีนัยสำคัญ และอัปเดตต่อเนื่องได้ง่ายโดยไม่ต้องพึ่งพาการสำรวจความคิดเห็นมนุษย์'
   },
   'index.about.whyPortfolio.title': {en: 'Why a Portfolio?', th: 'ทำไมต้องทำเป็น "Portfolio"'},
   'index.about.whyPortfolio.subtitle': {en: 'Not just assessing one site at a time', th: 'ไม่ใช่แค่ประเมินทีละพื้นที่'},
   'index.about.whyPortfolio.body': {
-    en: 'Based on Cooper et al.\'s (2001) portfolio-innovation theory, which holds that managing projects one at a time is not enough to build sustainable business advantage.<br><br>BEQI Portfolio therefore reframes each destination as a "strategic investment unit," comparing scores across multiple sites — such as Khao Lak\'s 3 zones, Phang Nga: North Zone (Coral Beach &amp; Bustling Beach), Central Zone (Bang Niang &amp; Nang Thong Beach), and South Zone (Khao Lak-Lam Ru National Park).',
-    th: 'อิงทฤษฎีนวัตกรรมเชิงพอร์ตโฟลิโอของ Cooper et al. (2001) ที่ว่าการบริหารแบบ "โครงการเดี่ยว" ไม่พอสำหรับสร้างความได้เปรียบทางธุรกิจที่ยั่งยืน<br><br>ดังนั้น BEQI Portfolio จึงเปลี่ยนมุมมอง "แหล่งท่องเที่ยว" ให้เป็น "หน่วยลงทุนเชิงกลยุทธ์" นำคะแนนจากหลายพื้นที่มาเทียบกัน เช่น 3 โซนเขาหลัก พังงา ได้แก่ โซนเหนือ: หาดปะการังและหาดคึกคัก, โซนกลาง: หาดบางเนียงและหาดนางทอง, โซนใต้: อุทยานแห่งชาติเขาหลัก-ลำรู่'
+    en: 'Drawing on Cooper et al.\'s (2001) portfolio-innovation theory, managing single projects in isolation cannot build a sustainable business advantage. The BEQI platform reframes individual destinations as "strategic investment units" by assessing multiple sites side by side (such as Khao Lak, Phang Nga\'s North, Central, and South zones). This comparative approach allows stakeholders to:',
+    th: 'อิงทฤษฎีนวัตกรรมเชิงพอร์ตโฟลิโอของ Cooper et al. (2001) ที่ว่าการบริหารแบบ "โครงการเดี่ยว" ไม่พอสำหรับสร้างความได้เปรียบทางธุรกิจที่ยั่งยืน BEQI Portfolio จึงเปลี่ยนมุมมอง "แหล่งท่องเที่ยว" ให้เป็น "หน่วยลงทุนเชิงกลยุทธ์" โดยประเมินหลายพื้นที่เทียบเคียงกัน เช่น 3 โซนเขาหลัก พังงา ได้แก่ โซนเหนือ โซนกลาง และโซนใต้ แนวทางเชิงเปรียบเทียบนี้ช่วยให้ผู้มีส่วนเกี่ยวข้อง:'
   },
-  'index.about.whyPortfolio.item1': {
-    en: 'To prioritize investment — knowing which sites deserve development spending first for the greatest return.',
-    th: 'เพื่อจัดลำดับความสำคัญการลงทุน ทำให้ได้รู้ว่าควรลงทุนพัฒนาที่ไหนก่อนจึงคุ้มค่าที่สุด'
+  'index.about.whyPortfolio.item1.title': {en: 'Prioritize Investment', th: 'จัดลำดับความสำคัญการลงทุน'},
+  'index.about.whyPortfolio.item1.body': {
+    en: 'Identify exactly which sites will yield the highest return for development spending.',
+    th: 'รู้ชัดเจนว่าควรลงทุนพัฒนาพื้นที่ไหนก่อนจึงจะคุ้มค่าที่สุด'
   },
-  'index.about.whyPortfolio.item2': {
-    en: 'To manage and diversify risk — for example, if one zone becomes degraded or overcrowded, resources can be redirected to another.',
-    th: 'เพื่อบริหารและกระจายความเสี่ยง ยกตัวอย่างเช่น ถ้าโซนหนึ่งเสื่อมโทรมหรือแออัดเกิน สามารถพิจารณาโยกทรัพยากรไปโซนอื่นได้'
+  'index.about.whyPortfolio.item2.title': {en: 'Manage Risk', th: 'บริหารความเสี่ยง'},
+  'index.about.whyPortfolio.item2.body': {
+    en: 'Diversify resources so funding can seamlessly pivot if one zone becomes ecologically degraded or overcrowded.',
+    th: 'กระจายทรัพยากร เพื่อให้โยกงบประมาณไปโซนอื่นได้ทันทีหากโซนหนึ่งเสื่อมโทรมทางนิเวศหรือแออัดเกินไป'
   },
-  'index.about.whyPortfolio.item3': {
-    en: 'To drive positive competition (benchmarking) among sites and operators, leading to a "Green Premium."',
-    th: 'เพื่อสร้างการแข่งขันเชิงบวก (Benchmarking) ระหว่างพื้นที่/ผู้ประกอบการ นำไปสู่ "ส่วนต่างราคาสีเขียว" (Green Premium)'
-  },
-  'index.about.whyPortfolio.closing': {
-    en: 'Ultimately, this extends into a genuine commercial certification service, "BEQI Certified."',
-    th: 'และท้ายที่สุดต่อยอดเป็นบริการรับรองคุณภาพเชิงพาณิชย์ "BEQI Certified" ได้จริง'
+  'index.about.whyPortfolio.item3.title': {en: 'Drive Competition', th: 'สร้างการแข่งขันเชิงบวก'},
+  'index.about.whyPortfolio.item3.body': {
+    en: 'Foster benchmarking among sites and operators to generate a "Green Premium," ultimately supporting the commercial "BEQI Certified" standard.',
+    th: 'ส่งเสริม Benchmarking ระหว่างพื้นที่/ผู้ประกอบการ นำไปสู่ "ส่วนต่างราคาสีเขียว" (Green Premium) และต่อยอดสู่มาตรฐานรับรองเชิงพาณิชย์ "BEQI Certified" ได้จริง'
   }
 };
