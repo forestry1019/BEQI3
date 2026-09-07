@@ -163,8 +163,10 @@
       </script>
 <style>
         body {
-            background: linear-gradient(180deg, #E3FBFD 0%, #7FE3EE 28%, #22B8D6 60%, #0B85AE 100%) fixed;
-            color: #0B2E3D;
+            background-color: #fbf9f4; /* background */
+            color: #1b1c19; /* on-surface */
+            background-image: radial-gradient(#D9C8B2 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
         .sketch-border {
@@ -207,7 +209,7 @@
 </head>
 <body class="font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
 <!-- TopAppBar -->
-<header class="bg-white/70 backdrop-blur-md font-label-caps text-label-caps top-0 sticky z-50 border-b border-white/40">
+<header class="bg-background/80 backdrop-blur-md font-label-caps text-label-caps top-0 sticky z-50 border-b border-limestone-gray">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
 <a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="index.html"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span><span class="flex flex-col leading-none"><span class="font-bold text-jungle-leaf text-headline-md">BEQI</span><span class="font-normal text-outline text-[10px] tracking-normal">For Sustainable Coastal Tourism</span></span></a>
 <div class="flex items-center gap-8">
@@ -245,7 +247,7 @@
 <div class="absolute inset-0 pointer-events-none z-20"><!-- NW Corner --><div class="absolute top-4 left-4 flex flex-col gap-1"><div class="w-4 h-4 border-t-2 border-l-2 border-coral-warmth"></div><span class="text-[8px] font-label-caps text-coral-warmth tracking-widest">NW: 8.712° N, 98.215° E</span></div><!-- NE Corner --><div class="absolute top-4 right-4 flex flex-col items-end gap-1"><div class="w-4 h-4 border-t-2 border-r-2 border-coral-warmth"></div><span class="text-[8px] font-label-caps text-coral-warmth tracking-widest">NE: 8.712° N, 98.321° E</span></div><!-- SW Corner --><div class="absolute bottom-4 left-4 flex flex-col gap-1"><span class="text-[8px] font-label-caps text-coral-warmth tracking-widest">SW: 8.542° N, 98.215° E</span><div class="w-4 h-4 border-b-2 border-l-2 border-coral-warmth"></div></div><!-- SE Corner --><div class="absolute bottom-4 right-4 flex flex-col items-end gap-1"><span class="text-[8px] font-label-caps text-coral-warmth tracking-widest">SE: 8.542° N, 98.321° E</span><div class="w-4 h-4 border-b-2 border-r-2 border-coral-warmth"></div></div><div class="absolute top-1/4 left-1/4 text-[10px] font-label-caps text-coral-warmth ml-4">8.452° N, 98.247° E</div><div class="absolute bottom-1/3 right-1/4 text-[10px] font-label-caps text-secondary-container mr-4 right-0 text-right">GEE ANALYSIS: ACTIVE</div><svg class="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"></path></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"></rect></svg></div></div>
 </div>
 <!-- Subtle background texture element -->
-<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-white/25 via-cyan-100/10 to-transparent -z-10 rounded-bl-[120px]"></div>
+<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-coral-warmth/10 via-secondary-container/5 to-transparent -z-10 rounded-bl-[120px]"></div>
 </section>
 
 <!-- About BEQI Portfolio Section -->
@@ -253,38 +255,38 @@
 <div class="max-w-container-max mx-auto flex flex-col gap-14">
 
 <div class="text-center max-w-3xl mx-auto">
-<h2 class="font-display-lg text-4xl md:text-6xl font-extrabold text-white mb-6 drop-shadow-sm">BEQI Portfolio</h2>
-<p class="text-lg md:text-xl text-white/95 leading-relaxed">คือนวัตกรรมพอร์ตโฟลิโอดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (Biophilic Environmental Quality Index Portfolio) ในรูปแบบแพลตฟอร์มดิจิทัลบนเว็บแอปพลิเคชัน ที่แปลงข้อมูลเชิงกายภาพจากภาพถ่ายดาวเทียมและการสำรวจภาคสนามตามกรอบ 14 Patterns of Biophilic Design ให้เป็นคะแนนดัชนี BEQI ของแต่ละพื้นที่ แล้วนำเสนอเปรียบเทียบหลายพื้นที่ในรูปแบบพอร์ตโฟลิโอ เพื่อสนับสนุนการตัดสินใจเชิงกลยุทธ์ด้านการลงทุนและการบริหารความเสี่ยง และต่อยอดสู่บริการรับรองคุณภาพเชิงพาณิชย์ภายใต้ตรา "BEQI Certified" (ระดับ Silver/Gold/Platinum) เพื่อส่งเสริมการท่องเที่ยวยั่งยืนชายฝั่งทะเล กรณีศึกษาจังหวัดพังงา ประเทศไทย</p>
+<h2 class="font-display-lg text-4xl md:text-6xl font-extrabold text-andaman-deep mb-6" data-i18n="index.about.title">BEQI Portfolio</h2>
+<p class="text-lg md:text-xl text-on-surface-variant leading-relaxed" data-i18n="index.about.intro">คือนวัตกรรมพอร์ตโฟลิโอดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (Biophilic Environmental Quality Index Portfolio) ในรูปแบบแพลตฟอร์มดิจิทัลบนเว็บแอปพลิเคชัน ที่แปลงข้อมูลเชิงกายภาพจากภาพถ่ายดาวเทียมและการสำรวจภาคสนามตามกรอบ 14 Patterns of Biophilic Design ให้เป็นคะแนนดัชนี BEQI ของแต่ละพื้นที่ แล้วนำเสนอเปรียบเทียบหลายพื้นที่ในรูปแบบพอร์ตโฟลิโอ เพื่อสนับสนุนการตัดสินใจเชิงกลยุทธ์ด้านการลงทุนและการบริหารความเสี่ยง และต่อยอดสู่บริการรับรองคุณภาพเชิงพาณิชย์ภายใต้ตรา "BEQI Certified" (ระดับ Silver/Gold/Platinum) เพื่อส่งเสริมการท่องเที่ยวยั่งยืนชายฝั่งทะเล กรณีศึกษาจังหวัดพังงา ประเทศไทย</p>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-<div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-xl">
-<h3 class="font-display-lg text-2xl md:text-3xl font-extrabold text-andaman-deep mb-4">ไบโอฟิลิก (Biophilia) คืออะไร</h3>
-<p class="text-on-surface-variant leading-relaxed">แนวคิดที่ Erich Fromm (1973) นิยามไว้เป็นคนแรกว่าคือ "ความรักที่แรงกล้าต่อสิ่งมีชีวิตทั้งหมด" สะท้อนแรงปรารถนาพื้นฐานในการส่งเสริมการเติบโตของชีวิต ต่อมา E.O. Wilson (1984) พัฒนาเป็น "สมมติฐานไบโอฟิเลีย" (Biophilia Hypothesis) ที่เสนอว่ามนุษย์มีรากฐานทางชีววิทยาที่โหยหาการเชื่อมโยงกับธรรมชาติโดยสัญชาตญาณ และ Kellert &amp; Calabrese (2015) นำมาต่อยอดเป็น "การออกแบบเชิงไบโอฟิลิก" (Biophilic Design) — ศาสตร์การออกแบบสภาพแวดล้อม/สิ่งก่อสร้างให้ฟื้นฟูความสัมพันธ์ระหว่างมนุษย์กับธรรมชาติ ผ่านกรอบ 14 Patterns (เช่น การเชื่อมโยงด้วยสายตากับธรรมชาติ, การมีอยู่ของน้ำ, รูปทรงชีวภาพ ฯลฯ ที่ใช้อยู่ในตัวชี้วัดที่ 4 ของ BEQI นั่นเอง)</p>
+<div class="organic-border bg-white sketch-shadow p-8 md:p-10">
+<h3 class="font-display-lg text-2xl md:text-3xl font-extrabold text-andaman-deep mb-4" data-i18n="index.about.biophilia.title">ไบโอฟิลิก (Biophilia) คืออะไร</h3>
+<p class="text-on-surface-variant leading-relaxed" data-i18n-html="index.about.biophilia.body">แนวคิดที่ Erich Fromm (1973) นิยามไว้เป็นคนแรกว่าคือ "ความรักที่แรงกล้าต่อสิ่งมีชีวิตทั้งหมด" สะท้อนแรงปรารถนาพื้นฐานในการส่งเสริมการเติบโตของชีวิต ต่อมา E.O. Wilson (1984) พัฒนาเป็น "สมมติฐานไบโอฟิเลีย" (Biophilia Hypothesis) ที่เสนอว่ามนุษย์มีรากฐานทางชีววิทยาที่โหยหาการเชื่อมโยงกับธรรมชาติโดยสัญชาตญาณ และ Kellert &amp; Calabrese (2015) นำมาต่อยอดเป็น "การออกแบบเชิงไบโอฟิลิก" (Biophilic Design) — ศาสตร์การออกแบบสภาพแวดล้อม/สิ่งก่อสร้างให้ฟื้นฟูความสัมพันธ์ระหว่างมนุษย์กับธรรมชาติ ผ่านกรอบ 14 Patterns (เช่น การเชื่อมโยงด้วยสายตากับธรรมชาติ, การมีอยู่ของน้ำ, รูปทรงชีวภาพ ฯลฯ ที่ใช้อยู่ในตัวชี้วัดที่ 4 ของ BEQI นั่นเอง)</p>
 </div>
 
-<div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-xl">
-<h3 class="font-display-lg text-2xl md:text-3xl font-extrabold text-andaman-deep mb-4">BEQI คืออะไร</h3>
-<p class="text-on-surface-variant leading-relaxed">ดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (Biophilic Environmental Quality Index) คือ เครื่องมือแปลงหลักการไบโอฟิลิกข้างต้นให้เป็น "ตัวเลขวัดผลได้" โดยอิงข้อมูลเชิงกายภาพ 100% (ภาพถ่ายดาวเทียมผ่าน Google Earth Engine + การลงสำรวจภาคสนาม) ไม่ใช้ความเห็น/ความรู้สึกของคนเป็นตัวตั้ง ครอบคลุม 4 ตัวชี้วัด: ความหนาแน่นพื้นที่สีเขียว, ความต่อเนื่องของโครงข่ายนิเวศ, การเข้าถึงพื้นที่น้ำ, ความหนาแน่นขององค์ประกอบไบโอฟิลิก</p>
+<div class="organic-border bg-white sketch-shadow p-8 md:p-10">
+<h3 class="font-display-lg text-2xl md:text-3xl font-extrabold text-andaman-deep mb-4" data-i18n="index.about.beqi.title">BEQI คืออะไร</h3>
+<p class="text-on-surface-variant leading-relaxed" data-i18n-html="index.about.beqi.body">ดัชนีคุณภาพสภาพแวดล้อมเชิงไบโอฟิลิก (Biophilic Environmental Quality Index) คือ เครื่องมือแปลงหลักการไบโอฟิลิกข้างต้นให้เป็น "ตัวเลขวัดผลได้" โดยอิงข้อมูลเชิงกายภาพ 100% (ภาพถ่ายดาวเทียมผ่าน Google Earth Engine + การลงสำรวจภาคสนาม) ไม่ใช้ความเห็น/ความรู้สึกของคนเป็นตัวตั้ง ครอบคลุม 4 ตัวชี้วัด: ความหนาแน่นพื้นที่สีเขียว, ความต่อเนื่องของโครงข่ายนิเวศ, การเข้าถึงพื้นที่น้ำ, ความหนาแน่นขององค์ประกอบไบโอฟิลิก</p>
 </div>
 
-<div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-xl">
-<h3 class="font-display-lg text-2xl md:text-3xl font-extrabold text-andaman-deep mb-4">ทำไมต้องทำเป็น "ดัชนี"</h3>
-<p class="font-label-caps text-label-caps text-outline uppercase mb-3">ไม่ใช้แบบสอบถามความเห็นคนอย่างเดียว</p>
-<p class="text-on-surface-variant leading-relaxed">เพราะเครื่องมือประเมินแบบเดิม (Blue Flag, GSTC ฯลฯ) และงานวิจัยไบโอฟิเลียส่วนใหญ่ในอดีตพึ่งพาการวัดผลเชิงจิตวิทยา (แบบสอบถาม/สัมภาษณ์) ซึ่งมี อคติส่วนบุคคล (bias), ผันแปรตามอารมณ์/บริบทผู้ตอบ, ต้องผ่านจริยธรรมวิจัยในมนุษย์ (IRB), วัดซ้ำยาก และช้า<br><br>ดังนั้น การใช้ดัชนีเชิงปริมาณจากข้อมูลกายภาพแก้ปัญหาเหล่านี้ได้ เนื่องด้วยเป็นภววิสัย (objective) ทำซ้ำได้ อัปเดตต่อเนื่อง ต้นทุนต่ำกว่า และใช้เป็นหลักฐานเชิงประจักษ์หนุนนโยบาย (evidence-based policy) พร้อมป้องกันการ "ฟอกเขียว" (Greenwashing) ได้ด้วย</p>
+<div class="organic-border bg-white sketch-shadow p-8 md:p-10">
+<h3 class="font-display-lg text-2xl md:text-3xl font-extrabold text-andaman-deep mb-4" data-i18n="index.about.whyIndex.title">ทำไมต้องทำเป็น "ดัชนี"</h3>
+<p class="font-label-caps text-label-caps text-outline uppercase mb-3" data-i18n="index.about.whyIndex.subtitle">ไม่ใช้แบบสอบถามความเห็นคนอย่างเดียว</p>
+<p class="text-on-surface-variant leading-relaxed" data-i18n-html="index.about.whyIndex.body">เพราะเครื่องมือประเมินแบบเดิม (Blue Flag, GSTC ฯลฯ) และงานวิจัยไบโอฟิเลียส่วนใหญ่ในอดีตพึ่งพาการวัดผลเชิงจิตวิทยา (แบบสอบถาม/สัมภาษณ์) ซึ่งมี อคติส่วนบุคคล (bias), ผันแปรตามอารมณ์/บริบทผู้ตอบ, ต้องผ่านจริยธรรมวิจัยในมนุษย์ (IRB), วัดซ้ำยาก และช้า<br><br>ดังนั้น การใช้ดัชนีเชิงปริมาณจากข้อมูลกายภาพแก้ปัญหาเหล่านี้ได้ เนื่องด้วยเป็นภววิสัย (objective) ทำซ้ำได้ อัปเดตต่อเนื่อง ต้นทุนต่ำกว่า และใช้เป็นหลักฐานเชิงประจักษ์หนุนนโยบาย (evidence-based policy) พร้อมป้องกันการ "ฟอกเขียว" (Greenwashing) ได้ด้วย</p>
 </div>
 
-<div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-xl">
-<h3 class="font-display-lg text-2xl md:text-3xl font-extrabold text-andaman-deep mb-4">ทำไมต้องทำเป็น "Portfolio"</h3>
-<p class="font-label-caps text-label-caps text-outline uppercase mb-3">ไม่ใช่แค่ประเมินทีละพื้นที่</p>
-<p class="text-on-surface-variant leading-relaxed mb-4">อิงทฤษฎีนวัตกรรมเชิงพอร์ตโฟลิโอของ Cooper et al. (2001) ที่ว่าการบริหารแบบ "โครงการเดี่ยว" ไม่พอสำหรับสร้างความได้เปรียบทางธุรกิจที่ยั่งยืน<br><br>ดังนั้น BEQI Portfolio จึงเปลี่ยนมุมมอง "แหล่งท่องเที่ยว" ให้เป็น "หน่วยลงทุนเชิงกลยุทธ์" นำคะแนนจากหลายพื้นที่มาเทียบกัน เช่น 3 โซนเขาหลัก พังงา ได้แก่ โซนเหนือ: หาดปะการังและหาดคึกคัก, โซนกลาง: หาดบางเนียงและหาดนางทอง, โซนใต้: อุทยานแห่งชาติเขาหลัก-ลำรู่</p>
+<div class="organic-border bg-white sketch-shadow p-8 md:p-10">
+<h3 class="font-display-lg text-2xl md:text-3xl font-extrabold text-andaman-deep mb-4" data-i18n="index.about.whyPortfolio.title">ทำไมต้องทำเป็น "Portfolio"</h3>
+<p class="font-label-caps text-label-caps text-outline uppercase mb-3" data-i18n="index.about.whyPortfolio.subtitle">ไม่ใช่แค่ประเมินทีละพื้นที่</p>
+<p class="text-on-surface-variant leading-relaxed mb-4" data-i18n-html="index.about.whyPortfolio.body">อิงทฤษฎีนวัตกรรมเชิงพอร์ตโฟลิโอของ Cooper et al. (2001) ที่ว่าการบริหารแบบ "โครงการเดี่ยว" ไม่พอสำหรับสร้างความได้เปรียบทางธุรกิจที่ยั่งยืน<br><br>ดังนั้น BEQI Portfolio จึงเปลี่ยนมุมมอง "แหล่งท่องเที่ยว" ให้เป็น "หน่วยลงทุนเชิงกลยุทธ์" นำคะแนนจากหลายพื้นที่มาเทียบกัน เช่น 3 โซนเขาหลัก พังงา ได้แก่ โซนเหนือ: หาดปะการังและหาดคึกคัก, โซนกลาง: หาดบางเนียงและหาดนางทอง, โซนใต้: อุทยานแห่งชาติเขาหลัก-ลำรู่</p>
 <ol class="list-decimal list-inside text-on-surface-variant leading-relaxed space-y-2 mb-4">
-<li>เพื่อจัดลำดับความสำคัญการลงทุน ทำให้ได้รู้ว่าควรลงทุนพัฒนาที่ไหนก่อนจึงคุ้มค่าที่สุด</li>
-<li>เพื่อบริหารและกระจายความเสี่ยง ยกตัวอย่างเช่น ถ้าโซนหนึ่งเสื่อมโทรมหรือแออัดเกิน สามารถพิจารณาโยกทรัพยากรไปโซนอื่นได้</li>
-<li>เพื่อสร้างการแข่งขันเชิงบวก (Benchmarking) ระหว่างพื้นที่/ผู้ประกอบการ นำไปสู่ "ส่วนต่างราคาสีเขียว" (Green Premium)</li>
+<li data-i18n="index.about.whyPortfolio.item1">เพื่อจัดลำดับความสำคัญการลงทุน ทำให้ได้รู้ว่าควรลงทุนพัฒนาที่ไหนก่อนจึงคุ้มค่าที่สุด</li>
+<li data-i18n="index.about.whyPortfolio.item2">เพื่อบริหารและกระจายความเสี่ยง ยกตัวอย่างเช่น ถ้าโซนหนึ่งเสื่อมโทรมหรือแออัดเกิน สามารถพิจารณาโยกทรัพยากรไปโซนอื่นได้</li>
+<li data-i18n="index.about.whyPortfolio.item3">เพื่อสร้างการแข่งขันเชิงบวก (Benchmarking) ระหว่างพื้นที่/ผู้ประกอบการ นำไปสู่ "ส่วนต่างราคาสีเขียว" (Green Premium)</li>
 </ol>
-<p class="text-on-surface-variant leading-relaxed">และท้ายที่สุดต่อยอดเป็นบริการรับรองคุณภาพเชิงพาณิชย์ "BEQI Certified" ได้จริง</p>
+<p class="text-on-surface-variant leading-relaxed" data-i18n="index.about.whyPortfolio.closing">และท้ายที่สุดต่อยอดเป็นบริการรับรองคุณภาพเชิงพาณิชย์ "BEQI Certified" ได้จริง</p>
 </div>
 
 </div>
@@ -292,11 +294,11 @@
 </section>
 </main>
 <!-- Footer -->
-<footer class="bg-white/10 backdrop-blur-sm border-t border-white/25 mt-auto">
-<div class="border-t border-white/10 py-6 text-center text-white/90 font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
+<footer class="bg-sand-base border-t border-limestone-gray/50 mt-auto">
+<div class="border-t border-limestone-gray/30 py-6 text-center text-on-surface-variant font-label-caps text-label-caps text-[10px]" data-i18n="common.footer.copyright">
             Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.</div>
 </footer>
-<script src="assets/js/i18n-dict.js?v=2"></script>
+<script src="assets/js/i18n-dict.js?v=3"></script>
 <script src="assets/js/i18n.js?v=2"></script>
 <script src="assets/js/beqi-core.js?v=2"></script>
 <script src="assets/js/mobile-nav.js?v=1"></script>
