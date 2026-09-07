@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000">
+<title>Abstract aerial illustration of a headland, forest canopy and Andaman Sea, with survey markers</title>
+<defs>
+  <radialGradient id="ihSky" cx="30%" cy="8%" r="95%"><stop offset="0%" stop-color="#F3E9C7"/><stop offset="100%" stop-color="#FCFAF5"/></radialGradient>
+  <linearGradient id="ihSea" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#BFE3E0"/>
+    <stop offset="45%" stop-color="#4FA6A2"/>
+    <stop offset="100%" stop-color="#0B4A4A"/>
+  </linearGradient>
+</defs>
+<rect width="1200" height="1000" fill="url(#ihSky)"/>
+<path d="M0,330 Q220,300 450,325 T900,310 T1200,330 V1000 H0 Z" fill="#9FB9AE" opacity="0.35"/>
+<path d="M0,370 Q240,345 470,365 T900,350 T1200,370 V1000 H0 Z" fill="#6E9A87" opacity="0.32"/>
+<path d="M0,260 Q90,150 200,175 Q290,195 330,270 Q310,340 220,355 Q100,360 0,320 Z" fill="#5C7A62" opacity="0.55"/>
+<path d="M0,290 Q70,190 170,215 Q260,235 290,300 Q260,355 160,365 Q70,365 0,335 Z" fill="#2E5C46" opacity="0.65"/>
+<path d="M900,300 Q1000,220 1100,245 Q1170,265 1200,300 L1200,420 Q1100,400 1000,410 Q940,415 900,420 Z" fill="#3E7057" opacity="0.3"/>
+<path d="M0,420 Q260,388 520,412 Q760,432 1030,405 Q1130,395 1200,405 V470 Q1000,450 700,455 Q350,460 0,450 Z" fill="#E9D3AC" opacity="0.85"/>
+<rect x="0" y="455" width="1200" height="545" fill="url(#ihSea)"/>
+<path d="M60,540 Q220,500 400,560 Q560,610 760,570" fill="none" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="2.5" stroke-dasharray="1 10" stroke-linecap="round"/>
+<path d="M120,650 Q320,610 520,670 Q740,730 980,690" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="2.5" stroke-dasharray="1 10" stroke-linecap="round"/>
+<path d="M0,800 Q260,760 540,810 Q820,860 1200,810" fill="none" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="2.5" stroke-dasharray="1 10" stroke-linecap="round"/>
+<g stroke="#F9564E" stroke-width="1.2" stroke-opacity="0.55" fill="none">
+<path d="M470,470 L680,560 L840,510 L1010,610"/>
+</g>
+<g fill="#F9564E">
+<circle cx="470" cy="470" r="7"/>
+<circle cx="680" cy="560" r="6"/>
+<circle cx="840" cy="510" r="6"/>
+<circle cx="1010" cy="610" r="7"/>
+</g>
+<circle cx="470" cy="470" r="14" fill="none" stroke="#F9564E" stroke-width="1"/>
+</svg>
