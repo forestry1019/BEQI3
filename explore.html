@@ -63,7 +63,7 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased">
 <header class="bg-background/80 backdrop-blur-md font-label-caps text-label-caps top-0 sticky z-50 border-b border-limestone-gray">
-<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
 <a class="font-display-lg text-headline-md tracking-tighter text-andaman-deep flex items-center gap-2 group" href="index.html"><span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300">water</span><span class="flex flex-col leading-none"><span class="font-bold text-jungle-leaf text-headline-md">BEQI</span><span class="font-normal text-outline text-[10px] tracking-normal">For Sustainable Coastal Tourism</span></span></a>
 <div class="flex items-center gap-8">
 <nav class="hidden md:flex gap-8 items-center">
@@ -76,6 +76,9 @@
 <span data-i18n="explore.header.portalAccess">Portal Access</span>
 <span class="material-symbols-outlined text-[16px]">login</span>
 </a>
+<button class="md:hidden text-primary hover:opacity-80 transition-all duration-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
 </div>
 </div>
 </header>
@@ -175,6 +178,7 @@
 <script src="assets/js/i18n-dict-explore.js?v=3"></script>
 <script src="assets/js/i18n.js?v=2"></script>
 <script src="assets/js/beqi-core.js?v=2"></script>
+<script src="assets/js/mobile-nav.js?v=1"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/earthengine/1.7.31/earthengine-api.min.js"></script>
 <script src="assets/js/gee-config.js?v=2"></script>
