@@ -27,7 +27,7 @@ Object.assign(window.BEQI_I18N_DICT = window.BEQI_I18N_DICT || {}, {
 
   /* ---------- shared sidebar/header: evaluator-dashboard.html + evaluator-site-audit.html ---------- */
   'evaluator.dashboard.sidebarSubtitle': {en: 'Coastal Quality Framework', th: 'กรอบคุณภาพชายฝั่ง'},
-  'evaluator.dashboard.navBiophilic': {en: 'Biophilic Index', th: 'ดัชนีไบโอฟิลิก'},
+  'evaluator.dashboard.navBiophilic': {en: 'Certification Applicants', th: 'รายการผู้ขอใบรับรอง'},
   'evaluator.dashboard.navSiteAudit': {en: 'Site Audit', th: 'ตรวจภาคสนาม'},
   'evaluator.dashboard.navReports': {en: 'Local Reports', th: 'รายงานท้องถิ่น'},
   'evaluator.dashboard.navSettings': {en: 'Settings', th: 'ตั้งค่า'},
