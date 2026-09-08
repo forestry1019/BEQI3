@@ -36,10 +36,10 @@ const MAX_BBOX_DEG = 0.3;
 const ALLOWED_ORIGIN = process.env.BEQI_ALLOWED_ORIGIN || '*';
 const VERTEX_PROJECT = process.env.VERTEX_PROJECT || EE_CLOUD_PROJECT;
 const VERTEX_LOCATION = process.env.VERTEX_LOCATION || 'us-central1';
-// Pro tier ให้เหตุผลเชิงพื้นที่/รายละเอียดภาพดีกว่า Flash และเหมาะกับงานวิจัยมากกว่า — แต่ 'gemini-2.5-pro'
-// เป็น alias แบบลอยตัวที่ Google ปรับปรุงเนื้อหลังได้โดยไม่แจ้ง ก่อน deploy จริงควรตรวจ Vertex AI Model
-// Garden แล้วตรึง VERTEX_MODEL เป็น GA snapshot ที่มีเลขเวอร์ชัน (ไม่ใช่ alias) และบันทึกเลขเวอร์ชันนั้นไว้ใน
-// บทระเบียบวิธีของงานวิจัยเพื่อให้ผลลัพธ์ทำซ้ำ (reproducible) ได้
+// Pro tier ให้เหตุผลเชิงพื้นที่/รายละเอียดภาพดีกว่า Flash และเหมาะกับงานวิจัยมากกว่า 'gemini-2.5-pro' เป็น
+// GA stable model ID ของ Google เอง (release 2025-06-17, สนับสนุนถึงอย่างน้อย 2026-10-16) ไม่ใช่ alias แบบ
+// "-latest" ที่สลับโมเดลใต้ชื่อเดิมได้ — รุ่น 2.5 นี้ไม่มี dated snapshot (-001/-002) แยกให้ตรึงเพิ่ม ชื่อนี้คือ
+// ตัวระบุที่ใช้บันทึกในบทระเบียบวิธีได้เลย แต่ควรระบุวันที่ deploy และวันหมดอายุการสนับสนุนไว้ในเล่มด้วย
 const VERTEX_MODEL = process.env.VERTEX_MODEL || 'gemini-2.5-pro';
 
 const firestore = new Firestore();
