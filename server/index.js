@@ -36,7 +36,11 @@ const MAX_BBOX_DEG = 0.3;
 const ALLOWED_ORIGIN = process.env.BEQI_ALLOWED_ORIGIN || '*';
 const VERTEX_PROJECT = process.env.VERTEX_PROJECT || EE_CLOUD_PROJECT;
 const VERTEX_LOCATION = process.env.VERTEX_LOCATION || 'us-central1';
-const VERTEX_MODEL = process.env.VERTEX_MODEL || 'gemini-2.5-flash';
+// Pro tier ให้เหตุผลเชิงพื้นที่/รายละเอียดภาพดีกว่า Flash และเหมาะกับงานวิจัยมากกว่า — แต่ 'gemini-2.5-pro'
+// เป็น alias แบบลอยตัวที่ Google ปรับปรุงเนื้อหลังได้โดยไม่แจ้ง ก่อน deploy จริงควรตรวจ Vertex AI Model
+// Garden แล้วตรึง VERTEX_MODEL เป็น GA snapshot ที่มีเลขเวอร์ชัน (ไม่ใช่ alias) และบันทึกเลขเวอร์ชันนั้นไว้ใน
+// บทระเบียบวิธีของงานวิจัยเพื่อให้ผลลัพธ์ทำซ้ำ (reproducible) ได้
+const VERTEX_MODEL = process.env.VERTEX_MODEL || 'gemini-2.5-pro';
 
 const firestore = new Firestore();
 const storage = new Storage();

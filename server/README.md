@@ -118,10 +118,17 @@ gcloud functions deploy aiDraftPatterns \
   --allow-unauthenticated \
   --project=beqi-488814 \
   --memory=512Mi \
-  --timeout=60s \
+  --timeout=120s \
   --max-instances=5 \
-  --set-env-vars=BEQI_API_SECRET=CHANGE_ME_TO_A_REAL_SECRET,BEQI_ALLOWED_ORIGIN=https://forestry1019.github.io,VERTEX_PROJECT=beqi-488814,VERTEX_LOCATION=us-central1,VERTEX_MODEL=gemini-2.5-flash
+  --set-env-vars=BEQI_API_SECRET=CHANGE_ME_TO_A_REAL_SECRET,BEQI_ALLOWED_ORIGIN=https://forestry1019.github.io,VERTEX_PROJECT=beqi-488814,VERTEX_LOCATION=us-central1,VERTEX_MODEL=gemini-2.5-pro
 ```
+
+**หมายเหตุการเลือกโมเดล:** ใช้ `gemini-2.5-pro` แทน `gemini-2.5-flash` เดิม เพราะงานนี้ต้องแยกแยะรายละเอียด
+เชิงพื้นที่/พื้นผิวในภาพ (เช่น pattern 9 Complexity & Order, 10 Fractal, 11 Prospect) ซึ่ง tier "Pro" ให้เหตุผล
+เชิงภาพละเอียดกว่า tier "Flash" ที่ออกแบบมาเพื่อความเร็ว/ต้นทุนต่ำเป็นหลัก ก่อน deploy จริงควรตรวจ Vertex AI
+Model Garden หา GA snapshot ที่ตรึงเลขเวอร์ชัน (ไม่ใช่ alias ลอยตัวอย่าง `gemini-2.5-pro`) มาใส่แทน แล้วบันทึก
+ชื่อเวอร์ชันนั้นไว้ในบทระเบียบวิธีของงานวิจัยเพื่อให้ผลลัพธ์ทำซ้ำได้ (ปรับ `--timeout` เป็น 120s เพราะ Pro
+ตอบช้ากว่า Flash)
 
 เอา URL ที่ได้ไปใส่เป็น `aiDraftUrl` ใน `assets/js/api-config.js` (ทำไว้ให้แล้ว รอแค่แทน URL จริงหลัง deploy)
 
