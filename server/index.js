@@ -33,7 +33,7 @@ const EVALUATOR_ACCESS_CODE = process.env.EVALUATOR_ACCESS_CODE || '';
 const SUBMISSIONS_BUCKET = process.env.SUBMISSIONS_BUCKET || 'beqi-488814-submissions';
 // จำกัดขนาดกรอบพื้นที่ที่ยอมรับ (องศา) กันการวาดพื้นที่ใหญ่เกินสมควร (~0.3° ราว ๆ 30 กม.) — ปรับได้ตามความเหมาะสม
 const MAX_BBOX_DEG = 0.3;
-const ALLOWED_ORIGIN = process.env.BEQI_ALLOWED_ORIGIN || '*';
+const ALLOWED_ORIGINS = (process.env.BEQI_ALLOWED_ORIGIN || '*').split(',').map(s => s.trim()).filter(Boolean);
 const VERTEX_PROJECT = process.env.VERTEX_PROJECT || EE_CLOUD_PROJECT;
 const VERTEX_LOCATION = process.env.VERTEX_LOCATION || 'us-central1';
 // Pro tier ให้เหตุผลเชิงพื้นที่/รายละเอียดภาพดีกว่า Flash และเหมาะกับงานวิจัยมากกว่า 'gemini-2.5-pro' เป็น
@@ -126,14 +126,19 @@ function computeIndicators(polygon){
   });
 }
 
-function setCors(res, methods){
-  res.set('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
+function setCors(req, res, methods){
+  const origin = req.get('Origin');
+  const allowed = ALLOWED_ORIGINS.includes('*')
+    ? '*'
+    : (origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]);
+  res.set('Access-Control-Allow-Origin', allowed);
+  if(allowed !== '*') res.set('Vary', 'Origin');
   res.set('Access-Control-Allow-Methods', methods || 'POST, OPTIONS');
   res.set('Access-Control-Allow-Headers', 'Content-Type, X-Evaluator-Code');
 }
 
 functions.http('computeBeqi', async (req, res) => {
-  setCors(res);
+  setCors(req, res);
   if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
   if(req.method !== 'POST'){ res.status(405).json({error: 'Method not allowed'}); return; }
 
@@ -217,7 +222,7 @@ async function uploadPhotos(id, photos){
 }
 
 functions.http('submitApplication', async (req, res) => {
-  setCors(res);
+  setCors(req, res);
   if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
   if(req.method !== 'POST'){ res.status(405).json({error: 'Method not allowed'}); return; }
 
@@ -252,7 +257,7 @@ functions.http('submitApplication', async (req, res) => {
 });
 
 functions.http('checkStatus', async (req, res) => {
-  setCors(res, 'GET, OPTIONS');
+  setCors(req, res, 'GET, OPTIONS');
   if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
   if(req.method !== 'GET'){ res.status(405).json({error: 'Method not allowed'}); return; }
 
@@ -285,7 +290,7 @@ function checkEvaluatorAuth(req, res){
 }
 
 functions.http('listSubmissions', async (req, res) => {
-  setCors(res, 'GET, OPTIONS');
+  setCors(req, res, 'GET, OPTIONS');
   if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
   if(req.method !== 'GET'){ res.status(405).json({error: 'Method not allowed'}); return; }
   if(!checkEvaluatorAuth(req, res)) return;
@@ -448,7 +453,7 @@ async function callVertexGemini(photoDataUrls){
 }
 
 functions.http('aiDraftPatterns', async (req, res) => {
-  setCors(res);
+  setCors(req, res);
   if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
   if(req.method !== 'POST'){ res.status(405).json({error: 'Method not allowed'}); return; }
 
@@ -477,7 +482,7 @@ functions.http('aiDraftPatterns', async (req, res) => {
 });
 
 functions.http('updateSubmission', async (req, res) => {
-  setCors(res);
+  setCors(req, res);
   if(req.method === 'OPTIONS'){ res.status(204).send(''); return; }
   if(req.method !== 'POST'){ res.status(405).json({error: 'Method not allowed'}); return; }
   if(!checkEvaluatorAuth(req, res)) return;

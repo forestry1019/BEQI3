@@ -53,13 +53,15 @@ gcloud functions deploy computeBeqi \
   --memory=512Mi \
   --timeout=60s \
   --max-instances=5 \
-  --set-env-vars=BEQI_API_SECRET=CHANGE_ME_TO_A_REAL_SECRET,BEQI_ALLOWED_ORIGIN=https://forestry1019.github.io,GEE_CLOUD_PROJECT=beqi-488814
+  --set-env-vars="^:^BEQI_API_SECRET=CHANGE_ME_TO_A_REAL_SECRET:BEQI_ALLOWED_ORIGIN=https://beqiportfolio.com,https://forestry1019.github.io:GEE_CLOUD_PROJECT=beqi-488814"
 ```
 
 - `--allow-unauthenticated` คือจำเป็น เพราะหน้าเว็บ (ไม่มี backend ของตัวเอง) ต้องเรียก endpoint นี้ตรง ๆ
   จาก browser ได้ — ตัวที่กันคนทั่วไปเรียกเล่นคือ `BEQI_API_SECRET` ข้างใน request body แทน
-- `BEQI_ALLOWED_ORIGIN` ตั้งเป็นโดเมนจริงที่เว็บจะรัน (เช่น GitHub Pages ของ BEQI3) กัน CORS จากโดเมนอื่น —
-  ถ้ายังไม่รู้โดเมนสุดท้าย ตั้งเป็น `*` ไปก่อนแล้วค่อยจำกัดทีหลังได้
+- `BEQI_ALLOWED_ORIGIN` รับรายการโดเมนคั่นด้วย comma ได้ (เช่น custom domain + GitHub Pages เดิม) — โค้ดจะ
+  echo กลับ origin ที่ตรงกับรายการนี้เท่านั้นใน `Access-Control-Allow-Origin`; ถ้ายังไม่รู้โดเมนสุดท้าย ตั้งเป็น
+  `*` ไปก่อนแล้วค่อยจำกัดทีหลังได้ — เพราะ comma ใช้คั่น env var แต่ละตัวใน `--set-env-vars` อยู่แล้ว ต้องใช้
+  syntax `^:^KEY=VAL:KEY2=VAL2` (เปลี่ยน delimiter เป็น `:`) ตอนค่าใดค่าหนึ่งมี comma อยู่ข้างในแบบนี้
 - คำสั่งจะพิมพ์ `url:` ของฟังก์ชันออกมาตอนจบ — เอา URL นั้นไปใส่ใน `assets/js/api-config.js` (ดูขั้นตอนที่ 5)
 
 ## 4) ให้สิทธิ์ Earth Engine กับ service account ของฟังก์ชัน
@@ -120,7 +122,7 @@ gcloud functions deploy aiDraftPatterns \
   --memory=512Mi \
   --timeout=120s \
   --max-instances=5 \
-  --set-env-vars=BEQI_API_SECRET=CHANGE_ME_TO_A_REAL_SECRET,BEQI_ALLOWED_ORIGIN=https://forestry1019.github.io,VERTEX_PROJECT=beqi-488814,VERTEX_LOCATION=us-central1,VERTEX_MODEL=gemini-2.5-pro
+  --set-env-vars="^:^BEQI_API_SECRET=CHANGE_ME_TO_A_REAL_SECRET:BEQI_ALLOWED_ORIGIN=https://beqiportfolio.com,https://forestry1019.github.io:VERTEX_PROJECT=beqi-488814:VERTEX_LOCATION=us-central1:VERTEX_MODEL=gemini-2.5-pro"
 ```
 
 **หมายเหตุการเลือกโมเดล:** ใช้ `gemini-2.5-pro` แทน `gemini-2.5-flash` เดิม เพราะงานนี้ต้องแยกแยะรายละเอียด
