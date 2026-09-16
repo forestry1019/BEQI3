@@ -9,7 +9,7 @@ window.BEQI_I18N_DICT = {
   'common.nav.evaluators': {en: 'Evaluators', th: 'ผู้ประเมิน'},
   'common.footer.copyright': {
     en: 'Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai 6581019720. All rights reserved.',
-    th: 'สงวนลิขสิทธิ์ © 2026 ดุษฎีนิพนธ์ของ ปาณิชาติ กิติสิทธิชัย รหัสนิสิต 6581019720 CUTIP'
+    th: 'สงวนลิขสิทธิ์ © 2026 ดุษฎีนิพนธ์ของ ปาณิชาติ กิติสิทธิชัย รหัสนิสิต 6581019720 Doctor of Philosophy Program in Technology Management and Innopreneurship Program (Interdisciplinary Program), College of Interdisciplinary and Integrative Studies (Cuii), Chulalongkorn University, Thailand'
   },
 
   /* ---------- index.html ---------- */
@@ -66,8 +66,8 @@ window.BEQI_I18N_DICT = {
   'index.about.biophilia.item3.year': {en: '2015', th: '2015'},
   'index.about.biophilia.item3.title': {en: 'The Application', th: 'การประยุกต์ใช้'},
   'index.about.biophilia.item3.body': {
-    en: 'Kellert &amp; Calabrese translated this biology into Biophilic Design — the science of creating built environments that restore our connection to nature.',
-    th: 'Kellert &amp; Calabrese แปลงหลักชีววิทยานี้เป็น "การออกแบบเชิงไบโอฟิลิก" (Biophilic Design) — ศาสตร์แห่งการออกแบบสภาพแวดล้อมก่อสร้างให้ฟื้นฟูความสัมพันธ์ระหว่างมนุษย์กับธรรมชาติ'
+    en: 'Kellert &amp; Calabrese translated this biology into Biophilic Design, the science of creating built environments that restore our connection to nature.',
+    th: 'Kellert &amp; Calabrese แปลงหลักชีววิทยานี้เป็น "การออกแบบเชิงไบโอฟิลิก" (Biophilic Design) ศาสตร์แห่งการออกแบบสภาพแวดล้อมก่อสร้างให้ฟื้นฟูความสัมพันธ์ระหว่างมนุษย์กับธรรมชาติ'
   },
   'index.about.biophilia.closing': {
     en: 'This practical application relies on the 14 Patterns of Biophilic Design (such as visual connections to nature, the presence of water, and biomorphic forms), which serve as the foundational metric for BEQI\'s Indicator 4.',
