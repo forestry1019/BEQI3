@@ -8,8 +8,8 @@ window.BEQI_I18N_DICT = {
   'common.nav.entrepreneurs': {en: 'Entrepreneurs', th: 'ผู้ประกอบการ'},
   'common.nav.evaluators': {en: 'Evaluators', th: 'ผู้ประเมิน'},
   'common.footer.copyright': {
-    en: 'สงวนลิขสิทธิ์ © 2026 ดุษฎีนิพนธ์ของ ปาณิชาติ กิติสิทธิชัย รหัสนิสิต 6581019720 CUTIP<br>Doctor of Philosophy Program in Technology Management and Innopreneurship Program (Interdisciplinary Program), College of Interdisciplinary and Integrative Studies (Cuii), Chulalongkorn University, Thailand',
-    th: 'สงวนลิขสิทธิ์ © 2026 ดุษฎีนิพนธ์ของ ปาณิชาติ กิติสิทธิชัย รหัสนิสิต 6581019720 CUTIP<br>Doctor of Philosophy Program in Technology Management and Innopreneurship Program (Interdisciplinary Program), College of Interdisciplinary and Integrative Studies (Cuii), Chulalongkorn University, Thailand'
+    en: 'Copyright © 2026 Ph.D.Dissertation of Panichat Kitisittichai. All rights reserved.<br>Doctor of Philosophy Program in Technology Management and Innopreneurship Program (Interdisciplinary Program), College of Interdisciplinary and Integrative Studies (Cuii), Chulalongkorn University, Thailand',
+    th: 'สงวนลิขสิทธิ์ © 2026 ดุษฎีนิพนธ์ของ ปาณิชาติ กิติสิทธิชัย<br>หลักสูตรวิทยาศาสตรดุษฎีบัณฑิต สาขาวิชาการจัดการเทคโนโลยีและนวัตกรรมผู้ประกอบการ (หลักสูตรสหสาขาวิชา) วิทยาลัยสหศาสตร์บูรณาการ จุฬาลงกรณ์มหาวิทยาลัย'
   },
 
   /* ---------- index.html ---------- */
